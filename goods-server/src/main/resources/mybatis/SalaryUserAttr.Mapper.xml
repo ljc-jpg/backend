@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloud.dao.SalaryUserAttrMapper">
+
+    <update id="updatePathById">
+        update t_salary set path=#{path} where salary_id =#{salaryId}
+    </update>
+
+    <select id="selectSalaryByMap" resultMap="salaryMap">
+      SELECT DISTINCT a.XM,a.LOGINID , b.project_name,b.money ,c.salary_name,c.type,d.type project_type,c.path,c.approval_time  from
+      (SELECT ID,XM,LOGINID from zxjz0101 where SCHID = #{schId}) a
+      inner JOIN (SELECT user_id,name project_name,money,salary_id from t_salary_user_attr WHERE salary_id = #{salaryId}) b on b.user_id=a.ID
+      inner JOIN (SELECT `name` salary_name,type,salary_id ,path,approval_time from t_salary where salary_id = #{salaryId}  ) c on c.salary_id = b.salary_id
+      inner JOIN t_salary_person_project d on d.`name` = b.project_name
+      ORDER BY a.XM,project_type,b.project_name
+    </select>
+    <resultMap id="salaryMap" type="com.cloud.model.SalaryUserAttr">
+        <id property="LOGINID" column="LOGINID"/>
+        <result property="XM" column="XM"/>
+        <result property="LOGINID" column="LOGINID"/>
+        <result property="name" column="path"/>
+        <result property="salaryName" column="salary_name"/>
+        <result property="type" column="type"/>
+        <result property="createTime" column="approval_time"/>
+        <collection property="salaryUserAttrs" ofType="com.cloud.model.SalaryUserAttr">
+            <id property="projectName" column="project_name"/>
+            <result property="projectName" column="project_name"/>
+            <result property="money" column="money"/>
+            <result property="projectType" column="project_type"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectSalaryByUserId" resultMap="salaries">
+        SELECT salary_id,name,#{userId} user_id ,DATE_FORMAT(provide_time,'%Y年%m月') project_name,destroy,read_time
+         from t_salary where salary_id = #{salaryId}
+    </select>
+    <resultMap id="salaries" type="com.cloud.model.SalaryUserAttr">
+        <id property="userId" column="user_id"/>
+        <result property="salaryId" column="salary_id"/>
+        <result property="name" column="name"/>
+        <result property="projectName" column="project_name"/>
+        <result property="LOGINID" column="destroy"/>
+        <result property="salaryName" column="read_time"/>
+        <collection property="salaryUserAttrs" ofType="com.cloud.model.SalaryUserAttr"
+                    column="{userId=user_id,salaryId=salary_id}" select="selectSalary"/>
+        <collection property="people" ofType="com.cloud.model.SalaryPerson"
+                    column="{userId=user_id,salaryId=salary_id}" select="selectLookTime"/>
+    </resultMap>
+    <select id="selectSalary" resultType="com.cloud.model.SalaryUserAttr">
+        select a.project_name,a.money ,b.type from (SELECT user_id,`name` project_name,money  from t_salary_user_attr WHERE user_id = #{userId} and salary_id = #{salaryId}) a
+        LEFT JOIN (SELECT name,type from t_salary_person_project where salary_id = #{salaryId}) b on b.`name`=a.project_name
+        order by b.type
+    </select>
+    <select id="selectLookTime" resultType="com.cloud.model.SalaryPerson">
+        SELECT look_status,confim_status,look_time create_time from t_salary_person where salary_id = #{salaryId} and user_id = #{userId}
+    </select>
+
+
+
+</mapper>

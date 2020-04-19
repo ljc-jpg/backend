@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset=utf-8>
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <title>认证中心登录页面</title>
+</head>
+<body>
+<div style="width:800px;margin:0 auto">
+    <input type="text" value="" id="userName"/><br/>
+    <input type="password" value="" id="pwd"/><br/>
+    <button id="login" onclick="doLogin()">登录</button>
+</div>
+
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/util/util.js"></script>
+<script>
+    function doLogin() {
+        var data = {
+            userName: $('#userName').val(),
+            pwd: $('#pwd').val()
+        }
+
+
+        Util.requestFormData("/cas/login", 'POST', data,
+            function (res) {
+                console.log(res);
+                // request.getResponseHeader()
+                if (res.returnCode == 1) {
+                    // location.href='index.html';
+                    localStorage.setItem("token", res.token);
+                    // location.href = 'http://127.0.0.1:8762/cas-server/index';
+                } else {
+                    alert("账号密码错误");
+                }
+            },
+            function () {
+                console.log("error");
+            },
+            false,
+            '/cas-server'
+        );
+    }
+
+
+</script>
+</body>
+</html>
+
