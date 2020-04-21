@@ -1,10 +1,24 @@
-# bootstrap.yml配置文件相对于application更优先
+server:
+  port: 8762
+
 spring:
   application:
     name: zuul-server
+  #redis配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 1
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        min-idle: 1
+        max-idle: 1
+        max-wait: 100
+    timeout: 6000
 
-server:
-  port: 8762
+
 eureka:
   instance:
     hostname: eureka-server
@@ -13,12 +27,6 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://admin:admin123@${eureka.instance.hostname}:8761/eureka
-
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
 
 zuul:
   host:

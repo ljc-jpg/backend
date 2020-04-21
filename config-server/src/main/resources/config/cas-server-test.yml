@@ -92,3 +92,13 @@ logging:
 # jwt过期时间，单位分钟
 jwt-expire-time: 60
 
+#手机端cookie过期时间
+cookie-time: 30
+
+#单点登录域名或ip
+domain-name: 127.0.0.1
+
+#轮询超时时间
+ribbon:
+  ReadTimeout: 600000
+  ConnectTimeout: 600000

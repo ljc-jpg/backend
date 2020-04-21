@@ -11,31 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author fanxb
- * @Description: jwt字符串工具类
+ * @author zhuz
+ * @Description: jwt解密
  * @date 2019/2/28 18:36
  */
 public class JwtUtil {
 
-    /**
-     * @param name    用户名
-     * @param secret  秘钥
-     * @param timeOut 超时时间（单位s）
-     * @return java.lang.String
-     * @Description: 生成一个jwt字符串
-     * @author fanxb
-     * @date 2019/3/4 17:26
-     */
-    public static String encode(String name, String secret, long timeOut) {
-        Algorithm algorithm = Algorithm.HMAC256(secret);
-        String token = JWT.create()
-                //设置过期时间为一个小时
-                .withExpiresAt(new Date(System.currentTimeMillis() + timeOut))
-                //设置负载
-                .withClaim("name", name)
-                .sign(algorithm);
-        return token;
-    }
 
     /**
      * @param secret token

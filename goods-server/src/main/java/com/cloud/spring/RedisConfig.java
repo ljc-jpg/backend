@@ -44,15 +44,6 @@ public class RedisConfig {
         redisTemplate.expire(key, expireTime, TimeUnit.MILLISECONDS);
     }
 
-
-    /**
-     * 设置键值对
-     * @param key key
-     */
-    public static String get(String key) {
-        return redisTemplate.opsForValue().get(key);
-    }
-
     /**
      * 删除key
      *
@@ -61,6 +52,4 @@ public class RedisConfig {
     public static void delete(String key) {
         redisTemplate.delete(key);
     }
-
-
 }

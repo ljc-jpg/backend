@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
 <head>
     <meta charset=utf-8>
     <meta name=viewport content="width=device-width,initial-scale=1">
     <title>vue-moblic</title>
-    <link rel="stylesheet" th:href="@{/index/css/app.8db5938c5bfd8eb060d9e8cf5e0444db.css}">
+    <link rel="icon" href="data:;base64,=">
 </head>
 <body>
-<div id=app></div>
+<div id=app>goods-server首页</div>
+<button id="login" onclick="doLogin()">登录</button>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/util/util.js"></script>
+<script>
+    function doLogin() {
+        location.href = Util.casIndex;
+    }
 
-<script type="text/javascript" th:src="@{/index/js/manifest.2ae2e69a05c33dfc65f8.js}"></script>
-<script type="text/javascript" th:src="@{/index/js/vendor.18cfe9f3bea653b76285.js}"></script>
-<script type="text/javascript" th:src="@{/index/js/app.86e1bcfc11b6a12f082d.js}"></script>
+
+</script>
+
 </body>
 </html>

@@ -1,9 +1,11 @@
 package com.cloud.filters;
 
 
-import com.cloud.utils.User;
+import com.auth0.jwt.interfaces.Claim;
+import com.cloud.spring.RedisConfig;
 import com.cloud.utils.CookieUtils;
-import com.cloud.utils.SessionUtils;
+import com.cloud.utils.JwtUtil;
+import com.cloud.utils.User;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.apache.commons.lang.StringUtils;
@@ -12,11 +14,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * @author zhu zheng
@@ -27,12 +32,15 @@ import java.util.Map;
 public class PreAuthFilter extends ZuulFilter {
     private static final Logger logger = LoggerFactory.getLogger(PreAuthFilter.class);
 
-    public static final String[] excludes = new String[]{"/login", "/static/**", "/auth/logout", "/index/**"};
+    public static final String[] excludes = new String[]{"/login", "/static/**", "/auth/logout"};
 
     public static final Map<String, String[]> map = new HashMap<>();
 
     @Value("${login-url}")
     private String loginUrl;
+
+    @Autowired
+    public StringRedisTemplate redisTemplate;
 
     static {
         map.put("news-web", new String[]{"/news-web/homePage/getThomePageBySchId/**", "/news-web/information/syncInfomation"});
@@ -78,32 +86,46 @@ public class PreAuthFilter extends ZuulFilter {
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        String uri = request.getRequestURI();// 获取请求的参数
-        //去重白名单路径
-        boolean isInterceptor = true;
+        // 获取请求的参数
+        String uri = request.getRequestURI();
+        //去重白名单路径默认拦截
+        boolean isInterceptor = false;
+        //token验证默认拦截
+        boolean isToken = false;
+
+        //判断路径在白名单中
         String[] uris = getExcludesByUri(uri);
-        if (null == uris) {
+        if (uris == null) {
             uris = excludes;
         }
         for (String exclude : uris) {
             if (exclude.contains("/**") && uri.indexOf(StringUtils.substringBetween(exclude, "/", "/**")) >= 0) {
-                isInterceptor = false;
+                isInterceptor = true;
                 break;
             } else if (uri.contains(exclude)) {
-                isInterceptor = false;
+                isInterceptor = true;
                 break;
             }
         }
+        //非白名单验证token
+        if (!isInterceptor) {
+            String token = CookieUtils.getCookie(request, CookieUtils.COOKIE_TOKEN);
+            if (!StringUtils.isEmpty(token)) {
+                String sign = RedisConfig.get(token);
+                if (!StringUtils.isEmpty(sign)) {
+                    Map<String, Claim> map = JwtUtil.decode(token, sign);
+                    logger.debug("map:" + map);
+                    String jwtSign = map.get("id").asString();
+                    if (sign.equals(jwtSign)) {
+                        request.getSession().setAttribute("user",  map.get("user"));
+                        isToken = true;
+                    }
+                }
+            }
+        }
 
-        User user = SessionUtils.getUser(request);
-        String headToken = request.getHeader("token");
-        boolean flag1 = null != user && !"guest".equals(user.getUserId());
-        boolean flag2 = CookieUtils.hasCookies(request, CookieUtils.COOKIE_TOKEN);
-
-//        boolean flag3 = StringUtils.isNotEmpty(headToken) && DESCoderHelper.decrypt(headToken, DESCoderHelper.key).split(",").length == 2;
-
-        boolean flag3 = StringUtils.isNotEmpty(headToken);
-        if (!isInterceptor || ((flag1) || flag2 || (flag3))) {
+        //白名单或者携带正确token不拦截
+        if (isInterceptor || (isToken)) {
             //对该请求进行路由
             ctx.setSendZuulResponse(true);
             ctx.setResponseStatusCode(200);
@@ -111,7 +133,7 @@ public class PreAuthFilter extends ZuulFilter {
             ctx.set("isSuccess", false);
             return null;
         } else {
-            logger.debug("请求被拦截 uri:{}", uri);
+            logger.debug("请求被拦截 uri:" + uri);
             ctx.getResponse().setContentType("application/json;charset=UTF-8");
             try {
                 ctx.getResponse().sendRedirect(loginUrl);

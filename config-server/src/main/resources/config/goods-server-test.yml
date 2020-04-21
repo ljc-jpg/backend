@@ -32,8 +32,10 @@ spring:
     encoding: UTF-8
     mode: LEGACYHTML5
 
-    mvc:
-      static-path-pattern: /static/**
+  mvc:
+    static-path-pattern: /static/**
+    view:
+      prefix: /static/
 
   #redis配置
   redis:

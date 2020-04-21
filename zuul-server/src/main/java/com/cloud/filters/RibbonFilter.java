@@ -42,7 +42,6 @@ public class RibbonFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        logger.debug("serverName: " + ctx.getRequest());
         logger.debug("serverName: " + ctx.getRequest().getServerName());
         HttpServletRequest request = ctx.getRequest();
         return null != request.getServerName() && request.getServerName().contains("pre");

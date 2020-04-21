@@ -3,6 +3,7 @@ package com.cloud.controller;
 import com.cloud.service.LoginService;
 import com.cloud.utils.Result;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 @RestController
 @RequestMapping("/cas")
 public class LoginController {
@@ -22,14 +24,21 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @ApiOperation(value = "登录")
     @PostMapping("/login")
-    public Result login(HttpServletResponse response, HttpServletRequest request, String userName, String pwd) {
+    public Result login(HttpServletRequest request, HttpServletResponse response, String loginName, String pwd) {
         Result result = new Result();
         try {
-            String token = loginService.login(response, request, userName, pwd);
-            result.setData(token);
-            return result;
+            if (StringUtils.isEmpty(loginName)) {
+                result.setMsg("loginName为空");
+                result.setReturnCode(Result.RETURN_CODE_ERR);
+                return result;
+            }
+            if (StringUtils.isEmpty(pwd)) {
+                result.setMsg("pwd为空");
+                result.setReturnCode(Result.RETURN_CODE_ERR);
+                return result;
+            }
+            loginService.login(request, response, loginName, pwd);
         } catch (Exception e) {
             logger.error("login:", e);
             result.setMsg("login:" + e);
