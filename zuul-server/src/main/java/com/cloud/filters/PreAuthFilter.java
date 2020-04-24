@@ -16,9 +16,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +41,9 @@ public class PreAuthFilter extends ZuulFilter {
 
     @Autowired
     public StringRedisTemplate redisTemplate;
+
+    @Value("${domain-name}")
+    private String domainName;
 
     static {
         map.put("news-web", new String[]{"/news-web/homePage/getThomePageBySchId/**", "/news-web/information/syncInfomation"});
@@ -117,9 +120,16 @@ public class PreAuthFilter extends ZuulFilter {
                     logger.debug("map:" + map);
                     String jwtSign = map.get("id").asString();
                     if (sign.equals(jwtSign)) {
-                        request.getSession().setAttribute("user",  map.get("user"));
+                        request.getSession().setAttribute("user", map.get("user"));
                         isToken = true;
                     }
+                } else {
+                    Cookie cookie = new Cookie("token", token);
+                    cookie.setHttpOnly(true);
+                    cookie.setMaxAge(0);
+                    cookie.setDomain(domainName);
+                    cookie.setPath("/");
+                    ctx.getResponse().addCookie(cookie);
                 }
             }
         }

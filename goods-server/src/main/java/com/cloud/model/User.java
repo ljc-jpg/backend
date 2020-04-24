@@ -31,24 +31,24 @@ public class User {
 
     private Integer schId;
 
-    private Integer platformType;
+    private Integer xqhId;
 
-    public User(String userId, String loginName, String fullName, String gender, String userType, String mobile, Integer enabled, Integer isAdmin, String psw, Date createTime, Date updateTime, String email, String headUrl, Integer schId, Integer platformType) {
+    public User(String userId, String gender, String loginName, String mobile, Integer enabled, String fullName, Integer isAdmin, String psw, String userType, Date createTime, Date updateTime, String email,  String headUrl, Integer schId, Integer xqhId) {
         this.userId = userId;
         this.loginName = loginName;
-        this.fullName = fullName;
-        this.gender = gender;
-        this.userType = userType;
         this.mobile = mobile;
         this.enabled = enabled;
+        this.fullName = fullName;
         this.isAdmin = isAdmin;
         this.psw = psw;
+        this.userType = userType;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.email = email;
         this.headUrl = headUrl;
         this.schId = schId;
-        this.platformType = platformType;
+        this.xqhId = xqhId;
+        this.gender = gender;
     }
 
     public User() {
@@ -167,11 +167,11 @@ public class User {
         this.schId = schId;
     }
 
-    public Integer getPlatformType() {
-        return platformType;
+    public Integer getXqhId() {
+        return xqhId;
     }
 
-    public void setPlatformType(Integer platformType) {
-        this.platformType = platformType;
+    public void setXqhId(Integer xqhId) {
+        this.xqhId = xqhId;
     }
 }

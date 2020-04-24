@@ -31,10 +31,10 @@ public class SalaryUserAttr implements Serializable {
     private Integer status;
 
     @Transient
-    private String XM;
+    private String fullName;
 
     @Transient
-    private String LOGINID;
+    private String loginName;
 
     @Transient
     private String salaryName;
@@ -91,18 +91,20 @@ public class SalaryUserAttr implements Serializable {
         this.salaryUserAttrs = salaryUserAttrs;
     }
 
-    public String getXM() {
-        return XM;
-    }
-    public void setXM(String XM) {
-        this.XM = XM;
+    public String getFullName() {
+        return fullName;
     }
 
-    public String getLOGINID() {
-        return LOGINID;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
-    public void setLOGINID(String LOGINID) {
-        this.LOGINID = LOGINID;
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 
     public String getSalaryName() {

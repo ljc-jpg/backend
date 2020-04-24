@@ -71,9 +71,9 @@ public class User implements Serializable {
     private String schId;
 
     @ExcelIgnore
-    private Integer platformType;
+    private Integer xqhId;
 
-    public User(String userId, String gender, String loginName, String mobile, Integer enabled, String fullName, Integer isAdmin, String psw, String userType, Date createTime, Date updateTime, String email,  String headUrl, String schId, Integer platformType) {
+    public User(String userId, String gender, String loginName, String mobile, Integer enabled, String fullName, Integer isAdmin, String psw, String userType, Date createTime, Date updateTime, String email,  String headUrl, String schId, Integer xqhId) {
         this.userId = userId;
         this.loginName = loginName;
         this.mobile = mobile;
@@ -87,7 +87,7 @@ public class User implements Serializable {
         this.email = email;
         this.headUrl = headUrl;
         this.schId = schId;
-        this.platformType = platformType;
+        this.xqhId = xqhId;
         this.gender = gender;
     }
 
@@ -207,11 +207,11 @@ public class User implements Serializable {
         this.schId = schId;
     }
 
-    public Integer getPlatformType() {
-        return platformType;
+    public Integer getXqhId() {
+        return xqhId;
     }
 
-    public void setPlatformType(Integer platformType) {
-        this.platformType = platformType;
+    public void setXqhId(Integer xqhId) {
+        this.xqhId = xqhId;
     }
 }

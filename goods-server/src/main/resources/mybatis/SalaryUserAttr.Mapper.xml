@@ -7,17 +7,17 @@
     </update>
 
     <select id="selectSalaryByMap" resultMap="salaryMap">
-      SELECT DISTINCT a.XM,a.LOGINID , b.project_name,b.money ,c.salary_name,c.type,d.type project_type,c.path,c.approval_time  from
-      (SELECT ID,XM,LOGINID from zxjz0101 where SCHID = #{schId}) a
-      inner JOIN (SELECT user_id,name project_name,money,salary_id from t_salary_user_attr WHERE salary_id = #{salaryId}) b on b.user_id=a.ID
+      SELECT DISTINCT a.full_name,a.login_name,b.project_name,b.money,c.salary_name,c.type,d.type project_type,c.path,c.approval_time  from
+      (SELECT user_id,full_name,login_name from zxjs0101 where sch_id = #{schId}) a
+      inner JOIN (SELECT user_id,name project_name,money,salary_id from t_salary_user_attr WHERE salary_id = #{salaryId}) b on b.user_id=a.user_id
       inner JOIN (SELECT `name` salary_name,type,salary_id ,path,approval_time from t_salary where salary_id = #{salaryId}  ) c on c.salary_id = b.salary_id
       inner JOIN t_salary_person_project d on d.`name` = b.project_name
-      ORDER BY a.XM,project_type,b.project_name
+      ORDER BY a.full_name,project_type,b.project_name
     </select>
     <resultMap id="salaryMap" type="com.cloud.model.SalaryUserAttr">
-        <id property="LOGINID" column="LOGINID"/>
-        <result property="XM" column="XM"/>
-        <result property="LOGINID" column="LOGINID"/>
+        <id property="loginName" column="login_name"/>
+        <result property="fullName" column="full_name"/>
+        <result property="loginName" column="login_name"/>
         <result property="name" column="path"/>
         <result property="salaryName" column="salary_name"/>
         <result property="type" column="type"/>
@@ -31,6 +31,15 @@
     </resultMap>
 
 
+
+
+
+
+
+
+
+
+    <!--一对多演示-->
     <select id="selectSalaryByUserId" resultMap="salaries">
         SELECT salary_id,name,#{userId} user_id ,DATE_FORMAT(provide_time,'%Y年%m月') project_name,destroy,read_time
          from t_salary where salary_id = #{salaryId}
@@ -55,7 +64,5 @@
     <select id="selectLookTime" resultType="com.cloud.model.SalaryPerson">
         SELECT look_status,confim_status,look_time create_time from t_salary_person where salary_id = #{salaryId} and user_id = #{userId}
     </select>
-
-
 
 </mapper>

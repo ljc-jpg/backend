@@ -71,3 +71,6 @@ logging:
     root: info
 
 login-url: "http://127.0.0.1:8762/cas-server/login"
+
+#单点登录域名或ip
+domain-name: 127.0.0.1
