@@ -40,29 +40,29 @@
 
 
     <!--一对多演示-->
-    <select id="selectSalaryByUserId" resultMap="salaries">
-        SELECT salary_id,name,#{userId} user_id ,DATE_FORMAT(provide_time,'%Y年%m月') project_name,destroy,read_time
-         from t_salary where salary_id = #{salaryId}
-    </select>
-    <resultMap id="salaries" type="com.cloud.model.SalaryUserAttr">
-        <id property="userId" column="user_id"/>
-        <result property="salaryId" column="salary_id"/>
-        <result property="name" column="name"/>
-        <result property="projectName" column="project_name"/>
-        <result property="LOGINID" column="destroy"/>
-        <result property="salaryName" column="read_time"/>
-        <collection property="salaryUserAttrs" ofType="com.cloud.model.SalaryUserAttr"
-                    column="{userId=user_id,salaryId=salary_id}" select="selectSalary"/>
-        <collection property="people" ofType="com.cloud.model.SalaryPerson"
-                    column="{userId=user_id,salaryId=salary_id}" select="selectLookTime"/>
-    </resultMap>
-    <select id="selectSalary" resultType="com.cloud.model.SalaryUserAttr">
-        select a.project_name,a.money ,b.type from (SELECT user_id,`name` project_name,money  from t_salary_user_attr WHERE user_id = #{userId} and salary_id = #{salaryId}) a
-        LEFT JOIN (SELECT name,type from t_salary_person_project where salary_id = #{salaryId}) b on b.`name`=a.project_name
-        order by b.type
-    </select>
-    <select id="selectLookTime" resultType="com.cloud.model.SalaryPerson">
-        SELECT look_status,confim_status,look_time create_time from t_salary_person where salary_id = #{salaryId} and user_id = #{userId}
-    </select>
+<!--    <select id="selectSalaryByUserId" resultMap="salaries">-->
+<!--        SELECT salary_id,name,#{userId} user_id ,DATE_FORMAT(provide_time,'%Y年%m月') project_name,destroy,read_time-->
+<!--         from t_salary where salary_id = #{salaryId}-->
+<!--    </select>-->
+<!--    <resultMap id="salaries" type="com.cloud.model.SalaryUserAttr">-->
+<!--        <id property="userId" column="user_id"/>-->
+<!--        <result property="salaryId" column="salary_id"/>-->
+<!--        <result property="name" column="name"/>-->
+<!--        <result property="projectName" column="project_name"/>-->
+<!--        <result property="LOGINID" column="destroy"/>-->
+<!--        <result property="salaryName" column="read_time"/>-->
+<!--        <collection property="salaryUserAttrs" ofType="com.cloud.model.SalaryUserAttr"-->
+<!--                    column="{userId=user_id,salaryId=salary_id}" select="selectSalary"/>-->
+<!--        <collection property="people" ofType="com.cloud.model.SalaryPerson"-->
+<!--                    column="{userId=user_id,salaryId=salary_id}" select="selectLookTime"/>-->
+<!--    </resultMap>-->
+<!--    <select id="selectSalary" resultType="com.cloud.model.SalaryUserAttr">-->
+<!--        select a.project_name,a.money ,b.type from (SELECT user_id,`name` project_name,money  from t_salary_user_attr WHERE user_id = #{userId} and salary_id = #{salaryId}) a-->
+<!--        LEFT JOIN (SELECT name,type from t_salary_person_project where salary_id = #{salaryId}) b on b.`name`=a.project_name-->
+<!--        order by b.type-->
+<!--    </select>-->
+<!--    <select id="selectLookTime" resultType="com.cloud.model.SalaryPerson">-->
+<!--        SELECT look_status,confim_status,look_time create_time from t_salary_person where salary_id = #{salaryId} and user_id = #{userId}-->
+<!--    </select>-->
 
 </mapper>

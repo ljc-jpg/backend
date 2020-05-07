@@ -49,7 +49,7 @@ public class SalaryService {
     private SalaryUserAttrMapper salaryUserAttrMapper;
 
     @Autowired
-    private BaseClientService baseClientService;
+    private CaseClientService caseClientService;
 
     /**
      * @param schId salaryId
@@ -104,7 +104,7 @@ public class SalaryService {
         log.error("***********path*********** : " + path);
         //第一个参数需要上传file   第二个参数 为 @RequestPart("multipartFile")   第三个 文件名称
         MultipartFile multipartFile = getMultipartFile(new File(path), "multipartFile", fileName);
-        UploadResult result = baseClientService.uploadInputStream(multipartFile, fileName);
+        UploadResult result = caseClientService.uploadInputStream(multipartFile, fileName);
         deleteFile(PATH, fileName);
         salaryUserAttrMapper.updatePathById(salaryId, result.getFilePreviewPathFull());
         return result.getFilePreviewPathFull();
@@ -144,8 +144,8 @@ public class SalaryService {
         table.addCell(createCell("实发工资", TEXTFONT));
         //表数据
         for (SalaryUserAttr a : attrList) {
-            table.addCell(createCell(a.getLOGINID(), TEXTFONT));
-            table.addCell(createCell(a.getXM(), TEXTFONT));
+            table.addCell(createCell(a.getLoginName(), TEXTFONT));
+            table.addCell(createCell(a.getFullName(), TEXTFONT));
             List<SalaryUserAttr> attrs = a.getSalaryUserAttrs();
             BigDecimal total = new BigDecimal("0.00");
             BigDecimal addTotal = new BigDecimal("0.00");
@@ -196,7 +196,7 @@ public class SalaryService {
         String path = this.loadSalaryPdf(o, salaryId, schId);
         log.error("***********addressee*************:" + addressee + "***********path*************:" + path);
         String content = "<a href='" + path + "'>点击我查看工资单</a>";
-        baseClientService.sendEmails(addressee, content, subject);
+        caseClientService.sendEmails(addressee, content, subject);
     }
 
 

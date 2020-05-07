@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 @FeignClient(name = "cas-server")
-public interface BaseClientService {
+public interface CaseClientService {
 
     @RequestMapping(method = RequestMethod.POST, value = "/OSS/uploadSingle", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     UploadResult uploadInputStream(@RequestPart("multipartFile") MultipartFile multipartFile, @RequestParam("fileName") String fileName);

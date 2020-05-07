@@ -50,11 +50,6 @@ public class Salary implements Serializable {
     @Transient
     private Integer state;
 
-    @Transient
-    private List<SalaryPersonProject> salaryPersonProject;
-
-    @Transient
-    private List<SalaryPerson> salaryPeople;
 
     @Transient
     private List<Salary> salaries;
@@ -163,21 +158,6 @@ public class Salary implements Serializable {
         this.provideTime = provideTime;
     }
 
-    public List<SalaryPersonProject> getSalaryPersonProject() {
-        return salaryPersonProject;
-    }
-
-    public void setSalaryPersonProject(List<SalaryPersonProject> salaryPersonProject) {
-        this.salaryPersonProject = salaryPersonProject;
-    }
-
-    public List<SalaryPerson> getSalaryPeople() {
-        return salaryPeople;
-    }
-
-    public void setSalaryPeople(List<SalaryPerson> salaryPeople) {
-        this.salaryPeople = salaryPeople;
-    }
 
     public List<Salary> getSalaries() {
         return salaries;

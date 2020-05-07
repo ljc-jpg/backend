@@ -59,16 +59,6 @@ public class SalaryUserAttr implements Serializable {
     @Transient
     private Integer[] personMoney;
 
-    @Transient
-    private SalaryPerson people;
-
-    public SalaryPerson getPeople() {
-        return people;
-    }
-
-    public void setPeople(SalaryPerson people) {
-        this.people = people;
-    }
 
     public Integer[] getPersonMoney() {
         return personMoney;
