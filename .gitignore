@@ -29,6 +29,4 @@ build/
 
 ### VS Code ###
 .vscode/
-/LOG_PATH_IS_UNDEFINED
-/opt
 LOG_PATH_IS_UNDEFINED

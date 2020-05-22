@@ -6,7 +6,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +15,6 @@ import java.util.Map;
  * @date 2019/2/28 18:36
  */
 public class JwtUtil {
-
 
     /**
      * @param secret token

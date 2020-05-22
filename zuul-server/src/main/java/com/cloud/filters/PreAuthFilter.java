@@ -2,10 +2,8 @@ package com.cloud.filters;
 
 
 import com.auth0.jwt.interfaces.Claim;
-import com.cloud.spring.RedisConfig;
 import com.cloud.utils.CookieUtils;
 import com.cloud.utils.JwtUtil;
-import com.cloud.utils.User;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.apache.commons.lang.StringUtils;
@@ -13,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -114,7 +113,7 @@ public class PreAuthFilter extends ZuulFilter {
         if (!isInterceptor) {
             String token = CookieUtils.getCookie(request, CookieUtils.COOKIE_TOKEN);
             if (!StringUtils.isEmpty(token)) {
-                String sign = RedisConfig.get(token);
+                String sign = getKey();
                 if (!StringUtils.isEmpty(sign)) {
                     Map<String, Claim> map = JwtUtil.decode(token, sign);
                     logger.debug("map:" + map);
@@ -191,6 +190,11 @@ public class PreAuthFilter extends ZuulFilter {
         }
         //如果没有经过代理或nginx为配置，则直接通过request获取
         return request.getRemoteAddr();
+    }
+
+    @Cacheable(value = "token",key = "'token' + #id",sync = true)
+    public String getKey() {
+        return null;
     }
 
 }

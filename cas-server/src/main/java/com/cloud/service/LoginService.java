@@ -6,6 +6,7 @@ import com.cloud.utils.CookieUtils;
 import com.cloud.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -33,14 +34,12 @@ public class LoginService {
     @Value("${domain-name}")
     private String domainName;
 
-    public void login(HttpServletRequest request, HttpServletResponse response, String loginName, String pwd) throws Exception {
+    public void login(HttpServletRequest request, HttpServletResponse response, String loginName, String pwd) {
         User user = new User();
         user.setLoginName(loginName);
         user.setPsw(pwd);
         User u = userMapper.selectOne(user);
-        if (null == u || null == u.getUserId()) {
-            throw new Exception("账号或者密码错误");
-        }
+        if (null == u || null == u.getUserId()) throw new RuntimeException("账号或者密码错误");
         //生成密钥   用户信息  随机字符串  时间戳
         String secret = UUID.randomUUID().toString().replaceAll("-", "");
         String token = JwtUtil.encode(u.toString(), secret, expireTime);
@@ -49,6 +48,5 @@ public class LoginService {
         redisTemplate.expire(token, expireTime, TimeUnit.MILLISECONDS);
         CookieUtils.addCookie(request, response, CookieUtils.COOKIE_TOKEN, token, domainName);
     }
-
 
 }
