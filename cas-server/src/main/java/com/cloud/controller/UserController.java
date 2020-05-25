@@ -8,8 +8,6 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.util.List;
 
-@Api(description = "用户处理接口")
+/**
+ * @Author zhuz
+ * @Description  用户管理接口
+ * @Date 14:51 2020/5/25
+ * @Param
+ **/
+@Api(tags = "用户管理接口")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -42,12 +46,10 @@ public class UserController {
         return result;
     }
 
-
     @ApiOperation(value = "导入excel")
     @PostMapping(value = "/insertExcel")
     public Result insertUsers(@RequestParam(value = "multipartFile") MultipartFile multipartFile,
                               @RequestParam(value = "schId") String schId) {
-
         Result result = new Result();
         try {
             if (null == multipartFile) {

@@ -13,7 +13,5 @@ public interface SalaryUserAttrMapper extends CrudMapper<SalaryUserAttr> {
 
     List<SalaryUserAttr> selectSalaryByMap(Map<String, Object> map);
 
-    SalaryUserAttr selectSalaryByUserId(Map<String, Object> searchMap);
-
     void updatePathById(Integer salaryId, String filePreviewPathFull);
 }

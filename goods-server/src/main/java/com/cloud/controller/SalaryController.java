@@ -24,7 +24,7 @@ import static com.cloud.utils.RegExUtil.isEmail;
 
 @RestController
 @RequestMapping(value = "/salaryUserAttr")
-@Api(description = "工资单人员明细接口")
+@Api(value = "工资单人员明细接口")
 public class SalaryController {
 
     private static final Logger log = LoggerFactory.getLogger(SalaryController.class);
@@ -38,16 +38,7 @@ public class SalaryController {
         Result result = new Result();
         OutputStream o = null;
         try {
-            if (null == salaryId) {
-                result.setMsg("salaryId为空");
-                result.setReturnCode(Result.RETURN_CODE_ERR);
-                return result;
-            }
-            if (null == schId) {
-                result.setMsg("schId为空");
-                result.setReturnCode(Result.RETURN_CODE_ERR);
-                return result;
-            }
+            if (isEmpty(salaryId, schId, result)) return result;
             String path = salaryService.loadSalaryPdf(o, salaryId, schId);
             result.setData(path);
             return result;
@@ -74,16 +65,7 @@ public class SalaryController {
     public Result sendSalaryEmail(String addressee, Integer salaryId, Integer schId, String userId) {
         Result result = new Result();
         try {
-            if (null == salaryId) {
-                result.setMsg("salaryId为空");
-                result.setReturnCode(Result.RETURN_CODE_ERR);
-                return result;
-            }
-            if (null == schId) {
-                result.setMsg("schId为空");
-                result.setReturnCode(Result.RETURN_CODE_ERR);
-                return result;
-            }
+            if (isEmpty(salaryId, schId, result)) return result;
             if (StringUtils.isEmpty(addressee) || (!isEmail(addressee))) {
                 result.setMsg("收件人邮箱有问题");
                 result.setReturnCode(Result.RETURN_CODE_ERR);
@@ -96,6 +78,20 @@ public class SalaryController {
             result.setReturnCode(Result.RETURN_CODE_ERR);
         }
         return result;
+    }
+
+    private boolean isEmpty(@PathVariable Integer salaryId, @PathVariable Integer schId, Result result) {
+        if (null == salaryId) {
+            result.setMsg("salaryId为空");
+            result.setReturnCode(Result.RETURN_CODE_ERR);
+            return true;
+        }
+        if (null == schId) {
+            result.setMsg("schId为空");
+            result.setReturnCode(Result.RETURN_CODE_ERR);
+            return true;
+        }
+        return false;
     }
 
 }

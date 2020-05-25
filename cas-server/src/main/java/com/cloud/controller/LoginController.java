@@ -2,7 +2,6 @@ package com.cloud.controller;
 
 import com.cloud.service.LoginService;
 import com.cloud.utils.Result;
-import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+/**
+ * @Author zhuz
+ * @Description  登录管理
+ * @Date 14:52 2020/5/25
+ * @Param
+ **/
 @RestController
 @RequestMapping("/cas")
 public class LoginController {
