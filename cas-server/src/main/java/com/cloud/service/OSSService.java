@@ -1,16 +1,22 @@
 package com.cloud.service;
 
 import com.aliyun.oss.OSSClient;
+import com.cloud.model.EmailContent;
 import com.cloud.utils.UploadResult;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.activation.DataHandler;
+import javax.activation.URLDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -93,12 +99,12 @@ public class OSSService {
     }
 
     /**
-     * @param addressee 收件人邮箱  content邮件内容 subject 邮件主题
-     * @Description:
-     * @author zhu zheng
-     * @date 2020/3/2
-     */
-    public boolean sendEmail(String addressee, String content, String subject) {
+     * @Author zhuz
+     * @Description 添加图片的方式 将整个图片包含到邮件内容中
+     * @Date 9:47 2020/5/26
+     * @Param [addressee（邮件地址）, content（邮件内容）, subject邮件主题）, files（邮件附件文件）, picture（邮件图片）]
+     **/
+    public boolean sendEmail(String addressee, List<EmailContent> list, String subject, String[] files) {
         log.error("收件人邮箱:" + addressee);
         // 创建Properties 类用于记录邮箱的一些属性
         Properties props = new Properties();
@@ -112,7 +118,7 @@ public class OSSService {
         props.put("mail.smtp.user", USER);
         // 此处填写16位STMP口令
         props.put("mail.smtp.password", PASSWORD);
-        // 构建授权信息，发件人邮件用户名、授权码 用于进行SMTP进行身份验证  //vpxpiufkxhcjbfig
+        // 构建授权信息，发件人邮件用户名、授权码 用于进行SMTP进行身份验证
         Authenticator authenticator = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 // 用户名、密码
@@ -127,74 +133,78 @@ public class OSSService {
         // 创建邮件消息
         MimeMessage message = new MimeMessage(mailSession);
         // 设置发件人
-        InternetAddress form = null;
+        InternetAddress from = null;
         try {
-            form = new InternetAddress(props.getProperty("mail.smtp.user"));
+            from = new InternetAddress(props.getProperty("mail.smtp.user"));
         } catch (AddressException e) {
-            log.error("第一步报错:" + e);
-            return false;
+            log.error("设置发件邮箱错误:" + e);
+            throw new RuntimeException("设置发件邮箱错误:" + e);
         }
+        // 创建混合节点
+        MimeMultipart multipart = new MimeMultipart();
 
         try {
-            message.setFrom(form);
+            message.setFrom(from);
             // 设置收件人的邮箱
             InternetAddress to = new InternetAddress(addressee);
             message.setRecipient(Message.RecipientType.TO, to);
             // 设置邮件标题
             message.setSubject(subject);
+            String content = "";
 
+            for (int i = 0; i < list.size(); i++) {
+                try {
+                    EmailContent emailContent = list.get(i);
+                    if ("1".equals(emailContent.getType())) {
+                        content = content + emailContent.getContent();
+                    } else {
+                        //创建图片节点
+                        MimeBodyPart image = new MimeBodyPart();
+                        URLDataSource url = new URLDataSource(new URL(emailContent.getContent()));
+                        DataHandler dataHandler = new DataHandler(url);
+                        //将图片添加至结点
+                        image.setDataHandler(dataHandler);
+                        //为 图片"节点"设置一个唯一编号
+                        image.setContentID("pic" + i);
+                        multipart.addBodyPart(image);
+                        content = content + "<img src='cid:pic" + i + "'/>";
+                    }
+                } catch (Exception e) {
+                    log.error("设置邮件图片错误:" + e);
+                    throw new RuntimeException("设置邮件图片错误:" + e);
+                }
+            }
 
-            //创建图片节点  添加图片的方式是将 图片唯一编号包含到邮件内容中
-//            MimeBodyPart image = new MimeBodyPart();
-//            //读取本地文件
-//            DataHandler dataHandler = new DataHandler(new FileDataSource("src/lib/love.jpg"));
-//            //将图片添加至结点
-//            image.setDataHandler(dataHandler);
-//            //为 图片"节点"设置一个唯一编号
-//            image.setContentID("pic");
-            // 创建文本"节点"
+            // 创建文本节点
             MimeBodyPart text = new MimeBodyPart();
-            // 这里添加图片的方式是将整个图片包含到邮件内容中
             text.setContent(content, "text/html;charset=UTF-8");
-//            text.setContent(
-//                    "<a href='" + content + "'>点击我查看工资单</a>" //+  "<img src='cid:pic'/>"
-//                    , "text/html;charset=UTF-8"
-//            );
-
-            // 创建附件结点1
-//            MimeBodyPart attachment  = new MimeBodyPart();
-//            // 读取本地文件
-//            DataHandler dataHandler1 = new DataHandler(new FileDataSource("src/com/funyoo/mail/test/MailTest.java"));
-//            // 将文件添加至结点
-//            attachment.setDataHandler(dataHandler1);
-//            // 设置附件的文件名（需要编码）
-//            attachment.setFileName(MimeUtility.encodeText(dataHandler1.getName()));
-
-            // 创建附件结点2
-//            MimeBodyPart jar  = new MimeBodyPart();
-//            // 读取本地文件
-//            DataHandler dataHandler2 = new DataHandler(new FileDataSource("src/lib/mail-1.4.7.jar"));
-//            // 将文件添加至结点
-//            jar.setDataHandler(dataHandler2);
-//            // 设置附件的文件名（需要编码）
-//            jar.setFileName(MimeUtility.encodeText(dataHandler2.getName()));
-
-            // 创建混合节点  将图片节点 文件结点 附件结点 加入
-            MimeMultipart multipart = new MimeMultipart();
-//            multipart.addBodyPart(image);
             multipart.addBodyPart(text);
-//            multipart.addBodyPart(attachment);
-//            multipart.addBodyPart(jar);
 
-            // 将混合节点加入邮件中
+            // 循环创建附件节点
+            if (!ArrayUtils.isEmpty(files)) {
+                for (int j = 0; j < files.length; j++) {
+                    try {
+                        MimeBodyPart attachment = new MimeBodyPart();
+                        URLDataSource url = new URLDataSource(new URL(files[j]));
+                        DataHandler dataHandler = new DataHandler(url);
+                        attachment.setDataHandler(dataHandler);
+                        // 设置附件的文件名（需要编码）
+                        attachment.setFileName(MimeUtility.encodeText(dataHandler.getName()));
+                        multipart.addBodyPart(attachment);
+                    } catch (Exception e) {
+                        log.error("设置附件文件名错误:" + e);
+                        throw new RuntimeException("设置附件文件名错误:" + e);
+                    }
+                }
+            }
+
+            //混合节点存入邮件消息
             message.setContent(multipart);
-            // 发送邮件
             Transport.send(message);
         } catch (MessagingException e) {
-            log.error("第二步报错:" + e);
-            return false;
+            log.error("发送邮件报错:" + e);
+            throw new RuntimeException("发送邮件报错:" + e);
         }
         return true;
     }
-
 }
