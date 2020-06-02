@@ -1,6 +1,7 @@
 package com.cloud.service;
 
-import com.cloud.dao.SalaryUserAttrMapper;
+import com.cloud.dao.SalaryMapper;
+import com.cloud.model.Salary;
 import com.cloud.model.SalaryUserAttr;
 import com.cloud.utils.UploadResult;
 import com.itextpdf.text.Document;
@@ -11,12 +12,12 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,10 +46,13 @@ public class SalaryService {
 
     private static final Logger log = LoggerFactory.getLogger(SalaryService.class);
 
-    @Autowired
-    private SalaryUserAttrMapper salaryUserAttrMapper;
+    @Resource
+    private SalaryMapper salaryMapper;
 
-    @Autowired
+    @Resource
+    private SalaryUserAttrService salaryUserAttrService;
+
+    @Resource
     private CaseClientService caseClientService;
 
     /**
@@ -58,10 +62,10 @@ public class SalaryService {
      * @date 2020/3/24
      */
     public String loadSalaryPdf(OutputStream o, Integer salaryId, Integer schId) throws Exception {
-        Map<String, Object> searchMap = new HashMap<>();
+        Map<String, Integer> searchMap = new HashMap<>();
         searchMap.put("salaryId", salaryId);
         searchMap.put("schId", schId);
-        List<SalaryUserAttr> attrList = salaryUserAttrMapper.selectSalaryByMap(searchMap);
+        List<SalaryUserAttr> attrList = salaryUserAttrService.selectSalaryByMap(searchMap);
         if (CollectionUtils.isEmpty(attrList)) {
             return null;
         }
@@ -106,7 +110,7 @@ public class SalaryService {
         MultipartFile multipartFile = getMultipartFile(new File(path), "multipartFile", fileName);
         UploadResult result = caseClientService.uploadInputStream(multipartFile, fileName);
         deleteFile(PATH, fileName);
-        salaryUserAttrMapper.updatePathById(salaryId, result.getFilePreviewPathFull());
+        salaryMapper.updatePathById(salaryId, result.getFilePreviewPathFull());
         return result.getFilePreviewPathFull();
     }
 
@@ -178,12 +182,12 @@ public class SalaryService {
      * @author zhu zheng
      * @date 2020/3/24
      */
-    public void sendSalaryEmail(String addressee, Integer salaryId, Integer schId, String userId) throws Exception {
-        Map<String, Object> searchMap = new HashMap<>();
+    public void sendSalaryEmail(String addressee, Integer salaryId, Integer schId) throws Exception {
+        Map<String, Integer> searchMap = new HashMap<>();
         searchMap.put("salaryId", salaryId);
         searchMap.put("schId", schId);
         log.error("searchMap:", searchMap);
-        List<SalaryUserAttr> attrList = salaryUserAttrMapper.selectSalaryByMap(searchMap);
+        List<SalaryUserAttr> attrList = salaryUserAttrService.selectSalaryByMap(searchMap);
         SalaryUserAttr userAttr = attrList.get(0);
         Date approvalTime = userAttr.getCreateTime();
         log.error("approvalTime:", approvalTime);
@@ -199,5 +203,17 @@ public class SalaryService {
         caseClientService.sendEmails(addressee, content, subject);
     }
 
+    /**
+     * @Author zhuz
+     * @Date 10:59 2020/6/2
+     * @Param [salary]
+     **/
+    public List<Salary> selectBySalaryId(Salary salary) {
+        Map<String, Object> searchMap = new HashMap<>();
+        searchMap.put("salaryId", salary.getSalaryId());
+        searchMap.put("schId", salary.getSchId());
+        log.error("searchMap:", searchMap);
+        return salaryMapper.selectSalaryByMap(searchMap);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.cloud.controller;
 
+import com.cloud.model.Salary;
 import com.cloud.service.SalaryService;
 import com.cloud.utils.Result;
 import io.swagger.annotations.Api;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import static com.cloud.utils.RegExUtil.isEmail;
 
@@ -62,7 +64,7 @@ public class SalaryController {
 
     @ApiOperation(value = "发指定老师的邮件")
     @GetMapping("/sendSalaryEmail")
-    public Result sendSalaryEmail(String addressee, Integer salaryId, Integer schId, String userId) {
+    public Result sendSalaryEmail(String addressee, Integer salaryId, Integer schId) {
         Result result = new Result();
         try {
             if (isEmpty(salaryId, schId, result)) return result;
@@ -71,7 +73,7 @@ public class SalaryController {
                 result.setReturnCode(Result.RETURN_CODE_ERR);
                 return result;
             }
-            salaryService.sendSalaryEmail(addressee, salaryId, schId, userId);
+            salaryService.sendSalaryEmail(addressee, salaryId, schId);
         } catch (Exception e) {
             log.error("updateConfirm", e);
             result.setMsg("updateConfirm" + e);
@@ -80,7 +82,22 @@ public class SalaryController {
         return result;
     }
 
-    private boolean isEmpty(@PathVariable Integer salaryId, @PathVariable Integer schId, Result result) {
+    @GetMapping("/sendSalary")
+    public Result sendSalary(Salary salary) {
+        Result result = new Result();
+        try {
+            List<Salary> salaries = salaryService.selectBySalaryId(salary);
+            result.setData(salaries);
+        } catch (Exception e) {
+            log.error("sendSalary", e);
+            result.setMsg("sendSalary" + e);
+            result.setReturnCode(Result.RETURN_CODE_ERR);
+        }
+        return result;
+    }
+
+
+    private boolean isEmpty(Integer salaryId, Integer schId, Result result) {
         if (null == salaryId) {
             result.setMsg("salaryId为空");
             result.setReturnCode(Result.RETURN_CODE_ERR);

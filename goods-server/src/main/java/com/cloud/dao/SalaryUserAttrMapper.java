@@ -11,7 +11,6 @@ import java.util.Map;
 @Repository
 public interface SalaryUserAttrMapper extends CrudMapper<SalaryUserAttr> {
 
-    List<SalaryUserAttr> selectSalaryByMap(Map<String, Object> map);
+    List<SalaryUserAttr> selectSalaryByMap(Map<String, Integer> map);
 
-    void updatePathById(Integer salaryId, String filePreviewPathFull);
 }
