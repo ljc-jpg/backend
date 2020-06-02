@@ -63,7 +63,7 @@ public class OSSController {
             @ApiImplicitParam(name = "addressee", value = "收件邮件", paramType = "query"),
             @ApiImplicitParam(name = "content", value = "邮件内容[{\"content\":\"<div>2222<div>\",\"type\":1},{\"content\":\"https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3252521864,872614242&fm=26&gp=0.jpg\",\"type\":2},{\"content\":\"<div>333<div>\",\"type\":1}]", paramType = "query"),
             @ApiImplicitParam(name = "subject", value = "邮件主题", paramType = "query"),
-            @ApiImplicitParam(name = "files", value = "邮件附件http://www.bestudy360.com/CSP/res//mobilecompus/file9e29ae7c-51a7-4a7b-b36b-4ce13a92d0ce.pdf,http://www.bestudy360.com/CSP/res//mobilecompus/file4a39efee-b02e-4f8a-b116-d11ce3b71a38.pdf", paramType = "query")
+            @ApiImplicitParam(name = "files", value = "邮件附件http://12.pdf,http://13.pdf", paramType = "query")
 
     })
     public Result sendEmail(String addressee, String content, String subject, String[] files) {
