@@ -1,6 +1,5 @@
 package com.cloud.controller;
 
-import com.cloud.model.Salary;
 import com.cloud.service.SalaryService;
 import com.cloud.utils.Result;
 import io.swagger.annotations.Api;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
 import static com.cloud.utils.RegExUtil.isEmail;
 
@@ -81,21 +79,6 @@ public class SalaryController {
         }
         return result;
     }
-
-    @GetMapping("/sendSalary")
-    public Result sendSalary(Salary salary) {
-        Result result = new Result();
-        try {
-            List<Salary> salaries = salaryService.selectBySalaryId(salary);
-            result.setData(salaries);
-        } catch (Exception e) {
-            log.error("sendSalary", e);
-            result.setMsg("sendSalary" + e);
-            result.setReturnCode(Result.RETURN_CODE_ERR);
-        }
-        return result;
-    }
-
 
     private boolean isEmpty(Integer salaryId, Integer schId, Result result) {
         if (null == salaryId) {

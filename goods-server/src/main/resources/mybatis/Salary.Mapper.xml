@@ -6,8 +6,4 @@
         update t_salary set path=#{path} where salary_id =#{salaryId}
     </update>
 
-    <select id="selectSalaryByMap" resultType="com.cloud.model.Salary">
-      SELECT * from t_salary
-    </select>
-
 </mapper>

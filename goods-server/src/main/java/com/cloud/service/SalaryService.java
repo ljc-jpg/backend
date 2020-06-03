@@ -1,7 +1,6 @@
 package com.cloud.service;
 
 import com.cloud.dao.SalaryMapper;
-import com.cloud.model.Salary;
 import com.cloud.model.SalaryUserAttr;
 import com.cloud.utils.UploadResult;
 import com.itextpdf.text.Document;
@@ -175,7 +174,6 @@ public class SalaryService {
         return out;
     }
 
-
     /**
      * @param addressee 收件人邮箱  salaryId指定工资单   schId
      * @Description:
@@ -203,17 +201,5 @@ public class SalaryService {
         caseClientService.sendEmails(addressee, content, subject);
     }
 
-    /**
-     * @Author zhuz
-     * @Date 10:59 2020/6/2
-     * @Param [salary]
-     **/
-    public List<Salary> selectBySalaryId(Salary salary) {
-        Map<String, Object> searchMap = new HashMap<>();
-        searchMap.put("salaryId", salary.getSalaryId());
-        searchMap.put("schId", salary.getSchId());
-        log.error("searchMap:", searchMap);
-        return salaryMapper.selectSalaryByMap(searchMap);
-    }
 
 }
