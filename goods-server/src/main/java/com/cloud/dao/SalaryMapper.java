@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SalaryMapper extends CrudMapper<Salary> {
 
-    void updatePathById(Integer salaryId, String filePreviewPathFull);
+    void updatePathById(Integer salaryId, String path);
 
 }

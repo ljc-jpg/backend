@@ -32,6 +32,8 @@ public class SalaryUserAttr implements Serializable {
 
     private Integer status;
 
+    private Integer projectType;
+
     @Transient
     private String fullName;
 
@@ -48,9 +50,6 @@ public class SalaryUserAttr implements Serializable {
 
     @Transient
     private String projectName;
-
-    @Transient
-    private Integer projectType;
 
     @Transient
     private List<SalaryUserAttr> salaryUserAttrs;

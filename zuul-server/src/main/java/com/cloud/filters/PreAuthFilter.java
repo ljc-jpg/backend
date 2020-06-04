@@ -113,7 +113,7 @@ public class PreAuthFilter extends ZuulFilter {
         if (!isInterceptor) {
             String token = CookieUtils.getCookie(request, CookieUtils.COOKIE_TOKEN);
             if (!StringUtils.isEmpty(token)) {
-                String sign = getKey();
+                String sign = redisTemplate.opsForValue().get(token);
                 if (!StringUtils.isEmpty(sign)) {
                     Map<String, Claim> map = JwtUtil.decode(token, sign);
                     logger.debug("map:" + map);
@@ -192,9 +192,5 @@ public class PreAuthFilter extends ZuulFilter {
         return request.getRemoteAddr();
     }
 
-    @Cacheable(value = "token",key = "'token' + #id",sync = true)
-    public String getKey() {
-        return null;
-    }
 
 }

@@ -2,17 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cloud.dao.SalaryUserAttrMapper">
 
-    <update id="updatePathById">
-        update t_salary set path=#{path} where salary_id =#{salaryId}
-    </update>
-
     <select id="selectSalaryByMap" resultMap="salaryMap">
-      SELECT DISTINCT a.full_name,a.login_name,b.project_name,b.money,c.salary_name,c.type,d.type project_type,c.path,c.approval_time  from
+      SELECT DISTINCT a.full_name,a.login_name,b.project_name,b.money,c.salary_name,c.type, project_type,c.path,c.approval_time  from
       (SELECT user_id,full_name,login_name from zxjs0101 where sch_id = #{schId}) a
-      inner JOIN (SELECT user_id,name project_name,money,salary_id from t_salary_user_attr WHERE salary_id = #{salaryId}) b on b.user_id=a.user_id
+      inner JOIN (SELECT user_id,name project_name,money,salary_id,project_type from t_salary_user_attr WHERE salary_id = #{salaryId}) b on b.user_id=a.user_id
       inner JOIN (SELECT `name` salary_name,type,salary_id ,path,approval_time from t_salary where salary_id = #{salaryId}  ) c on c.salary_id = b.salary_id
-      inner JOIN t_salary_person_project d on d.`name` = b.project_name
-      ORDER BY a.full_name,project_type,b.project_name
+      ORDER BY a.full_name,b.project_name
     </select>
     <resultMap id="salaryMap" type="com.cloud.model.SalaryUserAttr">
         <id property="loginName" column="login_name"/>

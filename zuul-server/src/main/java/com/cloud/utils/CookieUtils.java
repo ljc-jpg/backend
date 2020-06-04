@@ -18,18 +18,18 @@ public class CookieUtils {
     public static final String COOKIE_TOKEN = "token";
 
     public static final String getCookie(HttpServletRequest servletRequest, String nameCookie) {
-        String result = null;
+        String token = null;
         Cookie[] cookies = servletRequest.getCookies();
         logger.debug("cookies", cookies);
         if (null != cookies) {
             for (Cookie cookie : cookies) {
                 if (nameCookie.equals(cookie.getName())) {
-                    result = cookie.getValue();
+                    token = cookie.getValue();
                     break;
                 }
             }
         }
-        return result;
+        return token;
     }
 
 

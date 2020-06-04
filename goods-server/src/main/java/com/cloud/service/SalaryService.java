@@ -1,7 +1,9 @@
 package com.cloud.service;
 
+import com.alibaba.fastjson.JSON;
 import com.cloud.dao.SalaryMapper;
 import com.cloud.model.SalaryUserAttr;
+import com.cloud.utils.Result;
 import com.cloud.utils.UploadResult;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -60,7 +62,7 @@ public class SalaryService {
      * @author zhu zheng
      * @date 2020/3/24
      */
-    public String loadSalaryPdf(OutputStream o, Integer salaryId, Integer schId) throws Exception {
+    public String loadSalaryPdf(Integer salaryId, Integer schId) {
         Map<String, Integer> searchMap = new HashMap<>();
         searchMap.put("salaryId", salaryId);
         searchMap.put("schId", schId);
@@ -79,37 +81,55 @@ public class SalaryService {
         //所有项目
         List<SalaryUserAttr> projects = attrList.get(0).getSalaryUserAttrs();
 
-        float[] tableWidth = new float[2 + projects.size() + 1];
+        float[] tableWidth = new float[1 + projects.size() + 1];
         for (int i = 0; i < 2; i++) {
             tableWidth[i] = 90f;
         }
-
         for (int i = 0; i < projects.size(); i++) {
-            tableWidth[2 + i] = 40f;
+            tableWidth[1 + i] = 40f;
             if (1 == projects.get(i).getProjectType()) {
                 y.add(projects.get(i));
             } else {
                 k.add(projects.get(i));
             }
         }
-        tableWidth[2 + projects.size()] = 40f;
+        tableWidth[1 + projects.size()] = 40f;
         if (!StringUtils.isEmpty(attrList.get(0).getName())) {
             return attrList.get(0).getName();
         }
         //存本地的pdf
         String fileName = attrList.get(0).getSalaryName() + ".pdf";
         String path = PATH + fileName;
-        o = new FileOutputStream(path);
-        Document pdf = new Document();
-        PdfWriter.getInstance(pdf, o);
-        pdf.open();
-        getOutputStream(o, attrList, y, k, tableWidth, pdf);
-        log.error("***********path*********** : " + path);
+        log.info("===path===" + path);
+
+        OutputStream o = null;
+        try {
+            o = new FileOutputStream(path);
+            Document pdf = new Document();
+            PdfWriter.getInstance(pdf, o);
+            pdf.open();
+            getOutputStream(o, attrList, y, k, tableWidth, pdf);
+        } catch (Exception e) {
+            log.error("loadSalaryPdf生成pdf文件异常:" + e);
+            throw new RuntimeException("loadSalaryPdf生成pdf文件异常:" + e);
+        } finally {
+            if (null != o) {
+                try {
+                    o.close();
+                } catch (IOException e) {
+                    log.error("loadSalaryPdf", e);
+                }
+            }
+        }
+
+
         //第一个参数需要上传file   第二个参数 为 @RequestPart("multipartFile")   第三个 文件名称
         MultipartFile multipartFile = getMultipartFile(new File(path), "multipartFile", fileName);
         UploadResult result = caseClientService.uploadInputStream(multipartFile, fileName);
+
         deleteFile(PATH, fileName);
         salaryMapper.updatePathById(salaryId, result.getFilePreviewPathFull());
+
         return result.getFilePreviewPathFull();
     }
 
@@ -180,7 +200,7 @@ public class SalaryService {
      * @author zhu zheng
      * @date 2020/3/24
      */
-    public void sendSalaryEmail(String addressee, Integer salaryId, Integer schId) throws Exception {
+    public Result sendSalaryEmail(String addressee, Integer salaryId, Integer schId) throws Exception {
         Map<String, Integer> searchMap = new HashMap<>();
         searchMap.put("salaryId", salaryId);
         searchMap.put("schId", schId);
@@ -194,11 +214,18 @@ public class SalaryService {
         //邮件主题
         String subject = localDateTime.format(DateTimeFormatter.ofPattern("yyyy年MM月dd")) + " " + userAttr.getSalaryName() + " 工资单";
         //工资单路径
-        OutputStream o = null;
-        String path = this.loadSalaryPdf(o, salaryId, schId);
+        String path = this.loadSalaryPdf(salaryId, schId);
+
         log.error("***********addressee*************:" + addressee + "***********path*************:" + path);
+        //邮件主题内容
         String content = "<a href='" + path + "'>点击我查看工资单</a>";
-        caseClientService.sendEmails(addressee, content, subject);
+        List<Map<String, String>> param = new ArrayList<>();
+        Map<String, String> map = new HashMap<>();
+        map.put("content", content);
+        map.put("type", "1");
+        param.add(map);
+        Result result = caseClientService.sendEmails(addressee, JSON.toJSONString(param), subject);
+        return result;
     }
 
 
