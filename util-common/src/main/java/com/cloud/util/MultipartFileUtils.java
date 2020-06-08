@@ -1,11 +1,9 @@
-package com.cloud.utils;
+package com.cloud.util;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
@@ -15,13 +13,10 @@ import java.io.OutputStream;
 
 public class MultipartFileUtils {
 
-    private static final Logger log = LoggerFactory.getLogger(MultipartFileUtils.class);
-
     public static CommonsMultipartFile getMultipartFile(File file, String fileType, String fileName) {
         if ((null == file) || (null == fileType) || (StringUtils.isEmpty(fileName))) {
             return null;
         }
-        log.error("***fileName***:" + fileName);
         FileItemFactory factory = new DiskFileItemFactory(16, null);
         FileItem item = factory.createItem(fileType, "multipart/form-data", true, fileName);
         int bytesRead = 0;
@@ -35,7 +30,6 @@ public class MultipartFileUtils {
             os.close();
             fis.close();
         } catch (IOException e) {
-            log.error("***getMultipartFile***:" + e);
         }
         return new CommonsMultipartFile(item);
     }
@@ -48,7 +42,6 @@ public class MultipartFileUtils {
      * @return
      */
     public static boolean deleteFile(String path, String fileName) {
-        log.error("***********path*******:" + path, "****fileName****:" + fileName);
         if (StringUtils.isEmpty(path)) {
             return false;
         }

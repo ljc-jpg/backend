@@ -3,8 +3,8 @@ package com.cloud.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cloud.model.EmailContent;
 import com.cloud.service.OSSService;
-import com.cloud.utils.Result;
-import com.cloud.utils.UploadResult;
+import com.cloud.util.Result;
+import com.cloud.util.UploadResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static com.cloud.utils.RegExUtil.isEmail;
+import static com.cloud.util.RegExUtil.isEmail;
 
 /**
  * @Author zhuz

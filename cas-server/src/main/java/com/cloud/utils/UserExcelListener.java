@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.cloud.utils.PinyUtil.ToPinyin;
+import static com.cloud.util.PinyUtil.ToPinyin;
 
 public class UserExcelListener extends AnalysisEventListener<User> {
 

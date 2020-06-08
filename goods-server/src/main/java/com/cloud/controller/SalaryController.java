@@ -1,7 +1,7 @@
 package com.cloud.controller;
 
 import com.cloud.service.SalaryService;
-import com.cloud.utils.Result;
+import com.cloud.util.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
-import static com.cloud.utils.RegExUtil.isEmail;
+import static com.cloud.util.RegExUtil.isEmail;
 
 
 /**
@@ -45,8 +45,8 @@ public class SalaryController {
             String path = salaryService.loadSalaryPdf(salaryId, schId);
             result.setData(path);
         } catch (Exception e) {
-            result.setMsg("salaryPdf" + e);
             log.error("salaryPdf", e);
+            result.setMsg("salaryPdf" + e);
             result.setReturnCode(Result.RETURN_CODE_ERR);
         }
         return result;
@@ -68,7 +68,7 @@ public class SalaryController {
                 result.setReturnCode(Result.RETURN_CODE_ERR);
                 return result;
             }
-            result = salaryService.sendSalaryEmail(addressee, salaryId, schId);
+            salaryService.sendSalaryEmail(addressee, salaryId, schId);
         } catch (Exception e) {
             log.error("salaryEmail", e);
             result.setMsg("salaryEmail" + e);

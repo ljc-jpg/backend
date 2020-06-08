@@ -1,8 +1,8 @@
 package com.cloud.service;
 
 
-import com.cloud.utils.Result;
-import com.cloud.utils.UploadResult;
+import com.cloud.util.Result;
+import com.cloud.util.UploadResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;

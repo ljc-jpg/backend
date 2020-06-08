@@ -2,8 +2,8 @@ package com.cloud.filters;
 
 
 import com.auth0.jwt.interfaces.Claim;
-import com.cloud.utils.CookieUtils;
-import com.cloud.utils.JwtUtil;
+import com.cloud.util.CookieUtils;
+import com.cloud.util.JwtUtil;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.apache.commons.lang.StringUtils;
@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.data.redis.core.StringRedisTemplate;
 

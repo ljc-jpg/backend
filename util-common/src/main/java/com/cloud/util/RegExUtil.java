@@ -1,4 +1,4 @@
-package com.cloud.utils;
+package com.cloud.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

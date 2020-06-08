@@ -1,4 +1,4 @@
-package com.cloud.utils;
+package com.cloud.util;
 
 import org.apache.commons.lang3.StringUtils;
 

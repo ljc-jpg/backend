@@ -2,8 +2,8 @@ package com.cloud.service;
 
 import com.cloud.dao.UserMapper;
 import com.cloud.model.User;
-import com.cloud.utils.CookieUtils;
-import com.cloud.utils.JwtUtil;
+import com.cloud.util.CookieUtils;
+import com.cloud.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;

@@ -2,7 +2,7 @@ package com.cloud.controller;
 
 import com.cloud.model.User;
 import com.cloud.service.UserService;
-import com.cloud.utils.Result;
+import com.cloud.util.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;

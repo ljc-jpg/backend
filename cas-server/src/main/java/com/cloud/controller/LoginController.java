@@ -1,7 +1,7 @@
 package com.cloud.controller;
 
 import com.cloud.service.LoginService;
-import com.cloud.utils.Result;
+import com.cloud.util.Result;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -18,6 +18,7 @@
         <module>zuul-server</module>
         <module>goods-server</module>
         <module>cas-server</module>
+        <module>util-common</module>
     </modules>
 
 

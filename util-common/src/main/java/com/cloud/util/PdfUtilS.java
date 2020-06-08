@@ -1,4 +1,4 @@
-package com.cloud.utils;
+package com.cloud.util;
 
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;

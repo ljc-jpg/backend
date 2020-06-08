@@ -3,8 +3,7 @@ package com.cloud.service;
 import com.alibaba.fastjson.JSON;
 import com.cloud.dao.SalaryMapper;
 import com.cloud.model.SalaryUserAttr;
-import com.cloud.utils.Result;
-import com.cloud.utils.UploadResult;
+import com.cloud.util.UploadResult;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -19,10 +18,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -30,9 +26,9 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static com.cloud.utils.MultipartFileUtils.deleteFile;
-import static com.cloud.utils.MultipartFileUtils.getMultipartFile;
-import static com.cloud.utils.PdfUtilS.*;
+import static com.cloud.util.MultipartFileUtils.deleteFile;
+import static com.cloud.util.MultipartFileUtils.getMultipartFile;
+import static com.cloud.util.PdfUtilS.*;
 
 /**
  * @Description:
@@ -80,48 +76,33 @@ public class SalaryService {
         List<SalaryUserAttr> k = new ArrayList<>();
         //所有项目
         List<SalaryUserAttr> projects = attrList.get(0).getSalaryUserAttrs();
-
-        float[] tableWidth = new float[1 + projects.size() + 1];
+        float[] tableWidth = new float[4 + projects.size() + 1];
         for (int i = 0; i < 2; i++) {
-            tableWidth[i] = 90f;
+            tableWidth[i] = 60f;
         }
         for (int i = 0; i < projects.size(); i++) {
-            tableWidth[1 + i] = 40f;
+            tableWidth[2 + i] = 40f;
             if (1 == projects.get(i).getProjectType()) {
                 y.add(projects.get(i));
             } else {
                 k.add(projects.get(i));
             }
         }
-        tableWidth[1 + projects.size()] = 40f;
-        if (!StringUtils.isEmpty(attrList.get(0).getName())) {
-            return attrList.get(0).getName();
+        for (int i = 0; i < 3; i++) {
+            tableWidth[2 + i + projects.size()] = 40f;
         }
         //存本地的pdf
         String fileName = attrList.get(0).getSalaryName() + ".pdf";
         String path = PATH + fileName;
-        log.info("===path===" + path);
-
-        OutputStream o = null;
-        try {
-            o = new FileOutputStream(path);
+        try (OutputStream o = new FileOutputStream(path)) {
             Document pdf = new Document();
             PdfWriter.getInstance(pdf, o);
             pdf.open();
             getOutputStream(o, attrList, y, k, tableWidth, pdf);
         } catch (Exception e) {
-            log.error("loadSalaryPdf生成pdf文件异常:" + e);
+            log.error("loadSalaryPdf生成pdf文件异常:", e);
             throw new RuntimeException("loadSalaryPdf生成pdf文件异常:" + e);
-        } finally {
-            if (null != o) {
-                try {
-                    o.close();
-                } catch (IOException e) {
-                    log.error("loadSalaryPdf", e);
-                }
-            }
         }
-
 
         //第一个参数需要上传file   第二个参数 为 @RequestPart("multipartFile")   第三个 文件名称
         MultipartFile multipartFile = getMultipartFile(new File(path), "multipartFile", fileName);
@@ -200,23 +181,24 @@ public class SalaryService {
      * @author zhu zheng
      * @date 2020/3/24
      */
-    public Result sendSalaryEmail(String addressee, Integer salaryId, Integer schId) throws Exception {
+    public void sendSalaryEmail(String addressee, Integer salaryId, Integer schId) {
         Map<String, Integer> searchMap = new HashMap<>();
         searchMap.put("salaryId", salaryId);
         searchMap.put("schId", schId);
-        log.error("searchMap:", searchMap);
+        log.info("searchMap:" + searchMap);
+
         List<SalaryUserAttr> attrList = salaryUserAttrService.selectSalaryByMap(searchMap);
         SalaryUserAttr userAttr = attrList.get(0);
         Date approvalTime = userAttr.getCreateTime();
-        log.error("approvalTime:", approvalTime);
+
+        log.info("approvalTime:", approvalTime);
         //Java8中的LocalDateTime  设置LocalDateTime时间值 参数long
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(approvalTime.getTime()), ZoneId.systemDefault());
         //邮件主题
         String subject = localDateTime.format(DateTimeFormatter.ofPattern("yyyy年MM月dd")) + " " + userAttr.getSalaryName() + " 工资单";
         //工资单路径
         String path = this.loadSalaryPdf(salaryId, schId);
-
-        log.error("***********addressee*************:" + addressee + "***********path*************:" + path);
+        log.info("***********addressee*************:" + addressee + "***********path*************:" + path);
         //邮件主题内容
         String content = "<a href='" + path + "'>点击我查看工资单</a>";
         List<Map<String, String>> param = new ArrayList<>();
@@ -224,9 +206,7 @@ public class SalaryService {
         map.put("content", content);
         map.put("type", "1");
         param.add(map);
-        Result result = caseClientService.sendEmails(addressee, JSON.toJSONString(param), subject);
-        return result;
+        caseClientService.sendEmails(addressee, JSON.toJSONString(param), subject);
     }
-
 
 }

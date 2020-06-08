@@ -2,7 +2,7 @@ package com.cloud.service;
 
 import com.aliyun.oss.OSSClient;
 import com.cloud.model.EmailContent;
-import com.cloud.utils.UploadResult;
+import com.cloud.util.UploadResult;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
@@ -89,7 +89,6 @@ public class OSSService {
             uploadResult.setFilePreviewPathFull(ALIYUN_OSS_ENDPOINT_CNAME + "/" + ALIYUN_OSS_DIR_CONSOLE_ROOT + relative + fileSavedName);
             uploadResult.setReturnCode(UploadResult.RETURN_CODE_SUCC);
             log.debug(originalFileName + "   " + ALIYUN_OSS_ENDPOINT_CNAME + "/" + ALIYUN_OSS_DIR_CONSOLE_ROOT + relative + fileSavedName);
-            return uploadResult;
         } catch (Exception oe) {
             log.error("Error Message," + oe);
         } finally {

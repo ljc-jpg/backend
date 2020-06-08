@@ -70,9 +70,9 @@ aliyun:
   accessKeyId: 1
   accessKeySecret: 2
   endpoint: 3
-  cname: 4
+  cname: https://www.baidu.com
   bucketName: 5
-  root: 6
+  root: /sdn
 
 eureka:
   instance:

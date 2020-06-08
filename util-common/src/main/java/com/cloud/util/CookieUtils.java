@@ -1,4 +1,4 @@
-package com.cloud.utils;
+package com.cloud.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,4 +71,18 @@ public class CookieUtils {
         response.addCookie(cookie);
     }
 
+    public static final String getCookie(HttpServletRequest servletRequest, String nameCookie) {
+        String token = null;
+        Cookie[] cookies = servletRequest.getCookies();
+        logger.debug("cookies", cookies);
+        if (null != cookies) {
+            for (Cookie cookie : cookies) {
+                if (nameCookie.equals(cookie.getName())) {
+                    token = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        return token;
+    }
 }
