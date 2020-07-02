@@ -1,119 +1,54 @@
 package com.cloud.model;
 
-import com.alibaba.excel.annotation.ExcelIgnore;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.format.DateTimeFormat;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
-
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @author zhu zheng
- * @date 2020/3/30
- */
-@ColumnWidth(10)
-@Table(name = "t_user")
-public class User implements Serializable {
-
-    @Id
-    @ExcelIgnore
-    /** 用户id */
+public class zxjs0101 {
     private String userId;
 
-    /** 登录名 */
-    @ColumnWidth(15)
-    @ExcelProperty("登录名")
     private String loginName;
 
-    /** 姓名 */
-    @ExcelProperty("姓名")
     private String fullName;
 
-    /** 性别 1男 0女 */
-    @ExcelProperty("性别")
     private String gender;
 
-    /** 用户角色 T 教职工 S学生 P 家长 D默认用户 */
-    @ColumnWidth(12)
-    @ExcelProperty("用户角色")
-    private String userType;
-
-    /** 手机号 */
-    @ColumnWidth(15)
-    @ExcelProperty("手机号")
     private String mobile;
 
-    /** 1正常 0 删除 */
-    @ExcelIgnore
-    private Integer enabled = 1;
+    private Integer enabled;
 
-    /** 管理员 1是0否 */
-    @ExcelIgnore
     private Integer isAdmin;
 
-    /** 密码 */
-    @ExcelIgnore
     private String psw;
 
-    /** 创建时间 */
-    @ColumnWidth(20)
-    @ExcelProperty("创建时间")
-    @DateTimeFormat("yyyy年MM月dd日HH时")
     private Date createTime;
 
-    /** 更新时间 */
-    @ColumnWidth(20)
-    @ExcelProperty("更新时间")
-    @DateTimeFormat("yyyy年MM月dd日HH时")
     private Date updateTime;
 
-    /** 邮箱 */
-    @ColumnWidth(20)
-    @ExcelProperty("邮箱")
     private String email;
 
-    /** 用户头像 */
-    @ExcelIgnore
     private String headUrl;
 
-    /** 学校id */
-    @ExcelIgnore
-    private String schId;
+    private Integer schId;
 
-    /** 校区id*/
-    @ExcelIgnore
     private Integer xqhId;
 
-    public User(String userId, String gender, String loginName, String mobile, Integer enabled, String fullName, Integer isAdmin, String psw, String userType, Date createTime, Date updateTime, String email, String headUrl, String schId, Integer xqhId) {
+    public zxjs0101(String userId, String loginName, String fullName, String gender, String mobile, Integer enabled, Integer isAdmin, String psw, Date createTime, Date updateTime, String email, String headUrl, Integer schId, Integer xqhId) {
         this.userId = userId;
         this.loginName = loginName;
+        this.fullName = fullName;
+        this.gender = gender;
         this.mobile = mobile;
         this.enabled = enabled;
-        this.fullName = fullName;
         this.isAdmin = isAdmin;
         this.psw = psw;
-        this.userType = userType;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.email = email;
         this.headUrl = headUrl;
         this.schId = schId;
         this.xqhId = xqhId;
-        this.gender = gender;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public User() {
+    public zxjs0101() {
         super();
     }
 
@@ -133,6 +68,22 @@ public class User implements Serializable {
         this.loginName = loginName == null ? null : loginName.trim();
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName == null ? null : fullName.trim();
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender == null ? null : gender.trim();
+    }
+
     public String getMobile() {
         return mobile;
     }
@@ -149,14 +100,6 @@ public class User implements Serializable {
         this.enabled = enabled;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName == null ? null : fullName.trim();
-    }
-
     public Integer getIsAdmin() {
         return isAdmin;
     }
@@ -171,14 +114,6 @@ public class User implements Serializable {
 
     public void setPsw(String psw) {
         this.psw = psw == null ? null : psw.trim();
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType == null ? null : userType.trim();
     }
 
     public Date getCreateTime() {
@@ -213,11 +148,11 @@ public class User implements Serializable {
         this.headUrl = headUrl == null ? null : headUrl.trim();
     }
 
-    public String getSchId() {
+    public Integer getSchId() {
         return schId;
     }
 
-    public void setSchId(String schId) {
+    public void setSchId(Integer schId) {
         this.schId = schId;
     }
 

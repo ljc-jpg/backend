@@ -133,7 +133,6 @@
         </dependency>
 
 
-
         <!--redis-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -186,18 +185,6 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!-- swagger生成接口API -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.7.0</version>
-        </dependency>
-
         <!--文件上传-->
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -209,6 +196,7 @@
             <groupId>com.cloud</groupId>
             <artifactId>util-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>
@@ -218,6 +206,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
             </plugin>
 
             <plugin>

@@ -87,7 +87,7 @@ public class OSSService {
             uploadResult.setFileSavedName(fileSavedName);
             uploadResult.setFileSavedPath(relative + fileSavedName);
             uploadResult.setFilePreviewPathFull(ALIYUN_OSS_ENDPOINT_CNAME + "/" + ALIYUN_OSS_DIR_CONSOLE_ROOT + relative + fileSavedName);
-            uploadResult.setReturnCode(UploadResult.RETURN_CODE_SUCC);
+            uploadResult.setCode(UploadResult.RETURN_CODE_ERR);
             log.debug(originalFileName + "   " + ALIYUN_OSS_ENDPOINT_CNAME + "/" + ALIYUN_OSS_DIR_CONSOLE_ROOT + relative + fileSavedName);
         } catch (Exception oe) {
             log.error("Error Message," + oe);

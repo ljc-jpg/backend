@@ -1,7 +1,7 @@
 package com.cloud.service;
 
 
-import com.cloud.util.Result;
+import com.cloud.util.ResultVo;
 import com.cloud.util.UploadResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -18,6 +18,6 @@ public interface CaseClientService {
     UploadResult uploadInputStream(@RequestPart("multipartFile") MultipartFile multipartFile, @RequestParam("fileName") String fileName);
 
     @RequestMapping(method = RequestMethod.POST, value = "/OSS/sendEmail")
-    Result sendEmails(@RequestParam(value = "addressee") String addressee, @RequestParam(value = "content") String content, @RequestParam(value = "subject") String subject);
+    ResultVo sendEmails(@RequestParam(value = "addressee") String addressee, @RequestParam(value = "content") String content, @RequestParam(value = "subject") String subject);
 
 }

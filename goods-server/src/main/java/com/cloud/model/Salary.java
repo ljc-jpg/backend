@@ -1,7 +1,6 @@
 package com.cloud.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -12,79 +11,76 @@ import java.util.List;
 @Table(name = "t_salary")
 public class Salary implements Serializable {
 
+    /** 工资单id */
     @Id
-    @ApiModelProperty(value = "工资单id")
     @GeneratedValue(generator = "JDBC")
     private Integer salaryId;
 
-    @ApiModelProperty(value = "学校id")
+    /** 学校id */
     private Integer schId;
 
-    @ApiModelProperty(value = "名称")
+    /** 工资单名称 */
     private String name;
 
-    @ApiModelProperty(value = "发放时间")
+    /** 工资单发放时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date provideTime;
 
-    @ApiModelProperty(value = "创建时间")
+    /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
-    @ApiModelProperty(value = "审批时间")
+    /** 审批时间*/
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date approvalTime;
 
-    @ApiModelProperty(value = "通过时间")
+    /** 通过时间 */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date adoptTime;
 
-    @ApiModelProperty(value = "发布时间")
+    /** 发布时间 */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date releaseTime;
 
-    @ApiModelProperty(value = "更新时间", hidden = true)
     //返回格式化
+    /** 更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     //接收处理
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    @ApiModelProperty(value = "默认0,删除99")
+    /** 默认0,删除99 */
     private Integer status;
 
-    @ApiModelProperty(value = "1.制表2.审批,3待发布,4已发布")
+    /** 1.制表2.审批,3待发布,4已发布 */
     private Integer type;
 
-    @ApiModelProperty(hidden = true)
     private String leaveId;
 
-    @ApiModelProperty(value = "1未推送，2已推送")
+    /** 1未推送，2已推送 */
     private Integer isPush;
 
-    @ApiModelProperty(value = "工资单路径")
+    /** 工资单路径*/
     private String path;
 
-    @ApiModelProperty(value = "发布工资单人")
+    /** 发布工资单人 */
     private String userId;
 
-    @ApiModelProperty(value = "未开启1,开启0")
+    /** 未开启1,开启0 */
     private Integer destroy;
 
-    @ApiModelProperty(value = "多长时间阅后即焚")
+    /** 多长时间阅后即焚 */
     private String readTime;
 
     @Transient
-    @ApiModelProperty(hidden = true)
     private Integer state;
 
     @Transient
-    @ApiModelProperty(hidden = true)
     private List<Salary> salaries;
 
     public String getPath() {

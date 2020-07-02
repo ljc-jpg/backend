@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @version: 1.0
  * @since: JDK 1.7
  */
-public class UploadResult extends Result implements Serializable {
+public class UploadResult extends ResultVo implements Serializable {
     /**
      * 原始文件名
      */

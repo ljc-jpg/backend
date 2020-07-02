@@ -1,15 +1,15 @@
 package com.cloud.controller;
 
 import com.cloud.service.LoginService;
-import com.cloud.util.Result;
+import com.cloud.util.ResultVo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,30 +25,30 @@ public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    @Autowired
+    @Resource
     private LoginService loginService;
 
     @PostMapping("/login")
-    public Result login(HttpServletRequest request, HttpServletResponse response, String loginName, String pwd) {
-        Result result = new Result();
+    public ResultVo login(HttpServletRequest request, HttpServletResponse response, String loginName, String pwd) {
+        ResultVo ResultVo = new ResultVo();
         try {
             if (StringUtils.isEmpty(loginName)) {
-                result.setMsg("loginName为空");
-                result.setReturnCode(Result.RETURN_CODE_ERR);
-                return result;
+                ResultVo.setMsg("loginName为空");
+                ResultVo.setCode(ResultVo.RETURN_CODE_ERR);
+                return ResultVo;
             }
             if (StringUtils.isEmpty(pwd)) {
-                result.setMsg("pwd为空");
-                result.setReturnCode(Result.RETURN_CODE_ERR);
-                return result;
+                ResultVo.setMsg("pwd为空");
+                ResultVo.setCode(ResultVo.RETURN_CODE_ERR);
+                return ResultVo;
             }
             loginService.login(request, response, loginName, pwd);
         } catch (Exception e) {
             logger.error("login:", e);
-            result.setMsg("login:" + e);
-            result.setReturnCode(Result.RETURN_CODE_ERR);
+            ResultVo.setMsg("login:" + e);
+            ResultVo.setCode(ResultVo.RETURN_CODE_ERR);
         }
-        return result;
+        return ResultVo;
     }
 
 

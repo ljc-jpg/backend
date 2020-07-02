@@ -38,7 +38,9 @@ public class LoginService {
         user.setLoginName(loginName);
         user.setPsw(pwd);
         User u = userMapper.selectOne(user);
-        if (null == u || null == u.getUserId()) throw new RuntimeException("账号或者密码错误");
+        if (null == u || null == u.getUserId()) {
+            throw new RuntimeException("账号或者密码错误");
+        }
         //生成密钥   用户信息  随机字符串  时间戳
         String secret = UUID.randomUUID().toString().replaceAll("-", "");
         String token = JwtUtil.encode(u.toString(), secret, expireTime);
