@@ -2,10 +2,7 @@ package com.cloud.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,7 +12,7 @@ import java.util.List;
 public class SalaryUserAttr implements Serializable {
 
     @Id
-    @Column(name = "user_attr_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userAttrId;
 
     private String userId;

@@ -13,7 +13,7 @@ public class Salary implements Serializable {
 
     /** 工资单id */
     @Id
-    @GeneratedValue(generator = "JDBC")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer salaryId;
 
     /** 学校id */
