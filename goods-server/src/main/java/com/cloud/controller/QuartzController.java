@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/quartz")
 public class QuartzController {
 
-    private static final Logger log = LoggerFactory.getLogger(QuartzController.class);
+    private static final Logger logger = LoggerFactory.getLogger(QuartzController.class);
 
     @GetMapping("/quartzTest")
     public void quartzTest() {
         try {
-            log.info("******************8*****************");
+            logger.info("******************8*****************");
         } catch (Exception e) {
-            log.debug("quartzTest:" + e);
+            logger.debug("quartzTest:" + e);
         }
     }
 

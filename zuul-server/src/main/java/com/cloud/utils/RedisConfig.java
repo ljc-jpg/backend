@@ -40,7 +40,7 @@ import java.time.Duration;
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
-    private static final Logger lg = LoggerFactory.getLogger(RedisConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(RedisConfig.class);
 
     @Resource
     private JedisConnectionFactory jedisConnectionFactory;
@@ -60,7 +60,7 @@ public class RedisConfig extends CachingConfigurerSupport {
                 sb.append(":" + String.valueOf(obj));
             }
             String rsToUse = String.valueOf(sb);
-            lg.info("自动生成Redis Key -> [{}]", rsToUse);
+            logger.info("自动生成Redis Key -> [{}]", rsToUse);
             return rsToUse;
         };
     }
@@ -69,7 +69,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public CacheManager cacheManager() {
         // 初始化缓存管理器，在这里我们可以缓存的整体过期时间什么的，我这里默认没有配置
-        lg.info("初始化 -> [{}]", "CacheManager RedisCacheManager Start");
+        logger.info("初始化 -> [{}]", "CacheManager RedisCacheManager Start");
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         //解决查询缓存转换异常的问题
@@ -92,7 +92,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory jedisConnectionFactory ) {
+    public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
         //设置序列化
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper om = new ObjectMapper();
@@ -115,26 +115,26 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     public CacheErrorHandler errorHandler() {
         // 异常处理，当Redis发生异常时，打印日志，但是程序正常走
-        lg.info("初始化 -> [{}]", "Redis CacheErrorHandler");
+        logger.info("初始化 -> [{}]", "Redis CacheErrorHandler");
         CacheErrorHandler cacheErrorHandler = new CacheErrorHandler() {
             @Override
             public void handleCacheGetError(RuntimeException e, Cache cache, Object key) {
-                lg.error("Redis occur handleCacheGetError：key -> [{}]", key, e);
+                logger.error("Redis occur handleCacheGetError：key -> [{}]", key, e);
             }
 
             @Override
             public void handleCachePutError(RuntimeException e, Cache cache, Object key, Object value) {
-                lg.error("Redis occur handleCachePutError：key -> [{}]；value -> [{}]", key, value, e);
+                logger.error("Redis occur handleCachePutError：key -> [{}]；value -> [{}]", key, value, e);
             }
 
             @Override
-            public void handleCacheEvictError(RuntimeException e, Cache cache, Object key)    {
-                lg.error("Redis occur handleCacheEvictError：key -> [{}]", key, e);
+            public void handleCacheEvictError(RuntimeException e, Cache cache, Object key) {
+                logger.error("Redis occur handleCacheEvictError：key -> [{}]", key, e);
             }
 
             @Override
             public void handleCacheClearError(RuntimeException e, Cache cache) {
-                lg.error("Redis occur handleCacheClearError：", e);
+                logger.error("Redis occur handleCacheClearError：", e);
             }
         };
         return cacheErrorHandler;
@@ -143,18 +143,17 @@ public class RedisConfig extends CachingConfigurerSupport {
     /**
      * 此内部类就是把yml的配置数据，进行读取，创建JedisConnectionFactory和JedisPool，以供外部类初始化缓存管理器使用
      * 不了解的同学可以去看@ConfigurationProperties和@Value的作用
-     *
      */
     @ConfigurationProperties
-    class DataJedisProperties{
+    class DataRedisProperties {
         @Value("${spring.redis.host}")
-        private  String host;
+        private String host;
         @Value("${spring.redis.password}")
-        private  String password;
+        private String password;
         @Value("${spring.redis.port}")
-        private  int port;
+        private int port;
         @Value("${spring.redis.timeout}")
-        private  int timeout;
+        private int timeout;
         @Value("${spring.redis.jedis.pool.max-idle}")
         private int maxIdle;
         @Value("${spring.redis.jedis.pool.max-wait}")
@@ -162,7 +161,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
         @Bean
         JedisConnectionFactory jedisConnectionFactory() {
-            lg.info("Create JedisConnectionFactory successful");
+            logger.info("Create JedisConnectionFactory successful");
             JedisConnectionFactory factory = new JedisConnectionFactory();
             factory.setHostName(host);
             factory.setPort(port);
@@ -170,9 +169,10 @@ public class RedisConfig extends CachingConfigurerSupport {
             factory.setPassword(password);
             return factory;
         }
+
         @Bean
         public JedisPool redisPoolFactory() {
-            lg.info("JedisPool init successful，host -> [{}]；port -> [{}]", host, port);
+            logger.info("redisPool init successful，host -> [{}]；port -> [{}]" + host, port);
             JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
             jedisPoolConfig.setMaxIdle(maxIdle);
             jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);

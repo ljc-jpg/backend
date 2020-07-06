@@ -17,61 +17,64 @@ import java.nio.charset.Charset;
 
 @Component
 public class MyFallbackProvider implements FallbackProvider {
-	private static final Logger LOGGER = LoggerFactory.getLogger(MyFallbackProvider.class);
-	@Override
-	public String getRoute() {
-		// 表明是为哪个微服务提供回退，*表示为所有微服务提供回退
-		return "*";
-	}
-	
-  public ClientHttpResponse fallbackResponse() {
-    return this.response(HttpStatus.INTERNAL_SERVER_ERROR);
-  }
-  
-  private ClientHttpResponse response(final HttpStatus status) {
-    return new ClientHttpResponse() {
-      @Override
-      public HttpStatus getStatusCode() throws IOException {
-        return status;
-      }
 
-      @Override
-      public int getRawStatusCode() throws IOException {
-        return status.value();
-      }
+    private static final Logger logger = LoggerFactory.getLogger(MyFallbackProvider.class);
 
-      @Override
-      public String getStatusText() throws IOException {
-        return status.getReasonPhrase();
-      }
+    @Override
+    public String getRoute() {
+        // 表明是为哪个微服务提供回退，*表示为所有微服务提供回退
+        return "*";
+    }
 
-      @Override
-      public void close() {
-      }
+    public ClientHttpResponse fallbackResponse() {
+        return this.response(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
-      @Override
-      public InputStream getBody() throws IOException {
-        return new ByteArrayInputStream("服务不可用，请稍后再试。".getBytes());
-      }
+    private ClientHttpResponse response(final HttpStatus status) {
+        return new ClientHttpResponse() {
+            @Override
+            public HttpStatus getStatusCode() throws IOException {
+                return status;
+            }
 
-      @Override
-      public HttpHeaders getHeaders() {
-        // headers设定
-        HttpHeaders headers = new HttpHeaders();
-        MediaType mt = new MediaType("application", "json", Charset.forName("UTF-8"));
-        headers.setContentType(mt);
-        return headers;
-      }
-    };
-  }
+            @Override
+            public int getRawStatusCode() throws IOException {
+                return status.value();
+            }
 
-	@Override
-	public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
-		LOGGER.error("fallbackResponse error",cause);
-		if (cause instanceof HystrixTimeoutException) {
-			return response(HttpStatus.GATEWAY_TIMEOUT);
-		} else {
-			return this.fallbackResponse();
-		}
-	}
+            @Override
+            public String getStatusText() throws IOException {
+                return status.getReasonPhrase();
+            }
+
+            @Override
+            public void close() {
+            }
+
+            @Override
+            public InputStream getBody() throws IOException {
+                return new ByteArrayInputStream("服务不可用，请稍后再试。".getBytes());
+            }
+
+            @Override
+            public HttpHeaders getHeaders() {
+                // headers设定
+                HttpHeaders headers = new HttpHeaders();
+                MediaType mt = new MediaType("application", "json", Charset.forName("UTF-8"));
+                headers.setContentType(mt);
+                return headers;
+            }
+        };
+    }
+
+    @Override
+    public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
+        logger.error("fallbackResponse error", cause);
+        if (cause instanceof HystrixTimeoutException) {
+            return response(HttpStatus.GATEWAY_TIMEOUT);
+        } else {
+            return this.fallbackResponse();
+        }
+    }
+
 }

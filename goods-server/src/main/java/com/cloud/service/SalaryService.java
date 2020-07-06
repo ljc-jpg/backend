@@ -42,7 +42,7 @@ public class SalaryService {
 
     private String PATH = "/";
 
-    private static final Logger log = LoggerFactory.getLogger(SalaryService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SalaryService.class);
 
     @Resource
     private SalaryMapper salaryMapper;
@@ -102,7 +102,7 @@ public class SalaryService {
             pdf.open();
             getOutputStream(o, attrList, y, k, tableWidth, pdf);
         } catch (Exception e) {
-            log.error("loadSalaryPdf生成pdf文件异常:", e);
+            logger.error("loadSalaryPdf生成pdf文件异常:", e);
             throw new RuntimeException("loadSalaryPdf生成pdf文件异常:" + e);
         }
 
@@ -187,20 +187,20 @@ public class SalaryService {
         Map<String, Integer> searchMap = new HashMap<>();
         searchMap.put("salaryId", salaryId);
         searchMap.put("schId", schId);
-        log.info("searchMap:" + searchMap);
+        logger.info("searchMap:" + searchMap);
 
         List<SalaryUserAttr> attrList = salaryUserAttrService.selectSalaryByMap(searchMap);
         SalaryUserAttr userAttr = attrList.get(0);
         Date approvalTime = userAttr.getCreateTime();
 
-        log.info("approvalTime:", approvalTime);
+        logger.info("approvalTime:", approvalTime);
         //Java8中的LocalDateTime  设置LocalDateTime时间值 参数long
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(approvalTime.getTime()), ZoneId.systemDefault());
         //邮件主题
         String subject = localDateTime.format(DateTimeFormatter.ofPattern("yyyy年MM月dd")) + " " + userAttr.getSalaryName() + " 工资单";
         //工资单路径
         String path = this.loadSalaryPdf(salaryId, schId);
-        log.info("***********addressee*************:" + addressee + "***********path*************:" + path);
+        logger.info("***********addressee*************:" + addressee + "***********path*************:" + path);
         //邮件主题内容
         String content = "<a href='" + path + "'>点击我查看工资单</a>";
         List<Map<String, String>> param = new ArrayList<>();

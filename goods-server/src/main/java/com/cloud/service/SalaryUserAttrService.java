@@ -13,13 +13,13 @@ import java.util.Map;
 @Service
 public class SalaryUserAttrService {
 
-    private static final Logger log = LoggerFactory.getLogger(SalaryService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SalaryService.class);
 
     @Autowired
     private SalaryUserAttrMapper salaryUserAttrMapper;
 
     public List<SalaryUserAttr> selectSalaryByMap(Map<String, Integer> searchMap) {
-        log.info("searchMap:" + searchMap);
+        logger.info("searchMap:" + searchMap);
         return salaryUserAttrMapper.selectSalaryByMap(searchMap);
     }
 

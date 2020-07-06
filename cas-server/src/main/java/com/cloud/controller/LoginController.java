@@ -28,6 +28,20 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
+    /**
+     * @api {POST} /cas/login login
+     * @apiVersion 1.0.0
+     * @apiGroup LoginController
+     * @apiName login
+     * @apiDescription 登录
+     * @apiParam (请求参数) {String} loginName 账号
+     * @apiParam (请求参数) {String} pwd 密码
+     * @apiParamExample 请求参数示例
+     * loginName=7&pwd=1
+     * @apiSuccess (响应结果) {Object} data 具体值
+     * @apiSuccessExample 响应结果示例
+     * {"data":{}}
+     */
     @PostMapping("/login")
     public ResultVo login(HttpServletRequest request, HttpServletResponse response, String loginName, String pwd) {
         ResultVo ResultVo = new ResultVo();

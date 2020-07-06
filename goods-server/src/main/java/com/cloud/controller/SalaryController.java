@@ -21,7 +21,7 @@ import static com.cloud.util.RegExUtil.isEmail;
 @RequestMapping(value = "/salaryUserAttr")
 public class SalaryController {
 
-    private static final Logger log = LoggerFactory.getLogger(SalaryController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SalaryController.class);
 
     @Resource
     private SalaryService salaryService;
@@ -59,7 +59,7 @@ public class SalaryController {
             String path = salaryService.loadSalaryPdf(salaryId, schId);
             result.setData(path);
         } catch (Exception e) {
-            log.error("salaryPdf", e);
+            logger.error("salaryPdf", e);
             result.setMsg("salaryPdf" + e);
             result.setCode(ResultVo.RETURN_CODE_ERR);
         }
@@ -109,7 +109,7 @@ public class SalaryController {
             result.setData(true);
         } catch (Exception e) {
             result.setData(false);
-            log.error("salaryEmail", e);
+            logger.error("salaryEmail", e);
             result.setMsg("salaryEmail" + e);
             result.setCode(ResultVo.RETURN_CODE_ERR);
         }

@@ -12,7 +12,7 @@ import java.util.List;
 public class SalaryUserAttr implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "JDBC")
     private Integer userAttrId;
 
     private String userId;

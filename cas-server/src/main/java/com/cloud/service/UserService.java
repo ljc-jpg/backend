@@ -9,11 +9,11 @@ import com.cloud.dao.UserMapper;
 import com.cloud.model.User;
 import com.cloud.utils.UserExcelListener;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
 import java.util.*;
@@ -21,9 +21,9 @@ import java.util.*;
 @Service
 public class UserService {
 
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(UserService.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
     /**
@@ -33,7 +33,7 @@ public class UserService {
      * @date 2020/4/1
      */
     public List<User> selectByUser(User user) {
-        log.debug("User:" + user);
+        logger.debug("User:" + user);
         List<User> users = userMapper.select(user);
         return users;
     }
@@ -45,7 +45,7 @@ public class UserService {
      * @date 2020/4/1
      */
     public void insertUsers(List<User> users) {
-        log.debug("users:" + users.size());
+        logger.debug("users:" + users.size());
         userMapper.insertUsers(users);
     }
 

@@ -6,7 +6,6 @@ import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,6 +13,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class InitQuartzJob implements ApplicationContextAware {
 
     public static SchedulerFactoryBean schedulerFactoryBean = null;
 
-    @Autowired
+    @Resource
     private QuartzMapper quartzMapper;
 
     public static ApplicationContext appCtx;

@@ -30,7 +30,25 @@ public class OSSController {
     @Resource
     private OSSService ossService;
 
-//    @ApiOperation("单个文件上传")
+    /**
+     * @api {POST} /OSS/uploadSingle uploadSingle
+     * @apiVersion 1.0.0
+     * @apiGroup OSSController
+     * @apiName uploadSingle
+     * @apiDescription 单个文件上传
+     * @apiParam (请求参数) {Object} multipartFile 上传的文件
+     * @apiParam (请求参数) {String} fileName 文件名
+     * @apiParamExample 请求参数示例
+     * fileName=61u3oWBn&multipartFile=null
+     * @apiSuccess (响应结果) {String} originalFileName 原始文件名
+     * @apiSuccess (响应结果) {String} fileExtName 文件扩展名
+     * @apiSuccess (响应结果) {String} fileSavedName 文件存储名
+     * @apiSuccess (响应结果) {String} fileSavedPath 文件存储相对路径
+     * @apiSuccess (响应结果) {String} filePreviewPathFull 文件预览完整路径
+     * @apiSuccess (响应结果) {Object} data 具体值
+     * @apiSuccessExample 响应结果示例
+     * {"originalFileName":"qXFuxfA","fileSavedName":"yyF0mLFf","data":{},"filePreviewPathFull":"n3Bk7O","fileSavedPath":"bBQCAzqg","fileExtName":"bjBBxcv"}
+     */
     @PostMapping(value = "/uploadSingle")
     public UploadResult uploadSingle(@RequestParam(value = "multipartFile") MultipartFile multipartFile,
                                      @RequestParam(value = "fileName") String fileName) {
@@ -53,15 +71,24 @@ public class OSSController {
         return uploadResult;
     }
 
-//    @ApiOperation("发送邮件")
+    /**
+     * @api {POST} /OSS/sendEmail sendEmail
+     * @apiVersion 1.0.0
+     * @apiGroup OSSController
+     * @apiName sendEmail
+     * @apiDescription 发送邮件
+     * @apiParam (请求参数) {String} addressee 收件邮件
+     * @apiParam (请求参数) {String} content 邮件内容
+     * @apiParam (请求参数) {String} subject 邮件主题
+     * @apiParam (请求参数) {Array} files 邮件附件
+     * @apiParamExample 请求参数示例
+     * addressee=804251123@qq.com&subject=邮件主题=http://12.pdf,http://13.pdf&content=[{\"content\":\"<div>2222<div>\",\"type\":1},{\"content\":\"https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3252521864,872614242&fm=26&gp=0.jpg\",\"type\":2},{\"content\":\"<div>333<div>\",\"type\":1}]
+     * @apiSuccess (响应结果) {Object} data 具体值
+     * @apiSuccessExample 响应结果示例
+     * {"data":{true}}
+     */
     @PostMapping(value = "/sendEmail")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "addressee", value = "收件邮件", paramType = "query"),
-//            @ApiImplicitParam(name = "content", value = "邮件内容[{\"content\":\"<div>2222<div>\",\"type\":1},{\"content\":\"https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3252521864,872614242&fm=26&gp=0.jpg\",\"type\":2},{\"content\":\"<div>333<div>\",\"type\":1}]", paramType = "query"),
-//            @ApiImplicitParam(name = "subject", value = "邮件主题", paramType = "query"),
-//            @ApiImplicitParam(name = "files", value = "邮件附件http://12.pdf,http://13.pdf", paramType = "query")
-//    })
-    public ResultVo sendEmail(String addressee, String content, String subject, String[] files) {
+    public ResultVo<Boolean> sendEmail(String addressee, String content, String subject, String[] files) {
         ResultVo result = new ResultVo();
         try {
             if (!isEmail(addressee)) {
@@ -81,7 +108,9 @@ public class OSSController {
             }
             List<EmailContent> contents = JSONObject.parseArray(content, EmailContent.class);
             ossService.sendEmail(addressee, contents, subject, files);
+            result.setData(true);
         } catch (Exception e) {
+            result.setData(false);
             logger.error("uploadSingle error", e);
             result.setCode(ResultVo.RETURN_CODE_ERR);
             result.setMsg("发送邮件异常！" + e);

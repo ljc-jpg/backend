@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
@@ -19,7 +20,7 @@ public class LoginService {
 
     private static long expireTime;
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
     @Autowired

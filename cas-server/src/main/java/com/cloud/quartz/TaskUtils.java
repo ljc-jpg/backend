@@ -3,16 +3,17 @@ package com.cloud.quartz;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.Resource;
 
 @Component
 public class TaskUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(TaskUtils.class);
 
-    @Autowired
+    @Resource
     private RestTemplate restTemplate;
 
     /**

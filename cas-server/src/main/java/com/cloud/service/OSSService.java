@@ -30,7 +30,7 @@ import java.util.UUID;
 @Service
 public class OSSService {
 
-    private static final Logger log = LoggerFactory.getLogger(OSSService.class);
+    private static final Logger logger = LoggerFactory.getLogger(OSSService.class);
 
     @Value("${aliyun.accessKeyId}")
     public String ALIYUN_ACCESS_KEY_ID;
@@ -88,9 +88,9 @@ public class OSSService {
             uploadResult.setFileSavedPath(relative + fileSavedName);
             uploadResult.setFilePreviewPathFull(ALIYUN_OSS_ENDPOINT_CNAME + "/" + ALIYUN_OSS_DIR_CONSOLE_ROOT + relative + fileSavedName);
             uploadResult.setCode(UploadResult.RETURN_CODE_ERR);
-            log.debug(originalFileName + "   " + ALIYUN_OSS_ENDPOINT_CNAME + "/" + ALIYUN_OSS_DIR_CONSOLE_ROOT + relative + fileSavedName);
+            logger.debug(originalFileName + "   " + ALIYUN_OSS_ENDPOINT_CNAME + "/" + ALIYUN_OSS_DIR_CONSOLE_ROOT + relative + fileSavedName);
         } catch (Exception oe) {
-            log.error("Error Message," + oe);
+            logger.error("Error Message," + oe);
         } finally {
 //            ossClient.shutdown();
         }
@@ -104,7 +104,7 @@ public class OSSService {
      * @Param [addressee（邮件地址）, content（邮件内容）, subject邮件主题）, files（邮件附件文件）, picture（邮件图片）]
      **/
     public boolean sendEmail(String addressee, List<EmailContent> list, String subject, String[] files) {
-        log.error("收件人邮箱:" + addressee);
+        logger.error("收件人邮箱:" + addressee);
         // 创建Properties 类用于记录邮箱的一些属性
         Properties props = new Properties();
         // 表示SMTP发送邮件，必须进行身份验证
@@ -136,7 +136,7 @@ public class OSSService {
         try {
             from = new InternetAddress(props.getProperty("mail.smtp.user"));
         } catch (AddressException e) {
-            log.error("设置发件邮箱错误:" + e);
+            logger.error("设置发件邮箱错误:" + e);
             throw new RuntimeException("设置发件邮箱错误:" + e);
         }
         // 创建混合节点
@@ -169,7 +169,7 @@ public class OSSService {
                         content = content + "<img src='cid:pic" + i + "'/>";
                     }
                 } catch (Exception e) {
-                    log.error("设置邮件图片错误:" + e);
+                    logger.error("设置邮件图片错误:" + e);
                     throw new RuntimeException("设置邮件图片错误:" + e);
                 }
             }
@@ -191,7 +191,7 @@ public class OSSService {
                         attachment.setFileName(MimeUtility.encodeText(dataHandler.getName()));
                         multipart.addBodyPart(attachment);
                     } catch (Exception e) {
-                        log.error("设置附件文件名错误:" + e);
+                        logger.error("设置附件文件名错误:" + e);
                         throw new RuntimeException("设置附件文件名错误:" + e);
                     }
                 }
@@ -201,7 +201,7 @@ public class OSSService {
             message.setContent(multipart);
             Transport.send(message);
         } catch (MessagingException e) {
-            log.error("发送邮件报错:" + e);
+            logger.error("发送邮件报错:" + e);
             throw new RuntimeException("发送邮件报错:" + e);
         }
         return true;

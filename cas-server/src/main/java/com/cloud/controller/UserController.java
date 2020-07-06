@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Resource
     private UserService userService;
@@ -79,7 +79,7 @@ public class UserController {
             List<User> users = userService.selectByUser(user);
             ResultVo.setData(users);
         } catch (Exception e) {
-            log.error("selectByUser:", e);
+            logger.error("selectByUser:", e);
             ResultVo.setMsg("selectByUser:" + e);
             ResultVo.setCode(ResultVo.RETURN_CODE_ERR);
             return ResultVo;
@@ -123,7 +123,7 @@ public class UserController {
             resultVo.setData(true);
         } catch (Exception e) {
             resultVo.setData(false);
-            log.error("insertUsers:", e);
+            logger.error("insertUsers:", e);
             resultVo.setMsg("insertUsers:" + e);
             resultVo.setCode(ResultVo.RETURN_CODE_ERR);
         }
@@ -170,7 +170,7 @@ public class UserController {
             resultVo.setData(true);
         } catch (Exception e) {
             resultVo.setData(false);
-            log.error("downloadExcel:", e);
+            logger.error("downloadExcel:", e);
             resultVo.setMsg("downloadExcel:" + e);
             resultVo.setCode(ResultVo.RETURN_CODE_ERR);
         }

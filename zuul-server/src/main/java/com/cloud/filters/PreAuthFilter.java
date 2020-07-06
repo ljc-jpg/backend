@@ -28,6 +28,7 @@ import java.util.Map;
  * @return
  */
 public class PreAuthFilter extends ZuulFilter {
+    
     private static final Logger logger = LoggerFactory.getLogger(PreAuthFilter.class);
 
     public static final String[] excludes = new String[]{"/login", "/static/**", "/auth/logout"};
