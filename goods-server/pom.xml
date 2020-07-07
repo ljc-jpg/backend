@@ -113,11 +113,6 @@
             <version>2.2.6.RELEASE</version>
         </dependency>
 
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-        </dependency>
-
         <!--RabbitMQ集成spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
