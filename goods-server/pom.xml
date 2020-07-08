@@ -119,11 +119,7 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
-        <!--thymeleaf-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
+
 
         <dependency>
             <groupId>com.cloud</groupId>

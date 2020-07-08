@@ -23,7 +23,7 @@
         }
         Util.requestFormData("/cas/login", 'POST', data,
             function (res) {
-                if (res.returnCode == 1) {
+                if (res.code == 1) {
                     location.href = Util.casIndex;
                 } else {
                     alert("账号密码错误");

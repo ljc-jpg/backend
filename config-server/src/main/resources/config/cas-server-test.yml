@@ -102,3 +102,10 @@ domain-name: 127.0.0.1
 ribbon:
   ReadTimeout: 600000
   ConnectTimeout: 600000
+
+# 微信配置
+weChat:
+  appId: 1
+  appsecret: 2
+  auth:
+    redirectUri: https://www.baidu.com
