@@ -10,6 +10,9 @@ import com.itextpdf.text.pdf.PdfPTable;
 
 public class PdfUtilS {
 
+    private PdfUtilS() {
+    }
+
     //最大宽度
     private static int MAXWIDTH = 520;
 

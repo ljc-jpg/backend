@@ -17,6 +17,9 @@ import java.util.Map;
  */
 public class JwtUtil {
 
+    private JwtUtil() {
+    }
+
     /**
      * @param user    用户信息
      * @param secret  秘钥

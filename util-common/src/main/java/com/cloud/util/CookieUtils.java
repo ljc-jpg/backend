@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 public class CookieUtils {
     private static Logger logger = LoggerFactory.getLogger(CookieUtils.class);
 
+    private CookieUtils() {
+    }
+
     public static String COOKIE_TOKEN = "token";
 
     private static int cookieTime;

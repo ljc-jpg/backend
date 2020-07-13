@@ -8,6 +8,9 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 
 public class PinyUtil {
 
+    private PinyUtil() {
+    }
+
     /**
      * @param chinese
      * @Description:汉字转为拼音

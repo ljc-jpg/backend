@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 
 public class RegExUtil {
 
+    public RegExUtil() {
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(RegExUtil.class);
 
     /**

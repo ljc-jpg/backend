@@ -45,7 +45,7 @@ public class Material {
      * @return
      */
     public static Map<String, Object> sendNews(String accessToken, Map<String, Object> params) {
-        Map<String, Object> resultMap = new HashMap<String ,Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         if (StringUtils.isEmpty(accessToken) || null == params) {
             resultMap.put("returnCode", "2");
             resultMap.put("msg", "参数错误");
@@ -69,7 +69,7 @@ public class Material {
      * @return
      */
     public static Map<String, Object> updateNews(String accessToken, Map<String, Object> params) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         String url = UPDATE_NEWS + accessToken;
         String json = JSONObject.toJSON(params).toString();
         JSONObject jsonObject = HttpUtils.httpsRequest(url, "POST", json);//获得返回数据
@@ -78,7 +78,7 @@ public class Material {
     }
 
     public static Map<String, Object> updateNews(String accessToken, String json) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         String url = UPDATE_NEWS + accessToken;
         JSONObject jsonObject = HttpUtils.httpsRequest(url, "POST", json);//获得返回数据
         parseMap(jsonObject, resultMap);
@@ -92,7 +92,7 @@ public class Material {
      * @return
      */
     public static Map<String, Object> sendNewsToAll(String accessToken, String mediaId) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         if (StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(mediaId)) {
             resultMap.put("returnCode", "2");
             resultMap.put("msg", "参数错误");
@@ -118,11 +118,12 @@ public class Material {
      * @return
      */
     public static Map<String, Object> sendText(String accessToken, String content) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        Map<String, Object> filter = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> filter = new HashMap<>();
         filter.put("is_to_all", true);
         params.put("filter", filter);
-        Map<String, Object> text = new HashMap<String, Object>();
+
+        Map<String, Object> text = new HashMap<>();
         text.put("content", content);
         params.put("text", text);
         params.put("msgtype", "text");
@@ -140,13 +141,14 @@ public class Material {
     public static Map<String, Object> sendImg(String accessToken, String mediaId) {
         if (StringUtils.isEmpty(mediaId)) {
             System.out.println("没有数据");
-            return new HashMap<String, Object>();
+            return new HashMap<>();
         }
-        Map<String, Object> params = new HashMap<String, Object>();
-        Map<String, Object> filter = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> filter = new HashMap<>();
         filter.put("is_to_all", true);
         params.put("filter", filter);
-        Map<String, Object> text = new HashMap<String, Object>();
+
+        Map<String, Object> text = new HashMap<>();
         text.put("media_id", mediaId);
         params.put("image", text);
         params.put("msgtype", "image");
@@ -163,9 +165,9 @@ public class Material {
      * @return
      */
     public static Map<String, Object> previewText(String accessToken, String content, String wxName) {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("towxname", wxName);
-        Map<String, Object> text = new HashMap<String, Object>();
+        Map<String, Object> text = new HashMap<>();
         text.put("content", content);
         params.put("text", text);
         params.put("msgtype", "text");
@@ -179,7 +181,7 @@ public class Material {
      * @return
      */
     private static Map<String, Object> sendMessage(String accessToken, String json) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         if (StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(json)) {
             resultMap.put("returnCode", "2");
             resultMap.put("msg", "参数错误");
@@ -203,7 +205,7 @@ public class Material {
      * @return
      */
     private static Map<String, Object> previewMessage(String accessToken, String json) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         String url = PREVIEW_NEWS + accessToken;
         JSONObject jsonObject = HttpUtils.httpsRequest(url, "POST", json);//获得返回数据
         parseMap(jsonObject, resultMap);
@@ -220,10 +222,11 @@ public class Material {
      * @return
      */
     private static Map<String, Object> parseNewsMap(String mediaId) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
+
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("is_to_all", true);
-        Map<String, Object> mediaMap = new HashMap<String, Object>();
+        Map<String, Object> mediaMap = new HashMap<>();
         mediaMap.put("media_id", mediaId);
         params.put("filter", filterMap);
         params.put("mpnews", mediaMap);
@@ -240,15 +243,15 @@ public class Material {
      * @return
      */
     public static Map<String, Object> previewNews(String accessToken, String wxName, String mediaId) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         if (StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(wxName) || StringUtils.isEmpty(mediaId)) {
             resultMap.put("returnCode", "0");
             resultMap.put("msg", "参数错误");
             return resultMap;
         }
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("towxname", wxName);
-        Map<String, Object> paramsSub = new HashMap<String, Object>();
+        Map<String, Object> paramsSub = new HashMap<>();
         paramsSub.put("media_id", mediaId);
         params.put("mpnews", paramsSub);
         params.put("msgtype", "mpnews");
@@ -267,13 +270,13 @@ public class Material {
      * @return
      */
     public static Map<String, Object> deleteMaterial(String accessToken, String mediaId) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         if (StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(mediaId)) {
             resultMap.put("returnCode", "2");
             resultMap.put("msg", "参数错误");
             return resultMap;
         }
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("media_id", mediaId);
         String url = DEL_MATERIAL + accessToken;
         String json = JSONObject.toJSON(params).toString();
@@ -291,8 +294,8 @@ public class Material {
      */
     public static Map<String, Object> revert(String accessToken, String msgId) {
         String url = REVERT_MATERIAL + accessToken;
-        Map<String, Object> params = new HashMap<String, Object>();
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> resultMap = new HashMap<>();
         params.put("msg_id", msgId);
         String json = JSONObject.toJSON(params).toString();
         JSONObject jsonObject = HttpUtils.httpsRequest(url, "POST", json);//获得返回数据
@@ -312,7 +315,7 @@ public class Material {
      * @return
      */
     public static Map<String, Object> uploadFile(String accessToken, String type, InputStream stream, String fileName, long fileSize) throws Exception {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         String url = UPLOAD_MATERIAL + accessToken + "&type=" + type;
         String result = HttpUtils.postFile(url, stream, fileName, fileSize);
         JSONObject jsonObject = JSONObject.parseObject(result);
@@ -321,7 +324,7 @@ public class Material {
     }
 
     public static Map<String, Object> uploadImg(String accessToken, File file) throws Exception {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         String url = UPLOAD_IMG + accessToken;
         String result = HttpUtils.postFile(url, "media", file);
         JSONObject jsonObject = JSONObject.parseObject(result);
@@ -332,7 +335,7 @@ public class Material {
     }
 
     public static Map<String, Object> uploadImg(String accessToken, InputStream stream, String fileName, long fileSize) throws Exception {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         String url = UPLOAD_IMG + accessToken;
         String result = HttpUtils.postFile(url, stream, fileName, fileSize);
         JSONObject jsonObject = JSONObject.parseObject(result);

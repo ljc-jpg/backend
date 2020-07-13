@@ -31,6 +31,9 @@ public class HttpUtils {
 
     public static final int timeout = 10;
 
+    private HttpUtils() {
+    }
+
     /**
      * @Author zhuz
      * @Description post 请求 无参数

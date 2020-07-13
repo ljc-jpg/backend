@@ -12,6 +12,9 @@ public class DateUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
 
+    private DateUtil() {
+    }
+
     /**
      * @Author zhuz
      * @Description date转LocalDateTime

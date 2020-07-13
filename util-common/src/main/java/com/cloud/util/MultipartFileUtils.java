@@ -13,6 +13,9 @@ import java.io.OutputStream;
 
 public class MultipartFileUtils {
 
+    private MultipartFileUtils() {
+    }
+
     public static CommonsMultipartFile getMultipartFile(File file, String fileType, String fileName) {
         if ((null == file) || (null == fileType) || (StringUtils.isEmpty(fileName))) {
             return null;
