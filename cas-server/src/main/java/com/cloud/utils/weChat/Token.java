@@ -67,7 +67,7 @@ public abstract class Token {
         } else {
             resultMap.put("accessToken", "");
         }
-        logger.error("result:" + result + "===accessToken:" + resultMap);
+        logger.info("result:" , result , "===accessToken:" , resultMap);
         return resultMap;
     }
 
@@ -97,7 +97,25 @@ public abstract class Token {
             logger.error("token 结果解析失败，token参数名称: " + tokenName
                     + "有效期参数名称:" + expiresInName
                     + "token请求结果:" + data);
-            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return true:有效，false: 无效
+     * @Description accessToken 是否有效
+     */
+    public boolean isValid() {
+        //黑名单判定法
+        if (StringUtils.isBlank(this.token)) {
+            return false;
+        }
+        if (this.expires <= 0) {
+            return false;
+        }
+        //过期
+        if (isExpire()) {
             return false;
         }
         return true;
@@ -124,25 +142,6 @@ public abstract class Token {
      * @Description 组织accessToken的请求Url
      */
     protected abstract String accessTokenUrl(String appId, String appSecret);
-
-    /**
-     * @return true:有效，false: 无效
-     * @Description accessToken 是否有效
-     */
-    public boolean isValid() {
-        //黑名单判定法
-        if (StringUtils.isBlank(this.token)) {
-            return false;
-        }
-        if (this.expires <= 0) {
-            return false;
-        }
-        //过期
-        if (isExpire()) {
-            return false;
-        }
-        return true;
-    }
 
     /**
      * @Author zhuz

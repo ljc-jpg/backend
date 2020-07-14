@@ -27,6 +27,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static com.cloud.util.DateUtil.*;
 import static com.cloud.util.MultipartFileUtils.deleteFile;
 import static com.cloud.util.MultipartFileUtils.getMultipartFile;
 import static com.cloud.util.PdfUtilS.*;
@@ -194,10 +195,9 @@ public class SalaryService {
         Date approvalTime = userAttr.getCreateTime();
 
         logger.info("approvalTime:", approvalTime);
-        //Java8中的LocalDateTime  设置LocalDateTime时间值 参数long
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(approvalTime.getTime()), ZoneId.systemDefault());
+        //Date转 LocalDateTime 再转 2016年10月05日格式时间
         //邮件主题
-        String subject = localDateTime.format(DateTimeFormatter.ofPattern("yyyy年MM月dd")) + " " + userAttr.getSalaryName() + " 工资单";
+        String subject = formatLocalDateTimeToStr(dateToLocalDateTime(approvalTime), DATE_TIME_FORMAT_YYYY年MM月DD日) + " " + userAttr.getSalaryName() + " 工资单";
         //工资单路径
         String path = this.loadSalaryPdf(salaryId, schId);
         logger.info("***********addressee*************:" + addressee + "***********path*************:" + path);

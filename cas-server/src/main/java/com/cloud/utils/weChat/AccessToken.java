@@ -40,7 +40,7 @@ public class AccessToken extends Token {
     @Override
     protected String accessTokenUrl() {
         String url = ACCESS_TOKEN_URL + "&appid=" + appId + "&secret=" + appSecret;
-        logger.info("创建获取access_token :" + url);
+        logger.info("创建获取access_token :" , url);
         return url;
     }
 
@@ -53,6 +53,7 @@ public class AccessToken extends Token {
     @Override
     protected String accessTokenUrl(String appId, String appSecret) {
         String url = ACCESS_TOKEN_URL + "&appid=" + appId + "&secret=" + appSecret;
+        logger.info("accessTokenUrl :" , url);
         return url;
     }
 }

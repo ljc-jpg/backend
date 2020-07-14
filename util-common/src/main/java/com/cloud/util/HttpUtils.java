@@ -64,8 +64,7 @@ public class HttpUtils {
                     .execute().returnResponse().getEntity();
             return entity != null ? EntityUtils.toString(entity) : null;
         } catch (Exception e) {
-            logger.error("post请求异常，" + e.getMessage() + "\n post url:" + url);
-            e.printStackTrace();
+            logger.error("post请求异常：" + e + "  post url:" + url);
         }
         return null;
     }
@@ -91,8 +90,7 @@ public class HttpUtils {
             HttpEntity entity = Request.Get(url).execute().returnResponse().getEntity();
             return entity != null ? EntityUtils.toString(entity) : null;
         } catch (Exception e) {
-            logger.error("get请求异常，" + e.getMessage() + "\n get url:" + url);
-            e.printStackTrace();
+            logger.error("get请求异常，" + e + " get url:" + url);
         }
         return "";
     }
@@ -123,8 +121,7 @@ public class HttpUtils {
             HttpEntity resEntity = request.execute().returnResponse().getEntity();
             return resEntity != null ? EntityUtils.toString(resEntity) : null;
         } catch (Exception e) {
-            logger.error("postFile请求异常，" + e.getMessage() + "\n post url:" + url);
-            e.printStackTrace();
+            logger.error("postFile请求异常，" + e + "  post url:" + url);
         }
         return null;
     }
@@ -137,8 +134,7 @@ public class HttpUtils {
             HttpEntity resEntity = request.execute().returnResponse().getEntity();
             return resEntity != null ? EntityUtils.toString(resEntity) : null;
         } catch (Exception e) {
-            logger.error("postFile请求异常，" + e.getMessage() + "\n post url:" + url);
-            e.printStackTrace();
+            logger.error("postFile请求异常，" + e + "post url:" + url);
         }
         return null;
     }
@@ -221,8 +217,7 @@ public class HttpUtils {
             HttpEntity resEntity = request.execute().returnResponse().getEntity();
             return EntityUtils.toByteArray(resEntity);
         } catch (Exception e) {
-            logger.error("postFile请求异常，" + e.getMessage() + "\n post url:" + url);
-            e.printStackTrace();
+            logger.error("postFile请求异常，" + e + " post url:" + url);
         }
         return null;
     }
@@ -275,7 +270,7 @@ public class HttpUtils {
             httpsURLConnection.disconnect();
             jsonObject = JSONObject.parseObject(stringBuffer.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("httpsRequest请求异常：" + e);
         }
         return jsonObject;
     }
