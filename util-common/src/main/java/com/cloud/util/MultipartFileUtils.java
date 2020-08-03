@@ -30,10 +30,10 @@ public class MultipartFileUtils {
         FileItemFactory factory = new DiskFileItemFactory(16, null);
         FileItem item = factory.createItem(fileType, "multipart/form-data", true, fileName);
         int bytesRead;
-        byte[] buffer = new byte[8192];
+        byte[] buffer = new byte[Integer.parseInt(ActiveEnum.MB_EVENT.getValue())];
         try (FileInputStream fis = new FileInputStream(file); OutputStream os = item.getOutputStream()) {
-            while ((bytesRead = fis.read(buffer, 0, 8192)) != -1) {
-                os.write(buffer, 0, bytesRead);
+            while ((bytesRead = fis.read(buffer, ActiveEnum.ZERO_EVENT.getKey(), Integer.parseInt(ActiveEnum.MB_EVENT.getValue()))) != -1) {
+                os.write(buffer, ActiveEnum.ZERO_EVENT.getKey(), bytesRead);
             }
         } catch (IOException e) {
             logger.error("getMultipartFile错误:" + e);
@@ -72,5 +72,5 @@ public class MultipartFileUtils {
         }
         return false;
     }
-    
+
 }

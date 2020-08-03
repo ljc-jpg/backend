@@ -8,41 +8,61 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author zhuz
+ * @date 2020/8/3
+ */
 @Table(name = "t_salary")
 public class Salary implements Serializable {
 
-    /** 工资单id */
+    /**
+     * 工资单id
+     */
     @Id
     @GeneratedValue(generator = "JDBC")
     private Integer salaryId;
 
-    /** 学校id */
+    /**
+     * 学校id
+     */
     private Integer schId;
 
-    /** 工资单名称 */
+    /**
+     * 工资单名称
+     */
     private String name;
 
-    /** 工资单发放时间 */
+    /**
+     * 工资单发放时间
+     */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date provideTime;
 
-    /** 创建时间 */
+    /**
+     * 创建时间
+     */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
-    /** 审批时间*/
+    /**
+     * 审批时间
+     */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date approvalTime;
 
-    /** 通过时间 */
+    /**
+     * 通过时间
+     */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date adoptTime;
 
-    /** 发布时间 */
+    /**
+     * 发布时间
+     */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date releaseTime;
@@ -50,6 +70,7 @@ public class Salary implements Serializable {
     /** 更新时间 */
     /**
      * DateTimeFormat 接收处理   JsonFormat 返回格式化
+     *
      * @author zhuz
      * @date 2020/7/31
      */
@@ -57,27 +78,41 @@ public class Salary implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    /** 默认0,删除99 */
+    /**
+     * 默认0,删除99
+     */
     private Integer status;
 
-    /** 1.制表2.审批,3待发布,4已发布 */
+    /**
+     * 1.制表2.审批,3待发布,4已发布
+     */
     private Integer type;
 
     private String leaveId;
 
-    /** 1未推送，2已推送 */
+    /**
+     * 1未推送，2已推送
+     */
     private Integer isPush;
 
-    /** 工资单路径*/
+    /**
+     * 工资单路径
+     */
     private String path;
 
-    /** 发布工资单人 */
+    /**
+     * 发布工资单人
+     */
     private String userId;
 
-    /** 未开启1,开启0 */
+    /**
+     * 未开启1,开启0
+     */
     private Integer destroy;
 
-    /** 多长时间阅后即焚 */
+    /**
+     * 多长时间阅后即焚
+     */
     private String readTime;
 
     @Transient

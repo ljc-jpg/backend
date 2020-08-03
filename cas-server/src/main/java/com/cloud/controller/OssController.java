@@ -17,15 +17,16 @@ import java.util.List;
 import static com.cloud.util.RegExUtil.isEmail;
 
 /**
- * @Author zhuz
- * @Description 文件, 邮件处理接口
- * @Date 14:51 2020/5/25
+ * 文件, 邮件处理接口
+ *
+ * @author zhuz
+ * @date 2020/5/25
  **/
 @RestController
 @RequestMapping(value = "/OSS")
-public class OSSController {
+public class OssController {
 
-    private static final Logger logger = LoggerFactory.getLogger(OSSController.class);
+    private static final Logger logger = LoggerFactory.getLogger(OssController.class);
 
     @Resource
     private OSSService ossService;
@@ -39,13 +40,8 @@ public class OSSController {
      * @apiParam (请求参数) {Object} multipartFile 上传的文件
      * @apiParam (请求参数) {String} fileName 文件名
      * @apiParamExample 请求参数示例
-     * fileName=61u3oWBn&multipartFile=null
-     * @apiSuccess (响应结果) {String} originalFileName 原始文件名
-     * @apiSuccess (响应结果) {String} fileExtName 文件扩展名
-     * @apiSuccess (响应结果) {String} fileSavedName 文件存储名
-     * @apiSuccess (响应结果) {String} fileSavedPath 文件存储相对路径
-     * @apiSuccess (响应结果) {String} filePreviewPathFull 文件预览完整路径
-     * @apiSuccess (响应结果) {Object} data 具体值
+     * fileName=61u3oWBn&
+     * multipartFile=null
      * @apiSuccessExample 响应结果示例
      * {"originalFileName":"qXFuxfA","fileSavedName":"yyF0mLFf","data":{},"filePreviewPathFull":"n3Bk7O","fileSavedPath":"bBQCAzqg","fileExtName":"bjBBxcv"}
      */
@@ -82,8 +78,9 @@ public class OSSController {
      * @apiParam (请求参数) {String} subject 邮件主题
      * @apiParam (请求参数) {Array} files 邮件附件
      * @apiParamExample 请求参数示例
-     * addressee=804251123@qq.com&subject=邮件主题=http://12.pdf,http://13.pdf&content=[{\"content\":\"<div>2222<div>\",\"type\":1},{\"content\":\"https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3252521864,872614242&fm=26&gp=0.jpg\",\"type\":2},{\"content\":\"<div>333<div>\",\"type\":1}]
-     * @apiSuccess (响应结果) {Object} data 具体值
+     * addressee=804251123@qq.com&
+     * subject=邮件主题&
+     * content=[{\"content\":\"<div>2222<div>\",\"type\":1},{\"content\":\"https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3252521864,872614242&fm=26&gp=0.jpg\",\"type\":2},{\"content\":\"<div>333<div>\",\"type\":1}]
      * @apiSuccessExample 响应结果示例
      * {"data":{true}}
      */

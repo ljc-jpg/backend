@@ -20,6 +20,9 @@ import java.util.Properties;
 
 /**
  * mybatis 主配置
+ *
+ * @author zhuz
+ * @date 2020/8/3
  */
 @Configuration
 @EnableTransactionManagement
@@ -34,9 +37,12 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
         bean.setDataSource(dataSource);
         bean.setTypeAliasesPackage("com.cloud.model.*");
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
-        configuration.setUseGeneratedKeys(true);//使用jdbc的getGeneratedKeys获取数据库自增主键值
-        configuration.setUseColumnLabel(true);//使用列别名替换列名 select AppUser as User
-        configuration.setMapUnderscoreToCamelCase(true);//-自动使用驼峰命名属性映射字段   userId    user_id
+        //使用jdbc的getGeneratedKeys获取数据库自增主键值
+        configuration.setUseGeneratedKeys(true);
+        //使用列别名替换列名 select AppUser as User
+        configuration.setUseColumnLabel(true);
+        //-自动使用驼峰命名属性映射字段   userId    user_id
+        configuration.setMapUnderscoreToCamelCase(true);
         configuration.setCallSettersOnNulls(true);
         bean.setConfiguration(configuration);
         bean.setFailFast(true);

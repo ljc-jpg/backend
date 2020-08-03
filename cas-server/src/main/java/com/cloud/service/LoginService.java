@@ -15,6 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author zhuz
+ * @date 2020/8/3
+ */
 @Service
 public class LoginService {
 

@@ -8,6 +8,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author zhuz
+ * @date 2020/8/3
+ */
 @Table(name = "t_salary_user_attr")
 public class SalaryUserAttr implements Serializable {
 
@@ -61,6 +65,7 @@ public class SalaryUserAttr implements Serializable {
     public Integer[] getPersonMoney() {
         return personMoney;
     }
+
     public void setPersonMoney(Integer[] personMoney) {
         this.personMoney = personMoney;
     }
@@ -68,6 +73,7 @@ public class SalaryUserAttr implements Serializable {
     public Integer getTotal() {
         return total;
     }
+
     public void setTotal(Integer total) {
         this.total = total;
     }
@@ -75,6 +81,7 @@ public class SalaryUserAttr implements Serializable {
     public List<SalaryUserAttr> getSalaryUserAttrs() {
         return salaryUserAttrs;
     }
+
     public void setSalaryUserAttrs(List<SalaryUserAttr> salaryUserAttrs) {
         this.salaryUserAttrs = salaryUserAttrs;
     }
@@ -98,6 +105,7 @@ public class SalaryUserAttr implements Serializable {
     public String getSalaryName() {
         return salaryName;
     }
+
     public void setSalaryName(String salaryName) {
         this.salaryName = salaryName;
     }
@@ -105,6 +113,7 @@ public class SalaryUserAttr implements Serializable {
     public String getProjectName() {
         return projectName;
     }
+
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
@@ -112,6 +121,7 @@ public class SalaryUserAttr implements Serializable {
     public Integer getProjectType() {
         return projectType;
     }
+
     public void setProjectType(Integer projectType) {
         this.projectType = projectType;
     }
@@ -119,6 +129,7 @@ public class SalaryUserAttr implements Serializable {
     public Integer getUserAttrId() {
         return userAttrId;
     }
+
     public void setUserAttrId(Integer userAttrId) {
         this.userAttrId = userAttrId;
     }
@@ -126,6 +137,7 @@ public class SalaryUserAttr implements Serializable {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
@@ -133,6 +145,7 @@ public class SalaryUserAttr implements Serializable {
     public Date getCreateTime() {
         return createTime;
     }
+
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
@@ -140,6 +153,7 @@ public class SalaryUserAttr implements Serializable {
     public Date getUpdateTime() {
         return updateTime;
     }
+
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
@@ -147,6 +161,7 @@ public class SalaryUserAttr implements Serializable {
     public Integer getStatus() {
         return status;
     }
+
     public void setStatus(Integer status) {
         this.status = status;
     }
@@ -154,6 +169,7 @@ public class SalaryUserAttr implements Serializable {
     public BigDecimal getMoney() {
         return money;
     }
+
     public void setMoney(BigDecimal money) {
         this.money = money;
     }
@@ -161,6 +177,7 @@ public class SalaryUserAttr implements Serializable {
     public Integer getType() {
         return type;
     }
+
     public void setType(Integer type) {
         this.type = type;
     }
@@ -168,6 +185,7 @@ public class SalaryUserAttr implements Serializable {
     public Integer getSalaryId() {
         return salaryId;
     }
+
     public void setSalaryId(Integer salaryId) {
         this.salaryId = salaryId;
     }
@@ -175,6 +193,7 @@ public class SalaryUserAttr implements Serializable {
     public String getUserId() {
         return userId;
     }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }

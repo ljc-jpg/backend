@@ -8,6 +8,10 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 
+/**
+ * @author zhuz
+ * @date 2020/8/3
+ */
 @Component
 public class TaskUtils {
 

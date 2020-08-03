@@ -17,7 +17,7 @@ public class PinyUtil {
     private PinyUtil() {
     }
 
-    public static String ToPinyin(String chinese) {
+    public static String toPinyin(String chinese) {
         String pinyinStr = "";
         char[] newChar = chinese.toCharArray();
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();

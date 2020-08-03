@@ -8,11 +8,22 @@ import tk.mybatis.spring.mapper.MapperScannerConfigurer;
 
 import java.util.Properties;
 
-//保证在MyBatisConfig实例化之后再实例化该类
+/**
+ * 保证在MyBatisConfig实例化之后再实例化该类
+ *
+ * @author zhuz
+ * @date 2020/8/3
+ */
 @Configuration
 @AutoConfigureAfter(MyBatisConfig.class)
 public class MapperScannerConfig {
-    // mapper接口的扫描器
+
+    /**
+     * mapper接口的扫描器
+     *
+     * @author zhuz
+     * @date 2020/8/3
+     */
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();

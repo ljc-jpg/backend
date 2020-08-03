@@ -22,6 +22,7 @@ public class QuartzJobFactoryDisallowConcurrentExecution implements Job, Applica
 
     public ApplicationContext appCtx;
 
+    @Override
     public void execute(JobExecutionContext context) {
         try {
             ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().get("scheduleJob");

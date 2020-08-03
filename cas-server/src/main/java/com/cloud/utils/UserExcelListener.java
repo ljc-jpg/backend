@@ -12,11 +12,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.cloud.util.PinyUtil.ToPinyin;
+import static com.cloud.util.PinyUtil.toPinyin;
 
+/**
+ * @author zhuz
+ */
 public class UserExcelListener extends AnalysisEventListener<User> {
 
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(UserExcelListener.class);
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(UserExcelListener.class);
 
     /**
      * 每隔5条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收
@@ -46,10 +49,10 @@ public class UserExcelListener extends AnalysisEventListener<User> {
      */
     @Override
     public void invoke(User user, AnalysisContext context) {
-        log.info("解析到一条数据:{}", JSON.toJSONString(data));
+        LOGGER.info("解析到一条数据:{}" + JSON.toJSONString(data));
         //读取的数据处理
         user.setCreateTime(new Date());
-        user.setLoginName(ToPinyin(user.getFullName()));
+        user.setLoginName(toPinyin(user.getFullName()));
         user.setUserType("教师".equals(user.getUserType()) ? "T" : ("学生".equals(user.getUserType()) ? "S" : "P"));
         user.setGender("男".equals(user.getGender()) ? "1" : "0");
         user.setIsAdmin(0);
@@ -79,12 +82,12 @@ public class UserExcelListener extends AnalysisEventListener<User> {
      */
     @Override
     public void onException(Exception exception, AnalysisContext context) {
-        log.error("解析失败，但是继续解析下一行:{}", exception.getMessage());
+        LOGGER.error("解析失败，但是继续解析下一行:{}", exception.getMessage());
         // 如果要获取头的信息 配合invokeHeadMap使用
         if (exception instanceof ExcelDataConvertException) {
             ExcelDataConvertException excelDataConvertException = (ExcelDataConvertException) exception;
-            log.error("第{}行，第{}列解析异常", excelDataConvertException.getRowIndex(), excelDataConvertException.getColumnIndex());
-            log.error("解析异常的数据", excelDataConvertException.getCellData());
+            LOGGER.error("第{}行，第{}列解析异常", excelDataConvertException.getRowIndex(), excelDataConvertException.getColumnIndex());
+            LOGGER.error("解析异常的数据", excelDataConvertException.getCellData());
             //错误处理
         }
     }
@@ -93,9 +96,9 @@ public class UserExcelListener extends AnalysisEventListener<User> {
      * 加上存储数据库
      */
     private void saveData() {
-        log.info("{}条数据，开始存储数据库！" + data.size());
+        LOGGER.info("{}条数据，开始存储数据库！" + data.size());
         userService.insertUsers(data);
-        log.info("存储数据库成功！");
+        LOGGER.info("存储数据库成功！");
     }
 
 }

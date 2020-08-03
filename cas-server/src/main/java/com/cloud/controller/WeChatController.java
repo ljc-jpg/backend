@@ -2,7 +2,7 @@ package com.cloud.controller;
 
 import com.cloud.service.WeChatService;
 import com.cloud.util.ResultVo;
-import com.cloud.utils.weChat.WXTemplate;
+import com.cloud.utils.wechat.WxTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author zhuz
+ * @date 2020/8/3
+ */
 @RequestMapping(value = "/weChat")
 @RestController
 public class WeChatController {
@@ -37,13 +41,22 @@ public class WeChatController {
      * @apiParam (请求参数) {String} templateId 模板id
      * @apiParam (请求参数) {String} schId
      * @apiParamExample 请求参数示例
-     * schId=LcH6tSWbu8&openId=MsrLniCg2&openIds=e8V&remark=lwz&time=OFzgtT8t&schoolName=ykZhfjNsk&templateId=5cwNehUR&user=67&url=Z7BVqpK&first=F77TU&content=zF
-     * @apiSuccess (响应结果) {Object} data 具体值
+     * schId=LcH6tSWbu8&
+     * openId=MsrLniCg2&
+     * openIds=e8V&
+     * remark=lwz&
+     * time=OFzgtT8t&
+     * schoolName=ykZhfjNsk&
+     * templateId=5cwNehUR&
+     * user=67&
+     * url=Z7BVqpK&
+     * first=F77TU&
+     * content=zF
      * @apiSuccessExample 响应结果示例
      * {"data":{}}
      */
     @PostMapping("/sendGlobalTemplate")
-    public ResultVo sendGlobalTemplate(String openIds, WXTemplate wxTemplate) {
+    public ResultVo sendGlobalTemplate(String openIds, WxTemplate wxTemplate) {
         ResultVo result = new ResultVo();
         try {
             weChatService.sendGlobalTemplate(openIds, wxTemplate);
@@ -64,8 +77,8 @@ public class WeChatController {
      * @apiParam (请求参数) {String} appId
      * @apiParam (请求参数) {String} paramStr
      * @apiParamExample 请求参数示例
-     * paramStr=p4S&appId=In
-     * @apiSuccess (响应结果) {Object} response
+     * paramStr=p4S&
+     * appId=In
      * @apiSuccessExample 响应结果示例
      * null
      */

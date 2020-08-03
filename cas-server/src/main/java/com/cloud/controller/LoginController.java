@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import static com.cloud.util.ResultVo.RETURN_CODE_ERR;
 
 /**
- * @Author zhuz
- * @Description  登录管理
- * @Date 14:52 2020/5/25
- * @Param
+ * 登录管理
+ *
+ * @author zhuz
+ * @date 2020/5/25
  **/
 @RestController
 @RequestMapping("/cas")
@@ -39,32 +39,32 @@ public class LoginController {
      * @apiParam (请求参数) {String} loginName 账号
      * @apiParam (请求参数) {String} pwd 密码
      * @apiParamExample 请求参数示例
-     * loginName=7&pwd=1
-     * @apiSuccess (响应结果) {Object} data 具体值
+     * loginName=7&
+     * pwd=1
      * @apiSuccessExample 响应结果示例
      * {"data":{}}
      */
     @PostMapping("/login")
     public ResultVo login(HttpServletRequest request, HttpServletResponse response, String loginName, String pwd) {
-        ResultVo ResultVo = new ResultVo();
+        ResultVo resultVo = new ResultVo();
         try {
             if (StringUtils.isEmpty(loginName)) {
-                ResultVo.setMsg("loginName为空");
-                ResultVo.setCode(RETURN_CODE_ERR);
-                return ResultVo;
+                resultVo.setMsg("loginName为空");
+                resultVo.setCode(RETURN_CODE_ERR);
+                return resultVo;
             }
             if (StringUtils.isEmpty(pwd)) {
-                ResultVo.setMsg("pwd为空");
-                ResultVo.setCode(RETURN_CODE_ERR);
-                return ResultVo;
+                resultVo.setMsg("pwd为空");
+                resultVo.setCode(RETURN_CODE_ERR);
+                return resultVo;
             }
             loginService.login(request, response, loginName, pwd);
         } catch (Exception e) {
             logger.error("login:", e);
-            ResultVo.setMsg("login:" + e);
-            ResultVo.setCode(RETURN_CODE_ERR);
+            resultVo.setMsg("login:" + e);
+            resultVo.setCode(RETURN_CODE_ERR);
         }
-        return ResultVo;
+        return resultVo;
     }
 
 

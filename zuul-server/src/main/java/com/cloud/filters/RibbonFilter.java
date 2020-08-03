@@ -1,5 +1,6 @@
 package com.cloud.filters;
 
+import com.cloud.util.ActiveEnum;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import io.jmnarloch.spring.cloud.ribbon.support.RibbonFilterContextHolder;
@@ -44,11 +45,12 @@ public class RibbonFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         logger.debug("serverName: " + ctx.getRequest().getServerName());
         HttpServletRequest request = ctx.getRequest();
-        return null != request.getServerName() && request.getServerName().contains("pre");
+        return null != request.getServerName() && request.getServerName().contains(ActiveEnum.PRE_EVENT.getValue());
     }
 
     /**
-     * @Description:过滤器具体业务 转发到对应的微服务
+     * 过滤器具体业务 转发到对应的微服务
+     *
      * @author zhu zheng
      * @date 2020/4/13
      */
@@ -56,8 +58,8 @@ public class RibbonFilter extends ZuulFilter {
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        if (null != request.getServerName() && request.getServerName().contains("pre")) {
-            RibbonFilterContextHolder.getCurrentContext().add("pre", "1");
+        if (null != request.getServerName() && request.getServerName().contains(ActiveEnum.PRE_EVENT.getValue())) {
+            RibbonFilterContextHolder.getCurrentContext().add(ActiveEnum.PRE_EVENT.getValue(), ActiveEnum.ONE_EVENT.getValue());
         }
         return null;
     }

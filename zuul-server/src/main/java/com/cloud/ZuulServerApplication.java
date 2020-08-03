@@ -22,12 +22,12 @@ public class ZuulServerApplication {
     }
 
     @Bean
-    public PreAuthFilter PreAuthFilter() {
+    public PreAuthFilter preAuthFilter() {
         return new PreAuthFilter();
     }
 
     @Bean
-    public RibbonFilter RibbonFilter() {
+    public RibbonFilter ribbonFilter() {
         return new RibbonFilter();
     }
 }

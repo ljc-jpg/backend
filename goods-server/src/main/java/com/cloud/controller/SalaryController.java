@@ -36,10 +36,8 @@ public class SalaryController {
      * @apiParam (请求参数) {Number} salaryId 工资单id
      * @apiParam (请求参数) {Number} schId 学校id
      * @apiParamExample 请求参数示例
-     * schId=2658&salaryId=2299
-     * @apiSuccess (响应结果) {Number} code 默认成功 1
-     * @apiSuccess (响应结果) {String} msg 消息
-     * @apiSuccess (响应结果) {String} data 具体值
+     * schId=2658&
+     * salaryId=2299
      * @apiSuccessExample 响应结果示例
      * {"msg":"skmvPns9L","code":100,"data":"x"}
      */
@@ -77,10 +75,9 @@ public class SalaryController {
      * @apiParam (请求参数) {Number} salaryId 工资单id
      * @apiParam (请求参数) {Number} schId 学校id
      * @apiParamExample 请求参数示例
-     * schId=4084&addressee=cW9FW&salaryId=3798
-     * @apiSuccess (响应结果) {Number} code 默认成功 1
-     * @apiSuccess (响应结果) {String} msg 消息
-     * @apiSuccess (响应结果) {Object} data 具体值
+     * schId=4084&
+     * addressee=cW9FW&
+     * salaryId=3798
      * @apiSuccessExample 响应结果示例
      * {"msg":"KVZAUE3","code":116,"data":{}}
      */

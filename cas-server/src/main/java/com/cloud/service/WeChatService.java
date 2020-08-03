@@ -4,9 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cloud.dao.Zxxx0101Mapper;
 import com.cloud.model.Zxxx0101;
+import com.cloud.util.ActiveEnum;
 import com.cloud.util.HttpUtils;
-import com.cloud.utils.weChat.AccessToken;
-import com.cloud.utils.weChat.WXTemplate;
+import com.cloud.utils.wechat.AccessToken;
+import com.cloud.utils.wechat.WxTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,10 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * @author zhuz
+ * @date 2020/8/3
+ */
 @Service
 public class WeChatService {
 
@@ -40,58 +44,82 @@ public class WeChatService {
     private StringRedisTemplate redisTemplate;
 
     private static Map setValue(String value, String color) {
-        Map<String, String> resultMap = new HashMap<>();
+        Map<String, String> resultMap = new HashMap<>(ActiveEnum.TWO_EVENT.getKey());
         resultMap.put("value", value);
         resultMap.put("color", color);
         return resultMap;
     }
 
-    //发送模板消息
+    /**
+     * 发送模板消息
+     *
+     * @param token
+     * @param json
+     * @return {@link Map< String, Object>}
+     * @author zhuz
+     * @date 2020/8/3
+     */
     public static Map<String, Object> sendTemplate(String token, String json) {
-        JSONObject jsonObject = HttpUtils.httpsRequest(SEND_MSG_URL + token, "POST", json);//获得返回数据
+        //获得返回数据
+        JSONObject jsonObject = HttpUtils.httpsRequest(SEND_MSG_URL + token, "POST", json);
         return jsonObject;
     }
 
-    //组装微信模板消息参数 url
-    public static String globalTemplate(WXTemplate wxTemplate) {
+    /**
+     * 组装微信模板消息参数 url
+     *
+     * @param wxTemplate
+     * @return {@link String}
+     * @author zhuz
+     * @date 2020/8/3
+     */
+    public static String globalTemplate(WxTemplate wxTemplate) {
         String id = StringUtils.isEmpty(wxTemplate.getTemplateId()) ? "7K2P0iMnHPdzZiMITs4GBLuiMWRyd5AHPvOtvBV2b_0" : wxTemplate.getTemplateId();
-        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>(ActiveEnum.FOUR_EVENT.getKey());
         params.put("touser", wxTemplate.getOpenId());
         params.put("template_id", id);
         params.put("url", wxTemplate.getUrl());
 
-        Map<String, Map> data = new HashMap<>();
+        Map<String, Map> data = new HashMap<>(6);
         data.put("first", setValue(wxTemplate.getFirst(), COLOR_GRAY));
         data.put("keyword1", setValue(wxTemplate.getSchoolName(), COLOR_GRAY));
         data.put("keyword2", setValue(wxTemplate.getUser(), COLOR_GRAY));
         data.put("keyword3", setValue(wxTemplate.getTime(), COLOR_GRAY));
         data.put("keyword4", setValue(wxTemplate.getContent(), COLOR_GRAY));
         data.put("remark", setValue(wxTemplate.getRemark(), COLOR_GRAY));
+
         params.put("data", data);
         String json = JSON.toJSON(params).toString();
         logger.info("微信公众号通用模板 json:{}", json);
         return json;
     }
 
-    //获取微信accessToken
+    /**
+     * 获取微信accessToken
+     *
+     * @param schId
+     * @return {@link String}
+     * @author zhuz
+     * @date 2020/8/3
+     */
     public String getAccessToken(String schId) {
         String token = null;
         try {
             Zxxx0101 zxxx0101 = zxxx0101Mapper.selectBySchId(schId);
-            logger.info("appId:" + zxxx0101.getWeChatAppID() + "appSecret:" + zxxx0101.getAppSecret());
+            logger.info("appId:" + zxxx0101.getWechatAppId() + "appSecret:" + zxxx0101.getAppSecret());
             if (null == zxxx0101) {
                 logger.error("未找到学校");
                 throw new RuntimeException("getAccessToken未找到学校");
             }
             AccessToken accessToken = new AccessToken();
-            String tokenStr = redisTemplate.opsForValue().get("send_template_message_token_" + zxxx0101.getWeChatAppID());
+            String tokenStr = redisTemplate.opsForValue().get("send_template_message_token_" + zxxx0101.getWechatAppId());
             logger.info("redis 获取 token  == >      " + tokenStr);
             if (!StringUtils.isEmpty(tokenStr)) {
                 token = tokenStr;
             } else {
-                token = (String) accessToken.request(zxxx0101.getWeChatAppID(), zxxx0101.getAppSecret()).get("accessToken");
+                token = (String) accessToken.request(zxxx0101.getWechatAppId(), zxxx0101.getAppSecret()).get("accessToken");
                 logger.info("自动生成token:" + token);
-                redisTemplate.opsForValue().set("send_template_message_token_" + zxxx0101.getWeChatAppID(), token, 3600);
+                redisTemplate.opsForValue().set("send_template_message_token_" + zxxx0101.getWechatAppId(), token, 3600);
             }
         } catch (Exception e) {
             logger.error("getAccessToken" + e);
@@ -105,7 +133,7 @@ public class WeChatService {
      * @Date 10:35 2020/7/8
      * @Param [openIds, wxTemplate]
      **/
-    public void sendGlobalTemplate(String openIds, WXTemplate wxTemplate) {
+    public void sendGlobalTemplate(String openIds, WxTemplate wxTemplate) {
         String tokenStr = getAccessToken(wxTemplate.getSchId());
         logger.info("sendGlobalTemplate tokenStr:" + tokenStr);
         String[] openId = openIds.split(",");

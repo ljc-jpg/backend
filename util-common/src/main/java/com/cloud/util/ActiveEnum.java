@@ -38,6 +38,8 @@ public enum ActiveEnum {
 
     PRE_EVENT(171, "pre", "过滤器使用"),
 
+    RETURN_CODE_EVENT(181,"returnCode","返回值"),
+
     MB_EVENT(141, "1024", "文件大小换算单位");
 
     private int key;

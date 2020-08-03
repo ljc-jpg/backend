@@ -1,6 +1,5 @@
 package com.cloud.service;
 
-import com.aliyun.oss.OSSClient;
 import com.cloud.model.EmailContent;
 import com.cloud.util.UploadResult;
 import org.apache.commons.io.FilenameUtils;
@@ -22,10 +21,8 @@ import java.util.UUID;
 
 
 /**
- * @author: zhuzheng
- * @date: 2020/1/24
- * @version: 1.0
- * @since: JDK 1.7
+ * @author zhuz
+ * @date 2020/1/24
  */
 @Service
 public class OSSService {
@@ -33,34 +30,34 @@ public class OSSService {
     private static final Logger logger = LoggerFactory.getLogger(OSSService.class);
 
     @Value("${aliyun.accessKeyId}")
-    public String ALIYUN_ACCESS_KEY_ID;
+    public String aliyunAccessKeyId;
 
     @Value("${aliyun.accessKeySecret}")
-    private String ALIYUN_ACCESS_KEY_SECRET;
+    private String aliyunAccessKeySecret;
 
     @Value("${aliyun.endpoint}")
-    private String ALIYUN_OSS_ENDPOINT;
+    private String aliyunOssEndpoint;
 
     @Value("${aliyun.cname}")
-    private String ALIYUN_OSS_ENDPOINT_CNAME;
+    private String aliyunOssEndpointCname;
 
     @Value("${aliyun.bucketName}")
-    private String ALIYUN_OSS_BUCKET_NAME;
+    private String aliyunOssBucketName;
 
     @Value("${aliyun.root}")
-    private String ALIYUN_OSS_DIR_CONSOLE_ROOT;
+    private String aliyunOssDirConsoleRoot;
 
     @Value("${mail.host}")
-    private String HOST;
+    private String host;
 
     @Value("${mail.port}")
-    private String PORT;
+    private String port;
 
     @Value("${mail.user}")
-    private String USER;
+    private String user;
 
     @Value("${mail.password}")
-    private String PASSWORD;
+    private String password;
 
     /**
      * 单个文件上传
@@ -72,53 +69,54 @@ public class OSSService {
      */
     public UploadResult uploadSingle(String originalFileName, String relative, InputStream inputStream) {
         UploadResult uploadResult = new UploadResult();
-        //创建客户端
-        OSSClient ossClient = new OSSClient(ALIYUN_OSS_ENDPOINT, ALIYUN_ACCESS_KEY_ID, ALIYUN_ACCESS_KEY_SECRET);
+        // OSS ossClient = new OSSClientBuilder().build(aliyunOssEndpoint, aliyunAccessKeyId, aliyunAccessKeySecret);
         try {
             // 文件扩展名
             String fileExtName = FilenameUtils.getExtension(originalFileName);
             // 新文件名
             String fileSavedName = UUID.randomUUID().toString() + "." + fileExtName;
             //执行文件保存
-//            ossClient.putObject(ALIYUN_OSS_BUCKET_NAME, ALIYUN_OSS_DIR_CONSOLE_ROOT + relative + fileSavedName, inputStream);
-            //构造返回
+//            ossClient.putObject(aliyunOssBucketName, aliyunOssDirConsoleRoot + relative + fileSavedName, inputStream);
             uploadResult.setOriginalFileName(originalFileName);
             uploadResult.setFileExtName(fileExtName);
             uploadResult.setFileSavedName(fileSavedName);
             uploadResult.setFileSavedPath(relative + fileSavedName);
-            uploadResult.setFilePreviewPathFull(ALIYUN_OSS_ENDPOINT_CNAME + "/" + ALIYUN_OSS_DIR_CONSOLE_ROOT + relative + fileSavedName);
+            uploadResult.setFilePreviewPathFull(aliyunOssEndpointCname + "/" + aliyunOssDirConsoleRoot + relative + fileSavedName);
             uploadResult.setCode(UploadResult.RETURN_CODE_ERR);
-            logger.debug(originalFileName + "   " + ALIYUN_OSS_ENDPOINT_CNAME + "/" + ALIYUN_OSS_DIR_CONSOLE_ROOT + relative + fileSavedName);
-        } catch (Exception oe) {
-            logger.error("Error Message," + oe);
+            logger.info(originalFileName + "   " + aliyunOssEndpointCname + "/" + aliyunOssDirConsoleRoot + relative + fileSavedName);
+        } catch (Exception e) {
+            logger.error("uploadSingle Error", e);
         } finally {
-//            ossClient.shutdown();
+            //ossClient.shutdown();
         }
         return uploadResult;
     }
 
     /**
-     * @Author zhuz
-     * @Description 添加图片的方式 将整个图片包含到邮件内容中
-     * @Date 9:47 2020/5/26
-     * @Param [addressee（邮件地址）, content（邮件内容）, subject邮件主题）, files（邮件附件文件）, picture（邮件图片）]
-     **/
+     * @param addressee 邮件地址
+     * @param list      邮件内容 (文字加图片)
+     * @param subject   邮件主题
+     * @param files     邮件附件文件
+     * @return {@link boolean}
+     * @author zhuz
+     * @date 2020/8/3
+     */
     public boolean sendEmail(String addressee, List<EmailContent> list, String subject, String[] files) {
-        logger.error("收件人邮箱:" + addressee);
         // 创建Properties 类用于记录邮箱的一些属性
         Properties props = new Properties();
         // 表示SMTP发送邮件，必须进行身份验证
         props.put("mail.smtp.auth", "true");
         //此处填写SMTP服务器
-        props.put("mail.smtp.host", HOST);
+        props.put("mail.smtp.host", host);
         //端口号，QQ邮箱端口587
-        props.put("mail.smtp.port", PORT);
+        props.put("mail.smtp.port", port);
         // 此处填写，写信人的账号
-        props.put("mail.smtp.user", USER);
+        props.put("mail.smtp.user", user);
         // 此处填写16位STMP口令
-        props.put("mail.smtp.password", PASSWORD);
+        props.put("mail.smtp.password", password);
         // 构建授权信息，发件人邮件用户名、授权码 用于进行SMTP进行身份验证
         Authenticator authenticator = new Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 // 用户名、密码
                 String userName = props.getProperty("mail.smtp.user");
@@ -128,11 +126,10 @@ public class OSSService {
         };
         // 使用环境属性和授权信息，创建邮件会话
         Session mailSession = Session.getInstance(props, authenticator);
-        mailSession.setDebug(true);
         // 创建邮件消息
         MimeMessage message = new MimeMessage(mailSession);
         // 设置发件人
-        InternetAddress from = null;
+        InternetAddress from;
         try {
             from = new InternetAddress(props.getProperty("mail.smtp.user"));
         } catch (AddressException e) {
@@ -141,7 +138,6 @@ public class OSSService {
         }
         // 创建混合节点
         MimeMultipart multipart = new MimeMultipart();
-
         try {
             message.setFrom(from);
             // 设置收件人的邮箱
@@ -149,13 +145,13 @@ public class OSSService {
             message.setRecipient(Message.RecipientType.TO, to);
             // 设置邮件标题
             message.setSubject(subject);
-            String content = "";
+            StringBuffer content = new StringBuffer();
 
             for (int i = 0; i < list.size(); i++) {
                 try {
                     EmailContent emailContent = list.get(i);
                     if ("1".equals(emailContent.getType())) {
-                        content = content + emailContent.getContent();
+                        content = content.append(emailContent.getContent());
                     } else {
                         //创建图片节点
                         MimeBodyPart image = new MimeBodyPart();
@@ -166,7 +162,7 @@ public class OSSService {
                         //为 图片"节点"设置一个唯一编号
                         image.setContentID("pic" + i);
                         multipart.addBodyPart(image);
-                        content = content + "<img src='cid:pic" + i + "'/>";
+                        content = content.append("<img src='cid:pic" + i + "'/>");
                     }
                 } catch (Exception e) {
                     logger.error("设置邮件图片错误:" + e);
@@ -206,4 +202,5 @@ public class OSSService {
         }
         return true;
     }
+
 }

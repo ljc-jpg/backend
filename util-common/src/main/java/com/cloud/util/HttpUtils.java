@@ -154,14 +154,14 @@ public class HttpUtils {
         con.setRequestProperty("Connection", "Keep-Alive");
         con.setRequestProperty("Charset", "UTF-8");
         // 设置边界
-        String BOUNDARY = "----------" + System.currentTimeMillis();
-        con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
+        String boundary = "----------" + System.currentTimeMillis();
+        con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
         // 请求正文信息
         // 第一部分：
         StringBuilder sb = new StringBuilder();
         // 必须多两道线
         sb.append("--");
-        sb.append(BOUNDARY);
+        sb.append(boundary);
         sb.append("\r\n");
         sb.append("Content-Disposition: form-data;name=\"media\";filelength=\"" + fileSize + "\";filename=\"" + fileName + "\"\r\n");
         sb.append("Content-Type: application/json;charset=UTF-8\r\n\r\n");
@@ -180,7 +180,7 @@ public class HttpUtils {
         }
         in.close();
         // 结尾部分  定义最后数据分隔线
-        byte[] foot = ("\r\n--" + BOUNDARY + "--\r\n").getBytes("utf-8");
+        byte[] foot = ("\r\n--" + boundary + "--\r\n").getBytes("utf-8");
         out.write(foot);
         out.flush();
         out.close();
@@ -235,8 +235,6 @@ public class HttpUtils {
         JSONObject jsonObject = null;
         StringBuffer stringBuffer = new StringBuffer();
         try {
-            //指定SSL客户端使用的协议为TLSv1
-            System.setProperty("https.protocols", "TLSv1");
             // 创建SSLContext对象，并使用我们指定的信任管理器初始化
             TrustManager[] trustManagers = {new MyX509TrustManager()};
             //自动调用Security.getProviders()获取已经注册的提供者
@@ -246,30 +244,30 @@ public class HttpUtils {
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             URL url = new URL(requestUrl);
-            HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            httpsURLConnection.setSSLSocketFactory(sslSocketFactory);
-            httpsURLConnection.setDoInput(true);
-            httpsURLConnection.setUseCaches(false);
-            httpsURLConnection.setRequestMethod(requestMethod);
-            httpsURLConnection.setReadTimeout(TIME_OUT);
-            httpsURLConnection.setConnectTimeout(5000);
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            connection.setSSLSocketFactory(sslSocketFactory);
+            connection.setDoInput(true);
+            connection.setUseCaches(false);
+            connection.setRequestMethod(requestMethod);
+            connection.setReadTimeout(TIME_OUT);
+            connection.setConnectTimeout(5000);
 
             //当有数据需要提交时
             if (StringUtils.isNotEmpty(outputStr)) {
-                httpsURLConnection.setDoOutput(true);
-                OutputStream outputStream = httpsURLConnection.getOutputStream();
+                connection.setDoOutput(true);
+                OutputStream outputStream = connection.getOutputStream();
                 outputStream.write(outputStr.getBytes("UTF-8"));
                 outputStream.close();
             }
-            httpsURLConnection.connect();
+            connection.connect();
             //将返回的输入流转为字符串
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream(), "UTF-8"));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuffer.append(line);
             }
             bufferedReader.close();
-            httpsURLConnection.disconnect();
+            connection.disconnect();
             jsonObject = JSONObject.parseObject(stringBuffer.toString());
         } catch (Exception e) {
             logger.error("httpsRequest请求异常：", e);

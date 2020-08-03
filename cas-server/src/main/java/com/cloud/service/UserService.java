@@ -26,7 +26,7 @@ import java.util.*;
 @Service
 public class UserService {
 
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     @Resource
     private UserMapper userMapper;
@@ -38,7 +38,7 @@ public class UserService {
      * @date 2020/4/1
      */
     public List<User> selectByUser(User user) {
-        logger.debug("User:" + user);
+        LOGGER.debug("User:" + user);
         List<User> users = userMapper.select(user);
         return users;
     }
@@ -50,7 +50,7 @@ public class UserService {
      * @date 2020/4/1
      */
     public void insertUsers(List<User> users) {
-        logger.debug("users:" + users.size());
+        LOGGER.debug("users:" + users.size());
         userMapper.insertUsers(users);
     }
 

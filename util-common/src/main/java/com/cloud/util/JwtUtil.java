@@ -54,8 +54,8 @@ public class JwtUtil {
         }
         Algorithm algorithm = Algorithm.HMAC256(secret);
         JWTVerifier jwtVerifier = JWT.require(algorithm).build();
-        DecodedJWT decodedJWT = jwtVerifier.verify(token);
-        return decodedJWT.getClaims();
+        DecodedJWT jwt = jwtVerifier.verify(token);
+        return jwt.getClaims();
     }
 
 }

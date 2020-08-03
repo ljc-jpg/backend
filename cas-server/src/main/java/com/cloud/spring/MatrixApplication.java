@@ -12,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  * spring 主配置
+ *
+ * @author zhuz
  */
 @Configuration
 @ComponentScan(basePackages = "com")
@@ -25,10 +27,15 @@ public class MatrixApplication extends SpringBootServletInitializer {
         return builder.sources(MatrixApplication.class);
     }
 
-    //配置RestTemplate
+    /**
+     * 配置RestTemplate
+     *
+     * @author zhuz
+     * @date 2020/8/3
+     */
     @Bean
     @LoadBalanced
-    public RestTemplate RestTemplate() {
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 

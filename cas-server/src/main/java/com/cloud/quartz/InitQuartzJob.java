@@ -2,6 +2,7 @@ package com.cloud.quartz;
 
 import com.cloud.dao.QuartzMapper;
 import com.cloud.model.Quartz;
+import com.cloud.util.ActiveEnum;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +12,15 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author zhuz
+ * @date 2020/8/3
+ */
 @Component
 public class InitQuartzJob implements ApplicationContextAware {
 
@@ -33,21 +37,25 @@ public class InitQuartzJob implements ApplicationContextAware {
     public void run() {
         schedulerFactoryBean = appCtx.getBean(SchedulerFactoryBean.class);
         // 这里从数据库中获取任务信息数据
-        Example example = new Example(Quartz.class);
-        Example.Criteria criteria = example.createCriteria();
-        List<Quartz> list = quartzMapper.selectByExample(example);
+        List<Quartz> list = quartzMapper.selectAll();
         List<ScheduleJob> jobList = new ArrayList<>();
         for (Quartz quartz : list) {
             ScheduleJob job = new ScheduleJob();
             job.setJobId(quartz.getQuartzId() + "");
-            job.setJobGroup(quartz.getGroupName()); // 任务组
-            job.setJobName(quartz.getTaskName());// 任务名称
-            job.setJobStatus(quartz.getStatus() + ""); // 任务发布状态
-            job.setIsConcurrent("0"); // 运行状态
+            // 任务组
+            job.setJobGroup(quartz.getGroupName());
+            // 任务名称
+            job.setJobName(quartz.getTaskName());
+            // 任务发布状态
+            job.setJobStatus(quartz.getStatus() + "");
+            // 运行状态
+            job.setIsConcurrent("0");
             job.setCronExpression(quartz.getCron());
-            job.setBeanClass(quartz.getAddress());// 一个以所给名字注册的bean的实例
-            job.setJobData(quartz.getParam()); // 参数
-            logger.debug("schedulerFactoryBean:{}", quartz.getTaskName());
+            // 一个以所给名字注册的bean的实例
+            job.setBeanClass(quartz.getAddress());
+            // 参数
+            job.setJobData(quartz.getParam());
+            logger.info("schedulerFactoryBean:{}" + quartz.getTaskName());
             jobList.add(job);
         }
         for (ScheduleJob job : jobList) {
@@ -74,32 +82,35 @@ public class InitQuartzJob implements ApplicationContextAware {
         CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
         // 不存在，创建一个
         if (null == trigger) {
-            if ("1".equals(job.getJobStatus())) {
+            if (ActiveEnum.ONE_EVENT.getValue().equals(job.getJobStatus())) {
                 Class clazz = ScheduleJob.CONCURRENT_IS.equals(job.getIsConcurrent()) ? QuartzJobFactory.class
                         : QuartzJobFactoryDisallowConcurrentExecution.class;
+
                 JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(job.getJobName(), job.getJobGroup())
                         .usingJobData("data", job.getJobData()).build();
+
                 jobDetail.getJobDataMap().put("scheduleJob", job);
 
                 CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
+
                 trigger = TriggerBuilder.newTrigger().withDescription(job.getJobId())
                         .withIdentity(job.getJobName(), job.getJobGroup()).withSchedule(scheduleBuilder).build();
-                logger.debug("add job:{}", triggerKey);
+
+                logger.info("add job:{}" + triggerKey);
                 scheduler.scheduleJob(jobDetail, trigger);
             }
         } else {
-            if ("1".equals(job.getJobStatus()) && !trigger.getCronExpression().equals(job.getCronExpression())) {
-                logger.debug("origin cron:{} now cron:{}", trigger.getCronExpression(), job.getCronExpression());
+            if (ActiveEnum.ONE_EVENT.getValue().equals(job.getJobStatus()) && !trigger.getCronExpression().equals(job.getCronExpression())) {
+                logger.info("origin cron:{} now cron:{}" + trigger.getCronExpression() + job.getCronExpression());
                 // Trigger已存在，那么更新相应的定时设置
                 CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
                 // 按新的cronExpression表达式重新构建trigger
                 trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).usingJobData("data", job.getJobData())
                         .withSchedule(scheduleBuilder).build();
-                logger.debug("rescheduleJob:{}", triggerKey);
                 // 按新的trigger重新设置job执行
                 scheduler.rescheduleJob(triggerKey, trigger);
-            } else if ("0".equals(job.getJobStatus())) {
-                logger.debug("delete job:{}", triggerKey);
+            } else if (ActiveEnum.ZERO_EVENT.getValue().equals(job.getJobStatus())) {
+                logger.info("delete job:{}" + triggerKey);
                 scheduler.unscheduleJob(triggerKey);
             }
         }
@@ -107,7 +118,7 @@ public class InitQuartzJob implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.appCtx = applicationContext;
+        appCtx = applicationContext;
     }
 
 

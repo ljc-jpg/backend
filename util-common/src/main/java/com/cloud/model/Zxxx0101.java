@@ -3,10 +3,10 @@ package com.cloud.model;
 import java.util.Date;
 
 /**
- *
  * @author zhuz
  * @date 2020/7/31
  */
+
 public class Zxxx0101 {
     /**
      *
@@ -22,10 +22,6 @@ public class Zxxx0101 {
      * 姓名
      */
     private String fullName;
-
-    private String weChatAppID;
-
-    private String appSecret;
 
     /**
      * 手机号
@@ -43,7 +39,7 @@ public class Zxxx0101 {
     private String email;
 
     /**
-     *
+     * 管理员userId
      */
     private String adminUserId;
 
@@ -62,12 +58,16 @@ public class Zxxx0101 {
      */
     private Integer enabled;
 
-    public Zxxx0101(Integer schId, Integer xqhId, String fullName, String mobile, String headUrl, String email, String appSecre,
-                    String weChatAppID, String adminUserId, Date createTime, Date updateTime, Integer enabled) {
-        this.appSecret = appSecre;
-        this.weChatAppID = weChatAppID;
+    private String weChatAppId;
+
+    private String appSecret;
+
+    public Zxxx0101(Integer schId, Integer xqhId, String fullName, String mobile, String headUrl, String email,
+                    String adminUserId, String weChatAppId, String appSecret, Date createTime, Date updateTime, Integer enabled) {
         this.schId = schId;
         this.xqhId = xqhId;
+        this.weChatAppId = weChatAppId;
+        this.appSecret = appSecret;
         this.fullName = fullName;
         this.mobile = mobile;
         this.headUrl = headUrl;
@@ -138,12 +138,12 @@ public class Zxxx0101 {
         this.adminUserId = adminUserId == null ? null : adminUserId.trim();
     }
 
-    public String getWeChatAppID() {
-        return weChatAppID;
+    public String getWechatAppId() {
+        return weChatAppId;
     }
 
-    public void setWeChatAppID(String weChatAppID) {
-        this.weChatAppID = weChatAppID;
+    public void setWechatAppId(String weChatAppId) {
+        this.weChatAppId = weChatAppId;
     }
 
     public String getAppSecret() {
