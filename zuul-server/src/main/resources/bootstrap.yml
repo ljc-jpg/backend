@@ -8,7 +8,7 @@ spring:
       fail-fast: true
   profiles:
     active: test
-# 最终读取的配置文件为 {spring.application.name}-{spring.profiles.active}.yml
+# 读取的配置文件为 {spring.application.name}-{spring.profiles.active}.yml
 # 即 eureka-client-dev.yml
 # 服务提供者端口号
 server:

@@ -2,6 +2,7 @@ package com.cloud.filters;
 
 
 import com.auth0.jwt.interfaces.Claim;
+import com.cloud.util.ActiveEnum;
 import com.cloud.util.CookieUtils;
 import com.cloud.util.JwtUtil;
 import com.netflix.zuul.ZuulFilter;
@@ -28,12 +29,12 @@ import java.util.Map;
  * @return
  */
 public class PreAuthFilter extends ZuulFilter {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(PreAuthFilter.class);
 
-    public static final String[] excludes = new String[]{"/login", "/static/**", "/auth/logout"};
+    public static final String[] EXCLUDES = new String[]{"/login", "/static/**", "/auth/logout"};
 
-    public static final Map<String, String[]> map = new HashMap<>();
+    public static final Map<String, String[]> MAP = new HashMap<>();
 
     @Value("${login-url}")
     private String loginUrl;
@@ -45,8 +46,8 @@ public class PreAuthFilter extends ZuulFilter {
     private String domainName;
 
     static {
-        map.put("news-web", new String[]{"/news-web/homePage/getThomePageBySchId/**", "/news-web/information/syncInfomation"});
-        map.put("online-shop", new String[]{"/online-shop/pay/payWeiXinByJsapi", "/online-shop/api/pay/payWeiXinByJsapi"});
+        MAP.put("news-web", new String[]{"/news-web/homePage/getThomePageBySchId/**", "/news-web/information/syncInfomation"});
+        MAP.put("online-shop", new String[]{"/online-shop/pay/payWeiXinByJsapi", "/online-shop/api/pay/payWeiXinByJsapi"});
     }
 
     /**
@@ -98,7 +99,7 @@ public class PreAuthFilter extends ZuulFilter {
         //判断路径在白名单中
         String[] uris = getExcludesByUri(uri);
         if (uris == null) {
-            uris = excludes;
+            uris = EXCLUDES;
         }
         for (String exclude : uris) {
             if (exclude.contains("/**") && uri.indexOf(StringUtils.substringBetween(exclude, "/", "/**")) >= 0) {
@@ -116,14 +117,14 @@ public class PreAuthFilter extends ZuulFilter {
                 String sign = redisTemplate.opsForValue().get(token);
                 if (!StringUtils.isEmpty(sign)) {
                     Map<String, Claim> map = JwtUtil.decode(token, sign);
-                    logger.debug("map:" + map);
+                    logger.info("map:" + map);
                     String jwtSign = map.get("id").asString();
                     if (sign.equals(jwtSign)) {
                         request.getSession().setAttribute("user", map.get("user"));
                         isToken = true;
                     }
                 } else {
-                    Cookie cookie = new Cookie("token", token);
+                    Cookie cookie = new Cookie(CookieUtils.COOKIE_TOKEN, token);
                     cookie.setHttpOnly(true);
                     cookie.setMaxAge(0);
                     cookie.setDomain(domainName);
@@ -151,7 +152,8 @@ public class PreAuthFilter extends ZuulFilter {
                 logger.debug("登录跳转失败：" + e);
             }
             ctx.setSendZuulResponse(false);
-            ctx.setResponseStatusCode(401);// 返回错误码
+            // 返回错误码
+            ctx.setResponseStatusCode(401);
             ctx.setResponseBody("{\"code\":\"401\",\"result\":\"请先登录!\"}");
             ctx.set("isSuccess", false);
             return null;
@@ -161,7 +163,7 @@ public class PreAuthFilter extends ZuulFilter {
     private String[] getExcludesByUri(String uri) {
         String[] url = null;
         if (!StringUtils.isEmpty(uri)) {
-            for (Map.Entry<String, String[]> entry : map.entrySet()) {
+            for (Map.Entry<String, String[]> entry : MAP.entrySet()) {
                 if (uri.contains(entry.getKey())) {
                     url = entry.getValue();
                     break;
@@ -174,12 +176,12 @@ public class PreAuthFilter extends ZuulFilter {
     private String getIp(HttpServletRequest request) {
         //对应nginx配置查询请求头是否有"X-Real-IP"信息
         String ipAddr = request.getHeader("X-Real-IP");
-        if (!StringUtils.isBlank(ipAddr) && !"unknown".equalsIgnoreCase(ipAddr)) {
+        if (!StringUtils.isBlank(ipAddr) && !ActiveEnum.UN_KNOWN_EVENT.getValue().equalsIgnoreCase(ipAddr)) {
             return ipAddr;
         }
         //对应nginx配置查询请求头是否有"X-Forwarded-For"信息
         ipAddr = request.getHeader("X-Forwarded-For");
-        if (!StringUtils.isBlank(ipAddr) && !"unknown".equalsIgnoreCase(ipAddr)) {
+        if (!StringUtils.isBlank(ipAddr) && !ActiveEnum.UN_KNOWN_EVENT.getValue().equalsIgnoreCase(ipAddr)) {
             // 如果经过了多次反向代理会有多个IP值，第一个为真实IP。
             int index = ipAddr.indexOf(',');
             if (index != -1) {

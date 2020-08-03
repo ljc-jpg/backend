@@ -8,6 +8,10 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * @author zhuz
+ * @date 2020/8/3
+ */
 @SpringBootApplication
 @EnableZuulProxy
 @RefreshScope

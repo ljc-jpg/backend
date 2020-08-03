@@ -4,6 +4,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
@@ -11,7 +13,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * @author zhuz
+ */
 public class MultipartFileUtils {
+
+    private static Logger logger = LoggerFactory.getLogger(MultipartFileUtils.class);
 
     private MultipartFileUtils() {
     }
@@ -22,17 +29,14 @@ public class MultipartFileUtils {
         }
         FileItemFactory factory = new DiskFileItemFactory(16, null);
         FileItem item = factory.createItem(fileType, "multipart/form-data", true, fileName);
-        int bytesRead = 0;
+        int bytesRead;
         byte[] buffer = new byte[8192];
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            OutputStream os = item.getOutputStream();
+        try (FileInputStream fis = new FileInputStream(file); OutputStream os = item.getOutputStream()) {
             while ((bytesRead = fis.read(buffer, 0, 8192)) != -1) {
                 os.write(buffer, 0, bytesRead);
             }
-            os.close();
-            fis.close();
         } catch (IOException e) {
+            logger.error("getMultipartFile错误:" + e);
         }
         return new CommonsMultipartFile(item);
     }
@@ -42,7 +46,9 @@ public class MultipartFileUtils {
      *
      * @param path
      * @param fileName
-     * @return
+     * @return {@link boolean}
+     * @author zhuz
+     * @date 2020/7/31
      */
     public static boolean deleteFile(String path, String fileName) {
         if (StringUtils.isEmpty(path)) {
@@ -52,23 +58,19 @@ public class MultipartFileUtils {
             return false;
         }
         File directory = new File(path);
-        File[] files = directory.listFiles();//把目录directory下的所有文件放在数组files
-        if (files.length == 0) {
+        //把目录directory下的所有文件放在数组files
+        File[] files = directory.listFiles();
+        if (files.length == ActiveEnum.ZERO_EVENT.getKey()) {
             return false;
         }
         for (File file : files) {
-            if (file.getName().equals(fileName)) { //若文件名与待删除文件名相同，则删除文件
+            //若文件名与待删除文件名相同，则删除文件
+            if (file.getName().equals(fileName)) {
                 file.delete();
                 return true;
             }
         }
         return false;
     }
-//      输入流转字符串
-//      StringWriter writer = new StringWriter();
-//      IOUtils.copy(new FileInputStream(path), writer, StandardCharsets.UTF_8.name());
-//      String str = writer.toString();
-
-//      字符串转输入流
-//      InputStream targetStream = IOUtils.toInputStream(fileInputStream, StandardCharsets.UTF_8.name());
+    
 }

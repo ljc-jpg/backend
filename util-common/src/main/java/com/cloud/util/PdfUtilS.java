@@ -8,23 +8,60 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
 
+/**
+ * @author zhuz
+ */
 public class PdfUtilS {
 
     private PdfUtilS() {
     }
 
-    //最大宽度
+    /**
+     * 最大宽度
+     *
+     * @author zhuz
+     * @date 2020/7/31
+     */
     private static int MAXWIDTH = 520;
 
-    // 定义全局的字体静态变量
+    /**
+     * 定义全局的字体静态变量
+     *
+     * @author zhuz
+     * @date 2020/7/31
+     */
     public static BaseFont BFCHINESE;
-    // 标题字体加粗
+
+    /**
+     * 标题字体加粗
+     *
+     * @author zhuz
+     * @date 2020/7/31
+     */
     public static Font TITLEFONT;
-    // 标题字体
+
+    /**
+     * 标题字体
+     *
+     * @author zhuz
+     * @date 2020/7/31
+     */
     public static Font TITLETEXTFONT;
-    // 表格表格文字 加粗
+
+    /**
+     * 表格表格文字 加粗
+     *
+     * @author zhuz
+     * @date 2020/7/31
+     */
     public static Font KEYFONT;
-    // 表格表格文字
+
+    /**
+     * 表格表格文字
+     *
+     * @author zhuz
+     * @date 2020/7/31
+     */
     public static Font TEXTFONT;
 
     static {
@@ -158,7 +195,7 @@ public class PdfUtilS {
      * @param colspan
      * @return
      */
-    public static PdfPCell createCell(String value, Font font, int align, int colspan,int rowspan) {
+    public static PdfPCell createCell(String value, Font font, int align, int colspan, int rowspan) {
         PdfPCell cell = new PdfPCell();
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(align);

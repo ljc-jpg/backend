@@ -78,20 +78,20 @@ public class WeChatService {
         String token = null;
         try {
             Zxxx0101 zxxx0101 = zxxx0101Mapper.selectBySchId(schId);
-            logger.info("appId:" + zxxx0101.getWechatAppID() + "appSecret:" + zxxx0101.getAppSecre());
+            logger.info("appId:" + zxxx0101.getWeChatAppID() + "appSecret:" + zxxx0101.getAppSecret());
             if (null == zxxx0101) {
                 logger.error("未找到学校");
                 throw new RuntimeException("getAccessToken未找到学校");
             }
             AccessToken accessToken = new AccessToken();
-            String tokenStr = redisTemplate.opsForValue().get("send_template_message_token_" + zxxx0101.getWechatAppID());
+            String tokenStr = redisTemplate.opsForValue().get("send_template_message_token_" + zxxx0101.getWeChatAppID());
             logger.info("redis 获取 token  == >      " + tokenStr);
             if (!StringUtils.isEmpty(tokenStr)) {
                 token = tokenStr;
             } else {
-                token = (String) accessToken.request(zxxx0101.getWechatAppID(), zxxx0101.getAppSecre()).get("accessToken");
+                token = (String) accessToken.request(zxxx0101.getWeChatAppID(), zxxx0101.getAppSecret()).get("accessToken");
                 logger.info("自动生成token:" + token);
-                redisTemplate.opsForValue().set("send_template_message_token_" + zxxx0101.getWechatAppID(), token, 3600);
+                redisTemplate.opsForValue().set("send_template_message_token_" + zxxx0101.getWeChatAppID(), token, 3600);
             }
         } catch (Exception e) {
             logger.error("getAccessToken" + e);

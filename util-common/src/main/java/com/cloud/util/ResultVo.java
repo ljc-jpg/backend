@@ -9,26 +9,37 @@ import java.io.Serializable;
  */
 public class ResultVo<T> implements Serializable {
 
-    /** 失败 0 */
+    /**
+     * 失败 0
+     */
     public static final byte RETURN_CODE_ERR = 0;
 
-    /** 默认成功 1 */
-    private static byte code = 1;
+    /**
+     * 默认成功 1
+     */
+    private byte code = 1;
 
-    /** 其他 3 */
+    /**
+     * 其他 3
+     */
     public static final byte RETURN_OTHER = 2;
 
-    /** 消息 */
-    private static String msg;
+    /**
+     * 消息
+     */
+    private String msg;
 
-    /** 具体值 */
-    private  T data;
+    /**
+     * 具体值
+     */
+    private T data;
 
-    public ResultVo(byte code,String message){
+    public ResultVo(byte code, String message) {
         this.code = code;
         this.msg = message;
     }
-    public ResultVo(){
+
+    public ResultVo() {
 
     }
 

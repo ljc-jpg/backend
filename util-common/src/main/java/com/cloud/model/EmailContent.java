@@ -1,5 +1,10 @@
 package com.cloud.model;
 
+/**
+ *
+ * @author zhuz
+ * @date 2020/7/31
+ */
 public class EmailContent {
 
     private String content;

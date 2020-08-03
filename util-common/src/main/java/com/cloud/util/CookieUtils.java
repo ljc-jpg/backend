@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 资源工具，读取资源文件，封装连接等.
  *
+ * @author zhuz
  * @version 2012-3-5
  * @since jdk1.5
  */
@@ -22,11 +23,11 @@ public class CookieUtils {
 
     public static String COOKIE_TOKEN = "token";
 
-    private static int cookieTime;
+    private static int COOKIE_TIME;
 
     @Value("cookie-time")
     public void setExpireTime(int cookieTime) {
-        CookieUtils.cookieTime = cookieTime * 60 * 60 * 24;
+        CookieUtils.COOKIE_TIME = cookieTime * 60 * 60 * 24;
     }
 
     public static boolean isMobile(HttpServletRequest request) {
@@ -46,11 +47,11 @@ public class CookieUtils {
                 "smal", "smar", "sony", "sph-", "symb", "t-mo", "teli", "tim-", "tosh", "tsm-", "upg1", "upsi", "vk-v",
                 "voda", "wap-", "wapa", "wapi", "wapp", "wapr", "webc", "winw", "winw", "xda", "xda-",
                 "Googlebot-Mobile"};
-        if (request.getHeader("User-Agent") != null) {
+        if (request.getHeader(ActiveEnum.USER_AGENT_EVENT.getValue()) != null) {
             for (String mobileAgent : mobileAgents) {
-                if (request.getHeader("User-Agent").toLowerCase().indexOf(mobileAgent) >= 0) {
+                if (request.getHeader(ActiveEnum.USER_AGENT_EVENT.getValue()).toLowerCase().indexOf(mobileAgent) >= 0) {
                     //客户端类型
-                    logger.debug("User-Agent:" + request.getHeader("User-Agent").toLowerCase());
+                    logger.info("User-Agent:" + request.getHeader(ActiveEnum.USER_AGENT_EVENT.getValue()).toLowerCase());
                     isMobile = true;
                     break;
                 }
@@ -64,7 +65,7 @@ public class CookieUtils {
         Cookie cookie = new Cookie(nameCookie, value);
         //手机端设置30天有效 电脑端浏览器关闭前有效
         if (CookieUtils.isMobile(request)) {
-            cookie.setMaxAge(cookieTime);
+            cookie.setMaxAge(COOKIE_TIME);
         } else {
             cookie.setMaxAge(-2);
         }
@@ -77,7 +78,7 @@ public class CookieUtils {
     public static final String getCookie(HttpServletRequest servletRequest, String nameCookie) {
         String token = null;
         Cookie[] cookies = servletRequest.getCookies();
-        logger.debug("cookies", cookies);
+        logger.info("cookies" + cookies);
         if (null != cookies) {
             for (Cookie cookie : cookies) {
                 if (nameCookie.equals(cookie.getName())) {

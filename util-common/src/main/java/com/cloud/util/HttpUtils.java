@@ -29,7 +29,7 @@ public class HttpUtils {
 
     private static Logger logger = LoggerFactory.getLogger(HttpUtils.class);
 
-    public static final int timeout = 10;
+    public static final int TIME_OUT = 10;
 
     private HttpUtils() {
     }
@@ -144,10 +144,12 @@ public class HttpUtils {
         URL url = new URL(path);
         String result = null;
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST"); // 以Post方式提交表单，默认get方式
+        // 以Post方式提交表单，默认get方式
+        con.setRequestMethod("POST");
         con.setDoInput(true);
         con.setDoOutput(true);
-        con.setUseCaches(false); // post方式不能使用缓存
+        // post方式不能使用缓存
+        con.setUseCaches(false);
         // 设置请求头信息
         con.setRequestProperty("Connection", "Keep-Alive");
         con.setRequestProperty("Charset", "UTF-8");
@@ -157,7 +159,8 @@ public class HttpUtils {
         // 请求正文信息
         // 第一部分：
         StringBuilder sb = new StringBuilder();
-        sb.append("--"); // 必须多两道线
+        // 必须多两道线
+        sb.append("--");
         sb.append(BOUNDARY);
         sb.append("\r\n");
         sb.append("Content-Disposition: form-data;name=\"media\";filelength=\"" + fileSize + "\";filename=\"" + fileName + "\"\r\n");
@@ -176,8 +179,8 @@ public class HttpUtils {
             out.write(bufferOut, 0, bytes);
         }
         in.close();
-        // 结尾部分
-        byte[] foot = ("\r\n--" + BOUNDARY + "--\r\n").getBytes("utf-8");// 定义最后数据分隔线
+        // 结尾部分  定义最后数据分隔线
+        byte[] foot = ("\r\n--" + BOUNDARY + "--\r\n").getBytes("utf-8");
         out.write(foot);
         out.flush();
         out.close();
@@ -186,8 +189,7 @@ public class HttpUtils {
         try {
             // 定义BufferedReader输入流来读取URL的响应
             reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String line = null;
-
+            String line;
             while ((line = reader.readLine()) != null) {
                 buffer.append(line);
             }
@@ -195,8 +197,7 @@ public class HttpUtils {
                 result = buffer.toString();
             }
         } catch (IOException e) {
-            System.out.println("发送POST请求出现异常！" + e);
-            e.printStackTrace();
+            logger.error("发送POST请求出现异常！" + e);
             throw new IOException("数据读取异常");
         } finally {
             if (reader != null) {
@@ -238,7 +239,8 @@ public class HttpUtils {
             System.setProperty("https.protocols", "TLSv1");
             // 创建SSLContext对象，并使用我们指定的信任管理器初始化
             TrustManager[] trustManagers = {new MyX509TrustManager()};
-            SSLContext sslContext = SSLContext.getInstance("SSL");//自动调用Security.getProviders()获取已经注册的提供者。
+            //自动调用Security.getProviders()获取已经注册的提供者
+            SSLContext sslContext = SSLContext.getInstance("SSL");
             sslContext.init(null, trustManagers, new SecureRandom());
             // 从上述SSLContext对象中获取SSLSocketFactory对象
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
@@ -249,7 +251,7 @@ public class HttpUtils {
             httpsURLConnection.setDoInput(true);
             httpsURLConnection.setUseCaches(false);
             httpsURLConnection.setRequestMethod(requestMethod);
-            httpsURLConnection.setReadTimeout(3000);
+            httpsURLConnection.setReadTimeout(TIME_OUT);
             httpsURLConnection.setConnectTimeout(5000);
 
             //当有数据需要提交时
@@ -270,7 +272,7 @@ public class HttpUtils {
             httpsURLConnection.disconnect();
             jsonObject = JSONObject.parseObject(stringBuffer.toString());
         } catch (Exception e) {
-            logger.error("httpsRequest请求异常：" + e);
+            logger.error("httpsRequest请求异常：", e);
         }
         return jsonObject;
     }

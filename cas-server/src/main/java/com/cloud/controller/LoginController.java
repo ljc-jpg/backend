@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.cloud.util.ResultVo.RETURN_CODE_ERR;
+
 /**
  * @Author zhuz
  * @Description  登录管理
@@ -48,19 +50,19 @@ public class LoginController {
         try {
             if (StringUtils.isEmpty(loginName)) {
                 ResultVo.setMsg("loginName为空");
-                ResultVo.setCode(ResultVo.RETURN_CODE_ERR);
+                ResultVo.setCode(RETURN_CODE_ERR);
                 return ResultVo;
             }
             if (StringUtils.isEmpty(pwd)) {
                 ResultVo.setMsg("pwd为空");
-                ResultVo.setCode(ResultVo.RETURN_CODE_ERR);
+                ResultVo.setCode(RETURN_CODE_ERR);
                 return ResultVo;
             }
             loginService.login(request, response, loginName, pwd);
         } catch (Exception e) {
             logger.error("login:", e);
             ResultVo.setMsg("login:" + e);
-            ResultVo.setCode(ResultVo.RETURN_CODE_ERR);
+            ResultVo.setCode(RETURN_CODE_ERR);
         }
         return ResultVo;
     }

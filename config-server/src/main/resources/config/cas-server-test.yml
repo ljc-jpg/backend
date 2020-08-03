@@ -105,7 +105,7 @@ ribbon:
 
 # 微信配置
 weChat:
-  appId: 1
-  appsecret: 2
+  appId: wx6c8e568076f43bd8
+  appsecret: 6fff694645fd017f43277504a2f6c57f
   auth:
     redirectUri: https://www.baidu.com

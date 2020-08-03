@@ -2,6 +2,9 @@ package com.cloud.dao;
 
 import com.cloud.model.zxjs0101;
 
+/**
+ * @author zhuz
+ */
 public interface zxjs0101Mapper {
     int deleteByPrimaryKey(String userId);
 

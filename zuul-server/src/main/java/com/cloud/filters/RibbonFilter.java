@@ -1,4 +1,4 @@
-package com.cloud.filters;//package com.wxm.cloud.zuul.filters.pre;
+package com.cloud.filters;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;

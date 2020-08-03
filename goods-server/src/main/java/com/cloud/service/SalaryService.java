@@ -3,6 +3,7 @@ package com.cloud.service;
 import com.alibaba.fastjson.JSON;
 import com.cloud.dao.SalaryMapper;
 import com.cloud.model.SalaryUserAttr;
+import com.cloud.util.ActiveEnum;
 import com.cloud.util.UploadResult;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -41,7 +42,7 @@ import static com.cloud.util.PdfUtilS.*;
 @Service
 public class SalaryService {
 
-    private String PATH = "/";
+    private static String PATH = "/";
 
     private static final Logger logger = LoggerFactory.getLogger(SalaryService.class);
 
@@ -60,9 +61,9 @@ public class SalaryService {
      * @author zhu zheng
      * @date 2020/3/24
      */
-    @Transactional
+    @Transactional(rollbackFor = RuntimeException.class)
     public String loadSalaryPdf(Integer salaryId, Integer schId) {
-        Map<String, Integer> searchMap = new HashMap<>();
+        Map<String, Integer> searchMap = new HashMap<>(ActiveEnum.TWO_EVENT.getKey());
         searchMap.put("salaryId", salaryId);
         searchMap.put("schId", schId);
         List<SalaryUserAttr> attrList = salaryUserAttrService.selectSalaryByMap(searchMap);
@@ -79,20 +80,20 @@ public class SalaryService {
         List<SalaryUserAttr> k = new ArrayList<>();
         //所有项目
         List<SalaryUserAttr> projects = attrList.get(0).getSalaryUserAttrs();
-        float[] tableWidth = new float[4 + projects.size() + 1];
-        for (int i = 0; i < 2; i++) {
+        float[] tableWidth = new float[ActiveEnum.FOUR_EVENT.getKey() + projects.size() + 1];
+        for (int i = 0; i < ActiveEnum.TWO_EVENT.getKey(); i++) {
             tableWidth[i] = 60f;
         }
         for (int i = 0; i < projects.size(); i++) {
-            tableWidth[2 + i] = 40f;
+            tableWidth[ActiveEnum.TWO_EVENT.getKey() + i] = 40f;
             if (1 == projects.get(i).getProjectType()) {
                 y.add(projects.get(i));
             } else {
                 k.add(projects.get(i));
             }
         }
-        for (int i = 0; i < 3; i++) {
-            tableWidth[2 + i + projects.size()] = 40f;
+        for (int i = 0; i < ActiveEnum.THREE_EVENT.getKey(); i++) {
+            tableWidth[ActiveEnum.TWO_EVENT.getKey() + i + projects.size()] = 40f;
         }
         //存本地的pdf
         String fileName = attrList.get(0).getSalaryName() + ".pdf";
@@ -125,7 +126,8 @@ public class SalaryService {
     private OutputStream getOutputStream(OutputStream out, List<SalaryUserAttr> attrList, List<SalaryUserAttr> y, List<SalaryUserAttr> k, float[] tableWidth, Document doc) throws DocumentException, IOException {
         Font titleFont = new Font(BFCHINESE, 16, Font.NORMAL);
         Paragraph paragraph = new Paragraph(attrList.get(0).getSalaryName(), titleFont);
-        paragraph.setAlignment(1); //设置文字居中 0靠左   1，居中     2，靠右
+        //设置文字居中 0靠左   1，居中     2，靠右
+        paragraph.setAlignment(1);
         doc.add(paragraph);
         doc.add(new Paragraph("\n"));
         PdfPTable table = createTable(tableWidth);
@@ -185,7 +187,7 @@ public class SalaryService {
      * @date 2020/3/24
      */
     public void sendSalaryEmail(String addressee, Integer salaryId, Integer schId) {
-        Map<String, Integer> searchMap = new HashMap<>();
+        Map searchMap = new HashMap<>(ActiveEnum.TWO_EVENT.getKey());
         searchMap.put("salaryId", salaryId);
         searchMap.put("schId", schId);
         logger.info("searchMap:" + searchMap);
@@ -194,7 +196,7 @@ public class SalaryService {
         SalaryUserAttr userAttr = attrList.get(0);
         Date approvalTime = userAttr.getCreateTime();
 
-        logger.info("approvalTime:", approvalTime);
+        logger.info("approvalTime:" + approvalTime);
         //Date转 LocalDateTime 再转 2016年10月05日格式时间
         //邮件主题
         String subject = formatLocalDateTimeToStr(dateToLocalDateTime(approvalTime), DATE_TIME_FORMAT_YYYY年MM月DD日) + " " + userAttr.getSalaryName() + " 工资单";
@@ -204,7 +206,7 @@ public class SalaryService {
         //邮件主题内容
         String content = "<a href='" + path + "'>点击我查看工资单</a>";
         List<Map<String, String>> param = new ArrayList<>();
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(ActiveEnum.TWO_EVENT.getKey());
         map.put("content", content);
         map.put("type", "1");
         param.add(map);

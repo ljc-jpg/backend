@@ -2,6 +2,11 @@ package com.cloud.model;
 
 import java.util.Date;
 
+/**
+ *
+ * @author zhuz
+ * @date 2020/7/31
+ */
 public class zxjs0101 {
     private String userId;
 

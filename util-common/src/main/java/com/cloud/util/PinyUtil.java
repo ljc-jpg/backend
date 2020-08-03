@@ -6,15 +6,17 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+/**
+ * 中文转拼音
+ *
+ * @author zhuz
+ * @date 2020/7/31
+ */
 public class PinyUtil {
 
     private PinyUtil() {
     }
 
-    /**
-     * @param chinese
-     * @Description:汉字转为拼音
-     */
     public static String ToPinyin(String chinese) {
         String pinyinStr = "";
         char[] newChar = chinese.toCharArray();
@@ -34,4 +36,5 @@ public class PinyUtil {
         }
         return pinyinStr;
     }
+    
 }

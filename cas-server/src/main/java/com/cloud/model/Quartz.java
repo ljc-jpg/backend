@@ -17,7 +17,7 @@ public class Quartz {
     private String param;
     private Integer status;
 
-    public Quartz(Integer quartzId, String taskName, String cron, Integer status, String address, String createUserId, Date createTime, String phone, String groupName, String param) {
+    public Quartz(Integer quartzId, String taskName, String cron, Integer status, String address, Date createTime, String phone, String groupName, String param) {
         this.quartzId = quartzId;
         this.taskName = taskName;
         this.cron = cron;

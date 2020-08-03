@@ -2,6 +2,11 @@ package com.cloud.model;
 
 import java.util.Date;
 
+/**
+ *
+ * @author zhuz
+ * @date 2020/7/31
+ */
 public class Zxxx0101 {
     /**
      *
@@ -18,9 +23,9 @@ public class Zxxx0101 {
      */
     private String fullName;
 
-    private String wechatAppID;
+    private String weChatAppID;
 
-    private String appSecre;
+    private String appSecret;
 
     /**
      * 手机号
@@ -58,9 +63,9 @@ public class Zxxx0101 {
     private Integer enabled;
 
     public Zxxx0101(Integer schId, Integer xqhId, String fullName, String mobile, String headUrl, String email, String appSecre,
-                    String wechatAppID, String adminUserId, Date createTime, Date updateTime, Integer enabled) {
-        this.appSecre = appSecre;
-        this.wechatAppID = wechatAppID;
+                    String weChatAppID, String adminUserId, Date createTime, Date updateTime, Integer enabled) {
+        this.appSecret = appSecre;
+        this.weChatAppID = weChatAppID;
         this.schId = schId;
         this.xqhId = xqhId;
         this.fullName = fullName;
@@ -133,20 +138,20 @@ public class Zxxx0101 {
         this.adminUserId = adminUserId == null ? null : adminUserId.trim();
     }
 
-    public String getWechatAppID() {
-        return wechatAppID;
+    public String getWeChatAppID() {
+        return weChatAppID;
     }
 
-    public void setWechatAppID(String wechatAppID) {
-        this.wechatAppID = wechatAppID;
+    public void setWeChatAppID(String weChatAppID) {
+        this.weChatAppID = weChatAppID;
     }
 
-    public String getAppSecre() {
-        return appSecre;
+    public String getAppSecret() {
+        return appSecret;
     }
 
-    public void setAppSecre(String appSecre) {
-        this.appSecre = appSecre;
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
     }
 
     public Date getCreateTime() {

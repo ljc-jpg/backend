@@ -8,6 +8,9 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * @author zhuz
+ */
 public class DateUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
@@ -28,7 +31,7 @@ public class DateUtil {
             ZoneId zoneId = ZoneId.systemDefault();
             localDateTime = instant.atZone(zoneId).toLocalDateTime();
         } catch (Exception e) {
-            logger.error("dateToLocalDateTime:" + e);
+            logger.error("dateToLocalDateTime:", e);
         }
         return localDateTime;
     }
@@ -58,7 +61,7 @@ public class DateUtil {
         try {
             dateTime = LocalDateTime.parse(date, df);
         } catch (Exception e) {
-            logger.error("parseStrToDate:" + e);
+            logger.error("parseStrToDate:", e);
         }
         return dateTime;
     }
@@ -75,7 +78,7 @@ public class DateUtil {
         try {
             localTime = df.format(localDateTime);
         } catch (Exception e) {
-            logger.error("parseLocalDateTimeToStr:" + e);
+            logger.error("parseLocalDateTimeToStr:", e);
         }
         return localTime;
     }

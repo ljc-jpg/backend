@@ -47,10 +47,13 @@ public class Salary implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date releaseTime;
 
-    //返回格式化
     /** 更新时间 */
+    /**
+     * DateTimeFormat 接收处理   JsonFormat 返回格式化
+     * @author zhuz
+     * @date 2020/7/31
+     */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    //接收处理
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 

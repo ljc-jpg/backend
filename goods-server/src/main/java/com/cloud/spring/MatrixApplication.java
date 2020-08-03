@@ -1,6 +1,7 @@
 package com.cloud.spring;
 
 
+import feign.Logger;
 import feign.codec.Encoder;
 import feign.form.spring.SpringFormEncoder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -15,6 +16,8 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  * spring 主配置
+ *
+ * @author zhu
  */
 @Configuration
 @ComponentScan(basePackages = "com")
@@ -28,14 +31,28 @@ public class MatrixApplication extends SpringBootServletInitializer {
         return builder.sources(MatrixApplication.class);
     }
 
-    //配置RestTemplate
+    /**
+     * 配置RestTemplate
+     *
+     * @param
+     * @return {@link RestTemplate}
+     * @author zhuz
+     * @date 2020/7/31
+     */
     @Bean
     @LoadBalanced
-    public RestTemplate RestTemplate() {
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 
-    //feign支持multipartFormEncoder支持
+    /**
+     * feign支持multipartFormEncoder支持
+     *
+     * @param
+     * @return {@link Encoder}
+     * @author zhuz
+     * @date 2020/7/31
+     */
     @Bean
     @Primary
     @Scope("prototype")
@@ -43,6 +60,14 @@ public class MatrixApplication extends SpringBootServletInitializer {
         return new SpringFormEncoder();
     }
 
+    /**
+     * feign日志级别
+     *
+     * @param
+     * @return {@link Logger.Level}
+     * @author zhuz
+     * @date 2020/7/31
+     */
     @Bean
     public feign.Logger.Level multipartLoggerLevel() {
         return feign.Logger.Level.FULL;

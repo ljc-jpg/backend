@@ -50,7 +50,7 @@ public class JwtUtil {
      */
     public static Map<String, Claim> decode(String token, String secret) {
         if (token == null || token.length() == 0) {
-            return new HashMap<>();
+            return new HashMap<>(ActiveEnum.ONE_EVENT.getKey());
         }
         Algorithm algorithm = Algorithm.HMAC256(secret);
         JWTVerifier jwtVerifier = JWT.require(algorithm).build();

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 import static com.cloud.util.RegExUtil.isEmail;
+import static com.cloud.util.ResultVo.RETURN_CODE_ERR;
 
 
 /**
@@ -48,12 +49,12 @@ public class SalaryController {
         try {
             if (null == salaryId) {
                 result.setMsg("salaryId为空");
-                result.setCode(ResultVo.RETURN_CODE_ERR);
+                result.setCode(RETURN_CODE_ERR);
                 return result;
             }
             if (null == schId) {
                 result.setMsg("schId为空");
-                result.setCode(ResultVo.RETURN_CODE_ERR);
+                result.setCode(RETURN_CODE_ERR);
                 return result;
             }
             String path = salaryService.loadSalaryPdf(salaryId, schId);
@@ -61,7 +62,7 @@ public class SalaryController {
         } catch (Exception e) {
             logger.error("salaryPdf", e);
             result.setMsg("salaryPdf" + e);
-            result.setCode(ResultVo.RETURN_CODE_ERR);
+            result.setCode(RETURN_CODE_ERR);
         }
         return result;
     }
@@ -90,19 +91,19 @@ public class SalaryController {
             if (null == schId) {
                 result.setData(false);
                 result.setMsg("schId为空");
-                result.setCode(ResultVo.RETURN_CODE_ERR);
+                result.setCode(RETURN_CODE_ERR);
                 return result;
             }
             if (null == salaryId) {
                 result.setData(false);
                 result.setMsg("salaryId为空");
-                result.setCode(ResultVo.RETURN_CODE_ERR);
+                result.setCode(RETURN_CODE_ERR);
                 return result;
             }
             if (StringUtils.isEmpty(addressee) || (!isEmail(addressee))) {
                 result.setData(false);
                 result.setMsg("收件人邮箱有问题");
-                result.setCode(ResultVo.RETURN_CODE_ERR);
+                result.setCode(RETURN_CODE_ERR);
                 return result;
             }
             salaryService.sendSalaryEmail(addressee, salaryId, schId);
@@ -111,7 +112,7 @@ public class SalaryController {
             result.setData(false);
             logger.error("salaryEmail", e);
             result.setMsg("salaryEmail" + e);
-            result.setCode(ResultVo.RETURN_CODE_ERR);
+            result.setCode(RETURN_CODE_ERR);
         }
         return result;
     }
