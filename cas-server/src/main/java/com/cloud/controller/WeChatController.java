@@ -5,10 +5,13 @@ import com.cloud.util.ResultVo;
 import com.cloud.utils.wechat.WxTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+
+import static com.cloud.util.ResultVo.RETURN_CODE_ERR;
 
 /**
  * @author zhuz
@@ -63,7 +66,7 @@ public class WeChatController {
         } catch (Exception e) {
             logger.error("sendGlobalTemplate", e);
             result.setMsg("sendGlobalTemplate:" + e);
-            result.setCode(ResultVo.RETURN_CODE_ERR);
+            result.setCode(RETURN_CODE_ERR);
         }
         return result;
     }
@@ -82,7 +85,7 @@ public class WeChatController {
      * @apiSuccessExample 响应结果示例
      * null
      */
-    @RequestMapping(value = "/bindH5WeChat_forAllUser", method = RequestMethod.GET)
+    @GetMapping(value = "/bindH5WeChat_forAllUser")
     public void bindH5WeChat(HttpServletResponse resp, String appId, String paramStr) {
         try {
             StringBuffer url = weChatService.bindH5WeChatServer(appId, paramStr);
@@ -91,6 +94,26 @@ public class WeChatController {
         } catch (Exception e) {
             logger.info("授权失败 e：{}", e);
         }
+    }
+
+    @GetMapping(value = "/accessToken")
+    public ResultVo<String> accessToken(String schId) {
+        ResultVo result = new ResultVo();
+        try {
+            if (StringUtils.isEmpty(schId)) {
+                result.setMsg("schId为空");
+                result.setCode(RETURN_CODE_ERR);
+                return result;
+            }
+            String token = weChatService.getAccessToken(schId);
+            result.setData(token);
+        } catch (Exception e) {
+            logger.error("accessToken", e);
+            result.setMsg("accessToken:" + e);
+            result.setCode(RETURN_CODE_ERR);
+        }
+        return result;
+
     }
 
 }

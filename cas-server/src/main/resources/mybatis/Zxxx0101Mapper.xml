@@ -3,7 +3,7 @@
 <mapper namespace="com.cloud.dao.Zxxx0101Mapper">
 
     <select id="selectBySchId" resultType="com.cloud.model.Zxxx0101">
-
+        SELECT sch_id,sch_name,wechat_app_id,app_secret from zxxx0101 where sch_id = #{schId}
     </select>
 
 </mapper>

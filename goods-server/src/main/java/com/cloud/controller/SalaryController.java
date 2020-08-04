@@ -28,7 +28,7 @@ public class SalaryController {
     private SalaryService salaryService;
 
     /**
-     * @api {GET} /salaryUserAttr/salaryPdf/{salaryId}/{schId} salaryPdf
+     * @api {GET} /salaryUserAttr/salaryPdf/{salaryId}/{schId} 阅览工资单对应pdf
      * @apiVersion 1.0.0
      * @apiGroup SalaryController
      * @apiName salaryPdf
@@ -66,7 +66,7 @@ public class SalaryController {
     }
 
     /**
-     * @api {GET} /salaryUserAttr/salaryEmail/{addressee}/{salaryId}/{schId} salaryEmail
+     * @api {GET} /salaryUserAttr/salaryEmail/{addressee}/{salaryId}/{schId} 资单pdf发送至邮箱
      * @apiVersion 1.0.0
      * @apiGroup SalaryController
      * @apiName salaryEmail

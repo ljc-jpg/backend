@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zhuz
@@ -41,7 +43,7 @@ public class WeChatService {
     private Zxxx0101Mapper zxxx0101Mapper;
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    public StringRedisTemplate redisTemplate;
 
     private static Map setValue(String value, String color) {
         Map<String, String> resultMap = new HashMap<>(ActiveEnum.TWO_EVENT.getKey());
@@ -103,26 +105,23 @@ public class WeChatService {
      * @date 2020/8/3
      */
     public String getAccessToken(String schId) {
-        String token = null;
-        try {
-            Zxxx0101 zxxx0101 = zxxx0101Mapper.selectBySchId(schId);
-            logger.info("appId:" + zxxx0101.getWechatAppId() + "appSecret:" + zxxx0101.getAppSecret());
-            if (null == zxxx0101) {
-                logger.error("未找到学校");
-                throw new RuntimeException("getAccessToken未找到学校");
-            }
-            AccessToken accessToken = new AccessToken();
-            String tokenStr = redisTemplate.opsForValue().get("send_template_message_token_" + zxxx0101.getWechatAppId());
-            logger.info("redis 获取 token  == >      " + tokenStr);
-            if (!StringUtils.isEmpty(tokenStr)) {
-                token = tokenStr;
-            } else {
-                token = (String) accessToken.request(zxxx0101.getWechatAppId(), zxxx0101.getAppSecret()).get("accessToken");
-                logger.info("自动生成token:" + token);
-                redisTemplate.opsForValue().set("send_template_message_token_" + zxxx0101.getWechatAppId(), token, 3600);
-            }
-        } catch (Exception e) {
-            logger.error("getAccessToken" + e);
+        String token;
+        Zxxx0101 zxxx0101 = zxxx0101Mapper.selectBySchId(schId);
+        logger.info("appId:" + zxxx0101.getWechatAppId() + " appSecret:" + zxxx0101.getAppSecret());
+        if (null == zxxx0101) {
+            throw new RuntimeException("getAccessToken未找到学校");
+        }
+        AccessToken accessToken = new AccessToken();
+        String tokenStr = redisTemplate.opsForValue().get("send_template_message_token_" + zxxx0101.getWechatAppId());
+        logger.info("redis 获取 token  == >      " + tokenStr);
+        if (!StringUtils.isEmpty(tokenStr)) {
+            token = tokenStr;
+        } else {
+            token = accessToken.request(zxxx0101.getWechatAppId(), zxxx0101.getAppSecret());
+            String key = "send_template_message_token_" + zxxx0101.getWechatAppId();
+            logger.info("自动生成key" + key + "  token:" + token);
+            redisTemplate.opsForValue().set(key, token);
+            redisTemplate.expire(key, 3600, TimeUnit.SECONDS);
         }
         return token;
     }
@@ -174,4 +173,5 @@ public class WeChatService {
         logger.info("授权 pa: {}" + pa);
         return url;
     }
+
 }

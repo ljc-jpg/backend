@@ -104,19 +104,18 @@ public abstract class AbstractToken {
      * @author zhuz
      * @date 2020/8/3
      */
-    public Map<String, Object> request(String appId, String appSecret) {
-        Map<String, Object> resultMap = new HashMap<>(ActiveEnum.TWO_EVENT.getKey());
+    public String request(String appId, String appSecret) {
+        String token;
         String url = accessTokenUrl(appId, appSecret);
         String result = HttpUtils.get(url);
         JSONObject jsonObject = JSONObject.parseObject(result);
-        Material.parseMap(jsonObject, resultMap);
         if (null != jsonObject) {
-            resultMap.put("accessToken", jsonObject.getString("access_token"));
+            token = jsonObject.getString("access_token");
         } else {
-            resultMap.put("accessToken", "");
+            token = "";
         }
-        logger.info("result:" + result + "===accessToken:" + resultMap);
-        return resultMap;
+        logger.info("result:" + result + "===accessToken:" + token);
+        return token;
     }
 
     /**

@@ -22,10 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.*;
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.cloud.util.DateUtil.*;
@@ -34,9 +30,8 @@ import static com.cloud.util.MultipartFileUtils.getMultipartFile;
 import static com.cloud.util.PdfUtilS.*;
 
 /**
- * @Description:
- * @Author: zhuzheng
- * @Date: 2019/12/11 17:57
+ * @author zhu zheng
+ * @date 2020/3/24
  */
 
 @Service
@@ -56,10 +51,13 @@ public class SalaryService {
     private CaseClientService caseClientService;
 
     /**
-     * @param schId salaryId
-     * @Description: 生成pdf 并用feign调用wxm-base的文件上传接口上传 返回pdf文件的路径
-     * @author zhu zheng
-     * @date 2020/3/24
+     * 生成pdf 并用feign调用wxm-base的文件上传接口上传 返回pdf文件的路径
+     *
+     * @param salaryId
+     * @param schId
+     * @return {@link String}
+     * @author zhuz
+     * @date 2020/8/4
      */
     @Transactional(rollbackFor = RuntimeException.class)
     public String loadSalaryPdf(Integer salaryId, Integer schId) {
@@ -119,7 +117,8 @@ public class SalaryService {
     }
 
     /**
-     * @Description: loadSalaryPdf 用到的生成工资pdf工具方法
+     * 用于生成工资pdf工具方法
+     *
      * @author zhu zheng
      * @date 2020/3/24
      */
@@ -181,10 +180,14 @@ public class SalaryService {
     }
 
     /**
-     * @param addressee 收件人邮箱  salaryId指定工资单   schId
-     * @Description:
-     * @author zhu zheng
-     * @date 2020/3/24
+     * 工资单pdf发送指指定邮件
+     *
+     * @param addressee 收件人邮箱
+     * @param salaryId  salaryId指定工资单
+     * @param schId
+     * @return
+     * @author zhuz
+     * @date 2020/8/4
      */
     public void sendSalaryEmail(String addressee, Integer salaryId, Integer schId) {
         Map searchMap = new HashMap<>(ActiveEnum.TWO_EVENT.getKey());
