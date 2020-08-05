@@ -5,7 +5,9 @@ import java.security.cert.X509Certificate;
 
 /**
  * 证书认证管理器（用于https请求）
+ *
  * @author zhuz
+ * @date 2020/8/5
  */
 public class MyX509TrustManager implements X509TrustManager {
     @Override

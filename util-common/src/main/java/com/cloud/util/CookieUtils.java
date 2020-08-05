@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  * 资源工具，读取资源文件，封装连接等.
  *
  * @author zhuz
- * @version 2012-3-5
- * @since jdk1.5
+ * @date 2020/7/29
  */
 public class CookieUtils {
     private static Logger logger = LoggerFactory.getLogger(CookieUtils.class);

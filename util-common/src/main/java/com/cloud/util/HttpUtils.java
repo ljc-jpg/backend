@@ -23,7 +23,7 @@ import java.security.SecureRandom;
 
 /**
  * @author zhuz
- * @date 2014年12月12日
+ * @date 2020/7/29
  */
 public class HttpUtils {
 
@@ -35,27 +35,38 @@ public class HttpUtils {
     }
 
     /**
-     * @Author zhuz
-     * @Description post 请求 无参数
-     * @Date 16:35 2020/7/8
-     **/
+     * post 请求 无参数
+     *
+     * @param url
+     * @return {@link String}
+     * @author zhuz
+     * @date 2020/8/5
+     */
     public static String post(String url) {
         return post(url, "");
     }
 
     /**
-     * @Author zhuz
-     * @Description post 请求 有参数
-     * @Date 16:35 2020/7/8
-     **/
+     * post 请求 有参数
+     *
+     * @param url
+     * @param data
+     * @return {@link String}
+     * @author zhuz
+     * @date 2020/8/5
+     */
     public static String post(String url, String data) {
         return httpPost(url, data);
     }
 
     /**
+     * post 请求
+     *
      * @param url
      * @param data
-     * @Description post 请求
+     * @return {@link String}
+     * @author zhuz
+     * @date 2020/8/5
      */
     private static String httpPost(String url, String data) {
         try {
@@ -71,19 +82,25 @@ public class HttpUtils {
 
     /************************************************  get请求  ************************************************/
 
-
     /**
+     * get请求
+     *
      * @param url
-     * @Description get请求
+     * @return {@link String}
+     * @author zhuz
+     * @date 2020/8/5
      */
     public static String get(String url) {
         return httpGet(url);
     }
 
-
     /**
+     * 发送get请求
+     *
      * @param url
-     * @Description 发送get请求
+     * @return {@link String}
+     * @author zhuz
+     * @date 2020/8/5
      */
     private static String httpGet(String url) {
         try {
@@ -95,23 +112,30 @@ public class HttpUtils {
         return "";
     }
 
-
     /************************************************ 文件数据  ************************************************/
 
     /**
+     * 上传文件
+     *
      * @param url  URL
      * @param file 需要上传的文件
-     * @Description 上传文件
+     * @return {@link String}
+     * @author zhuz
+     * @date 2020/8/5
      */
     public static String postFile(String url, File file) {
         return postFile(url, null, file);
     }
 
     /**
+     * 上传文件
+     *
      * @param url  URL
      * @param name 文件的post参数名称
      * @param file 上传的文件
-     * @Description 上传文件
+     * @return {@link String}
+     * @author zhuz
+     * @date 2020/8/5
      */
     public static String postFile(String url, String name, File file) {
         try {
@@ -138,7 +162,6 @@ public class HttpUtils {
         }
         return null;
     }
-
 
     public static String postFile(String path, InputStream inputStream, String fileName, long fileSize) throws Exception {
         URL url = new URL(path);
@@ -208,9 +231,12 @@ public class HttpUtils {
     }
 
     /**
-     * @param url URL
-     * @return 文件的二进制流，客户端使用outputStream输出为文件
-     * @Description 下载文件
+     * 文件的二进制流，客户端使用outputStream输出为文件
+     *
+     * @param url
+     * @return {@link byte[]}
+     * @author zhuz
+     * @date 2020/8/5
      */
     public static byte[] getFile(String url) {
         try {
@@ -226,11 +252,15 @@ public class HttpUtils {
     /************************************************  传送数据  ************************************************/
 
     /**
-     * @Author zhuz
-     * @Description 传送数据
-     * @Date 16:37 2020/7/8
-     * @Param [requestUrl, requestMethod, outputStr]
-     **/
+     * 传送数据
+     *
+     * @param requestUrl
+     * @param requestMethod
+     * @param outputStr
+     * @return {@link JSONObject}
+     * @author zhuz
+     * @date 2020/8/5
+     */
     public static JSONObject httpsRequest(String requestUrl, String requestMethod, String outputStr) {
         JSONObject jsonObject = null;
         StringBuffer stringBuffer = new StringBuffer();

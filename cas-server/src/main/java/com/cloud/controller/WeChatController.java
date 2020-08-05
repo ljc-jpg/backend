@@ -27,7 +27,7 @@ public class WeChatController {
     private WeChatService weChatService;
 
     /**
-     * @api {POST} /weChat/sendGlobalTemplate sendGlobalTemplate
+     * @api {POST} /weChat/sendGlobalTemplate 发送微信模板消息
      * @apiVersion 1.0.0
      * @apiGroup WeChatController
      * @apiName sendGlobalTemplate

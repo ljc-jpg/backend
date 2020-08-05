@@ -11,9 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * jwt加密
+ *
  * @author zhuz
- * @Description: jwt加密
- * @date 2019/2/28 18:36
+ * @date 2020/8/5
  */
 public class JwtUtil {
 
@@ -21,12 +22,14 @@ public class JwtUtil {
     }
 
     /**
+     * 生成一个jwt字符串
+     *
      * @param user    用户信息
      * @param secret  秘钥
      * @param timeOut 超时时间（单位s）
-     * @Description: 生成一个jwt字符串
-     * @author zhu
-     * @date 2020/3/4 17:26
+     * @return {@link java.lang.String}
+     * @author zhuz
+     * @date 2020/8/5
      */
     public static String encode(String user, String secret, long timeOut) {
         Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -41,12 +44,14 @@ public class JwtUtil {
         return token;
     }
 
-
     /**
-     * @param secret token
-     * @Description: 解密jwt
+     * 解密jwt
+     *
+     * @param token
+     * @param secret
+     * @return {@link Map< String, Claim>}
      * @author zhuz
-     * @date 2019/3/4 18:14
+     * @date 2020/8/5
      */
     public static Map<String, Claim> decode(String token, String secret) {
         if (token == null || token.length() == 0) {

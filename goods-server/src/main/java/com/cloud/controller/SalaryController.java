@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 
 import static com.cloud.util.RegExUtil.isEmail;
@@ -13,9 +14,8 @@ import static com.cloud.util.ResultVo.RETURN_CODE_ERR;
 
 
 /**
- * @Description:
- * @Author: zhuzheng
- * @Date: 2019/12/11 17:57
+ * @author: zhuzheng
+ * @date: 2019/12/11 17:57
  */
 
 @RestController

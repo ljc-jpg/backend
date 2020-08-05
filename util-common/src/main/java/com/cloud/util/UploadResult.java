@@ -3,12 +3,8 @@ package com.cloud.util;
 import java.io.Serializable;
 
 /**
- * UploadResult
- *
- * @author: zhuzheng
- * @date: 2020/1/24
- * @version: 1.0
- * @since: JDK 1.7
+ * @author zhuz
+ * @date 2020/8/5
  */
 public class UploadResult extends ResultVo implements Serializable {
     /**
