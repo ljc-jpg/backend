@@ -132,10 +132,10 @@ public class WeChatService {
      * @Date 10:35 2020/7/8
      * @Param [openIds, wxTemplate]
      **/
-    public void sendGlobalTemplate(String openIds, WxTemplate wxTemplate) {
+    public void sendGlobalTemplate(WxTemplate wxTemplate) {
         String tokenStr = getAccessToken(wxTemplate.getSchId());
         logger.info("sendGlobalTemplate tokenStr:" + tokenStr);
-        String[] openId = openIds.split(",");
+        String[] openId = wxTemplate.getOpenId().split(",");
         for (String id : openId) {
             wxTemplate.setOpenId(id);
             Map res = sendTemplate(tokenStr, globalTemplate(wxTemplate));

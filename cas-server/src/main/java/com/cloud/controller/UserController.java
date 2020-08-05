@@ -54,7 +54,7 @@ public class UserController {
      * email=X
      */
     @GetMapping("/selectByUser")
-    public ResultVo<List<User>> selectByUser(User user) {
+    public ResultVo<List<User>> selectByUser(@RequestBody User user) {
         ResultVo resultVo = new ResultVo();
         try {
             List<User> users = userService.selectByUser(user);
@@ -144,7 +144,7 @@ public class UserController {
      * {"msg":"ZI5Yr","code":73,"data":false}
      */
     @GetMapping("downloadExcel")
-    public ResultVo<Boolean> downloadExcel(HttpServletResponse response, User user) {
+    public ResultVo<Boolean> downloadExcel(HttpServletResponse response, @RequestBody User user) {
         ResultVo resultVo = new ResultVo();
         try {
             response.setCharacterEncoding("utf-8");

@@ -5,6 +5,7 @@ import com.cloud.util.ResultVo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +32,7 @@ public class LoginController {
     private LoginService loginService;
 
     /**
-     * @api {POST} /cas/login login
+     * @api {POST} /cas/login 登录
      * @apiVersion 1.0.0
      * @apiGroup LoginController
      * @apiName login
@@ -39,13 +40,13 @@ public class LoginController {
      * @apiParam (请求参数) {String} loginName 账号
      * @apiParam (请求参数) {String} pwd 密码
      * @apiParamExample 请求参数示例
-     * loginName=7&
-     * pwd=1
+     * /cas/login/liujingkun/1
      * @apiSuccessExample 响应结果示例
      * {"data":{}}
      */
-    @PostMapping("/login")
-    public ResultVo login(HttpServletRequest request, HttpServletResponse response, String loginName, String pwd) {
+    @PostMapping("/login/{loginName}/{pwd}")
+    public ResultVo login(HttpServletRequest request, HttpServletResponse response,
+                          @PathVariable String loginName, @PathVariable String pwd) {
         ResultVo resultVo = new ResultVo();
         try {
             if (StringUtils.isEmpty(loginName)) {

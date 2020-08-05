@@ -59,10 +59,10 @@ public class WeChatController {
      * {"data":{}}
      */
     @PostMapping("/sendGlobalTemplate")
-    public ResultVo sendGlobalTemplate(String openIds, WxTemplate wxTemplate) {
+    public ResultVo sendGlobalTemplate(@RequestBody WxTemplate wxTemplate) {
         ResultVo result = new ResultVo();
         try {
-            weChatService.sendGlobalTemplate(openIds, wxTemplate);
+            weChatService.sendGlobalTemplate(wxTemplate);
         } catch (Exception e) {
             logger.error("sendGlobalTemplate", e);
             result.setMsg("sendGlobalTemplate:" + e);
@@ -85,8 +85,8 @@ public class WeChatController {
      * @apiSuccessExample 响应结果示例
      * null
      */
-    @GetMapping(value = "/bindH5WeChat_forAllUser")
-    public void bindH5WeChat(HttpServletResponse resp, String appId, String paramStr) {
+    @GetMapping(value = "/bindH5WeChat_forAllUser/{appId}/{paramStr}")
+    public void bindH5WeChat(HttpServletResponse resp, @PathVariable String appId, @PathVariable String paramStr) {
         try {
             StringBuffer url = weChatService.bindH5WeChatServer(appId, paramStr);
             resp.setCharacterEncoding("utf-8");
@@ -96,8 +96,24 @@ public class WeChatController {
         }
     }
 
-    @GetMapping(value = "/accessToken")
-    public ResultVo<String> accessToken(String schId) {
+    /**
+     * @api {GET} /weChat/accessToken/{schId} 获取学校对应的token
+     * @apiVersion 1.0.0
+     * @apiGroup WeChatController
+     * @apiName accessToken
+     * @apiDescription 获取学校对应的token
+     * @apiParam (请求参数) {String} schId
+     * @apiParamExample 请求参数示例
+     * schId=100075
+     * @apiSuccessExample 响应结果示例
+     * {
+     * "code": 1,
+     * "msg": null,
+     * "data": "35_si1Rizrt6R56AKqSpB7j14HZDqD8wdSI6LTCNoYx75X90FGMgl2Lk7kgs6QvEzaC1GsFiVb66mhaeVQbGAmkAtJqZRZgSXzYlYNdUevNLlpS3Dc2GYf6eMeuFtydqw1nbvRFluFD8DGA4NbKRNUfABAJFM"
+     * }
+     */
+    @GetMapping(value = "/accessToken/{schId}")
+    public ResultVo<String> accessToken(@PathVariable String schId) {
         ResultVo result = new ResultVo();
         try {
             if (StringUtils.isEmpty(schId)) {
@@ -113,7 +129,7 @@ public class WeChatController {
             result.setCode(RETURN_CODE_ERR);
         }
         return result;
-
     }
+
 
 }
