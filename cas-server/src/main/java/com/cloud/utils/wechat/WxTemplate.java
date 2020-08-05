@@ -8,6 +8,7 @@ public class WxTemplate {
     private String openId;
     private String url;
     private String first;
+    private String openIds;
     /**
      * 学校
      */
@@ -112,4 +113,11 @@ public class WxTemplate {
         this.schId = schId;
     }
 
+    public String getOpenIds() {
+        return openIds;
+    }
+
+    public void setOpenIds(String openIds) {
+        this.openIds = openIds;
+    }
 }
