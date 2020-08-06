@@ -1,0 +1,7 @@
+{
+  "name": "商品管理",
+  "title": "goods-server",
+  "description": "商品管理接口文档",
+  "url": "http://ip:8751",
+  "version": "1.0.0"
+}
