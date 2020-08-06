@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1cdddbf4-23db-4b56-9ee4-532a26e2fc16" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/apidoc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/CasServerApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/controller/IndexController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/controller/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/controller/OssController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/controller/WeChatController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/dao/QuartzMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/dao/UserMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/dao/ZXXX0101Mapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/model/Quartz.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/mybatis/CrudMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/mybatis/DeleteMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/mybatis/InsertMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/mybatis/SelectMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/mybatis/UpdateMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/quartz/InitQuartzJob.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/quartz/QuartzJobFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/quartz/QuartzJobFactoryDisallowConcurrentExecution.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/quartz/ScheduleJob.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/quartz/TaskUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/service/LoginService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/service/OSSService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/service/WeChatService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/spring/MapperScannerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/spring/MatrixApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/spring/MyBatisConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/spring/SpringConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/utils/UserExcelListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/utils/wechat/AbstractToken.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/utils/wechat/AccessToken.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/utils/wechat/Material.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/utils/wechat/WeChatReturnCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/java/com/cloud/utils/wechat/WxTemplate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/resources/bootstrap.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/resources/logback.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/resources/mybatis/QuartzMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/resources/mybatis/UserMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/resources/mybatis/ZXXX0101Mapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/resources/static/404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/resources/static/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/resources/static/js/util/util.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cas-server/src/main/resources/static/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/java/com/cloud/ConfigServerApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/java/com/cloud/WebSecurityConfigurer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/bootstrap.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config/cas-server-test.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config/goods-server-test.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config/zuul-server-test.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/logback.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-server/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-server/src/main/java/com/cloud/EurekaServerApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-server/src/main/java/com/cloud/WebSecurityConfigurer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-server/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-server/src/main/resources/logback.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/apidoc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/GoodsApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/controller/IndexController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/controller/QuartzController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/controller/SalaryController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/dao/SalaryMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/dao/SalaryUserAttrMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/dao/ZXJS0101Mapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/model/Salary.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/model/SalaryUserAttr.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/mybatis/CrudMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/mybatis/DeleteMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/mybatis/InsertMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/mybatis/SelectMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/mybatis/UpdateMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/service/CaseClientService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/service/SalaryService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/service/SalaryUserAttrService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/spring/MapperScannerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/spring/MatrixApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/spring/MyBatisConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/spring/MyCommentGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/spring/RunClass.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/java/com/cloud/spring/SpringConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/resources/bootstrap.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/resources/generatorConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/resources/logback.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/resources/mybatis/Salary.Mapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/resources/mybatis/SalaryUserAttr.Mapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/resources/mybatis/ZXJS0101Mapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/resources/static/404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/resources/static/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goods-server/src/main/resources/static/js/util/util.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/model/EmailContent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/model/ZXXX0101.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/model/ZZJS0101.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/ActiveEnum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/CookieUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/DateUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/HttpUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/MultipartFileUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/MyX509TrustManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/PdfUtilS.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/PinyUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/RegExUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/ResultVo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util-common/src/main/java/com/cloud/util/UploadResult.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zuul-server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zuul-server/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zuul-server/src/main/java/com/cloud/ZuulServerApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zuul-server/src/main/java/com/cloud/filters/MyFallbackProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zuul-server/src/main/java/com/cloud/filters/PreAuthFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zuul-server/src/main/java/com/cloud/filters/RibbonFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zuul-server/src/main/resources/bootstrap.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zuul-server/src/main/resources/logback.xml" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+        <option value="$PROJECT_DIR$/.idea/vue.iml" />
+        <option value="$PROJECT_DIR$/.idea/misc.xml" />
+        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
+        <option value="$PROJECT_DIR$/.idea/modules.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="5" />
+    <option name="width" value="1940" />
+    <option name="height" value="1050" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="vue" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vue" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vue" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vue" type="462c0819:PsiDirectoryNode" />
+              <item name="vue-moblic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vue" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vue" type="462c0819:PsiDirectoryNode" />
+              <item name="vue-moblic" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vue" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vue" type="462c0819:PsiDirectoryNode" />
+              <item name="vue-moblic" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="router" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="editor.config.ad.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="vcs.patch.to.clipboard" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1cdddbf4-23db-4b56-9ee4-532a26e2fc16" name="Default Changelist" comment="" />
+      <created>1596704304703</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1596704304703</updated>
+      <workItem from="1596704305965" duration="259000" />
+    </task>
+    <task id="LOCAL-00001" summary="vue">
+      <created>1596704520346</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1596704520346</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="259000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <layout>
+      <window_info id="Designer" />
+      <window_info id="Image Layers" />
+      <window_info id="Capture Tool" />
+      <window_info id="UI Designer" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Tail" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info active="true" anchor="bottom" id="Version Control" visible="true" weight="0.601983" />
+      <window_info anchor="bottom" id="MyBatis Log" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Maven" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Codota" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Key Promoter X" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="vue" />
+    <option name="LAST_COMMIT_MESSAGE" value="vue" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/vue-moblic/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vue-moblic/src/router/rounter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vue-moblic/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

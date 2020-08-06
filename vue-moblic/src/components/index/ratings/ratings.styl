@@ -1,0 +1,180 @@
+@import "../../../common/stylus/mixin.styl"
+@import "../../../common/stylus/base.styl"
+.ratings
+    overflow hidden
+    position absolute
+    top 174px
+    bottom 0
+    left 0
+    width 100%
+    .overView
+        height 88px
+        width 100%
+
+        .overView-left
+            float left
+            width 70%
+            height 100%
+            .overView-left-top
+                padding 16px 0 0 12px
+                height 24px
+
+            .overView-left-bottom
+                padding 5px 0 5px 12px
+                height 24px    
+
+            .overView-left-top-title
+                float left
+                text-align center
+                width 30%
+                font-size 21px
+                color rgb(266, 153, 0)
+
+            .overView-left-bottom-title
+                float left
+                text-align center
+                width 30%
+                font-size 12px
+                color rgb(147, 153, 159)
+            
+            .overView-left-top-content
+                float left
+                text-align center
+                width 20%
+                font-size 12px 
+                color rgb(147, 153, 159)
+
+            .overView-left-top-star
+                float left
+                width 27%
+                line-height 16px
+                padding-top 4px
+                
+            .overView-left-top-score
+                float left
+                text-align center
+                width 16%
+                font-size 12px 
+                color rgb(266, 153, 0)
+                       
+        .overView-right
+            float right 
+            width 30%
+            height 100%
+
+            .overView-right-title
+                margin 16px 0 0 0
+                font-size 18px
+                color rgb(147, 153, 159)
+                text-align center  
+                height 24px
+                border-left 1px solid rgba(7, 17, 27, 0.1)
+
+            .overView-right-content
+                color rgb(147, 153, 159)
+                text-align center  
+                font-size 13px 
+                padding 5px 0 5px 12px
+                border-left 1px solid rgba(7, 17, 27, 0.1)
+                
+    .content
+        text-align center
+        width 100%
+
+        .content-title
+            height 23px
+            width 100%
+            display flex
+
+            .radio
+                display none
+
+            .content-content-title
+                margin 8px 0 0 0
+                padding 6px 8px 20px 8px
+                background #fff
+                color rgb(266, 153, 0)
+                font-size 12px
+                font-weight 600
+                border-radius 2px
+                width 33%
+                border 1px solid rgba(255, 200, 0 , 0.6)
+                &.title-active//该属性对应为true  设置有效
+                    color #000
+                    background  rgba(255, 150 , 0 , 0.5) 
+                &:last-child  //选中最后元素
+                     margin-right 12px
+                &:first-child  //选中第一个元素
+                     margin-left 12px     
+
+        .content-content-ul
+            margin 1px 0 0 0
+            padding 0 12px 0 12px
+            .content-content-top
+                display flex
+                position relative
+                margin 24px 0 16px 0
+                border-bottom 1px solid rgba(7,17,27,0.1)
+                min-height 68px
+                .content-content-left
+                    width 12%
+                    .avatar
+                        border-radius 50%
+                        
+                .content-content-right   
+                    width 80% 
+                    position relative
+                    flex 1px
+                    .content-content-right-top
+                        position relative
+                        display flex
+                        .name
+                            margin 0
+                            font-size 10px
+                            line-height 12px
+
+                        .time
+                            font-size 10px  
+                            line-height 12px
+                            position absolute
+                            right 6px
+                            color #93999f
+
+            .content-content-middle
+                position relative
+                display flex 
+                width 100%   
+                margin-top 9px
+                .content
+                    width 10%
+                    margin 0 
+                    color #93999f
+                    font-size 7px  
+                    line-height 12px 
+
+            .content-content-bottom
+                color #93999f
+                font-size 10px  
+                line-height 12px
+                position relative
+                display flex
+                margin-top 8px
+                .content
+                    text-align left 
+
+            .content-content-last
+                position relative
+                display flex
+                margin 10px 0 12px 0  
+                .iconfont
+                    color rgb(0, 160, 220)
+                    padding-right 3px
+
+                .iconfont-text
+                    padding 0 6px
+                    border 1px solid rgba(7,17,27,0.1)
+                    border-radius 1px
+                    color #93999f
+                    line-height 16px
+                    font-size 9px 
+
