@@ -2,8 +2,8 @@ package com.cloud.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.cloud.dao.Zxxx0101Mapper;
-import com.cloud.model.Zxxx0101;
+import com.cloud.dao.ZXXX0101Mapper;
+import com.cloud.model.ZXXX0101;
 import com.cloud.util.ActiveEnum;
 import com.cloud.util.HttpUtils;
 import com.cloud.utils.wechat.AccessToken;
@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -40,7 +39,7 @@ public class WeChatService {
     private String redirectUri;
 
     @Resource
-    private Zxxx0101Mapper zxxx0101Mapper;
+    private ZXXX0101Mapper zxxx0101Mapper;
 
     @Autowired
     public StringRedisTemplate redisTemplate;
@@ -106,7 +105,7 @@ public class WeChatService {
      */
     public String getAccessToken(String schId) {
         String token;
-        Zxxx0101 zxxx0101 = zxxx0101Mapper.selectBySchId(schId);
+        ZXXX0101 zxxx0101 = zxxx0101Mapper.selectBySchId(schId);
         logger.info("appId:" + zxxx0101.getWechatAppId() + " appSecret:" + zxxx0101.getAppSecret());
         if (null == zxxx0101) {
             throw new RuntimeException("getAccessToken未找到学校");

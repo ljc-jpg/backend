@@ -7,7 +7,7 @@ import java.util.Date;
  * @author zhuz
  * @date 2020/7/31
  */
-public class zxjs0101 {
+public class ZZJS0101 {
     private String userId;
 
     private String loginName;
@@ -36,7 +36,7 @@ public class zxjs0101 {
 
     private Integer xqhId;
 
-    public zxjs0101(String userId, String loginName, String fullName, String gender, String mobile, Integer enabled, Integer isAdmin, String psw, Date createTime, Date updateTime, String email, String headUrl, Integer schId, Integer xqhId) {
+    public ZZJS0101(String userId, String loginName, String fullName, String gender, String mobile, Integer enabled, Integer isAdmin, String psw, Date createTime, Date updateTime, String email, String headUrl, Integer schId, Integer xqhId) {
         this.userId = userId;
         this.loginName = loginName;
         this.fullName = fullName;
@@ -53,7 +53,7 @@ public class zxjs0101 {
         this.xqhId = xqhId;
     }
 
-    public zxjs0101() {
+    public ZZJS0101() {
         super();
     }
 

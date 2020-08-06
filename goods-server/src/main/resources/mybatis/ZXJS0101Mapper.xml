@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cloud.dao.zxjs0101Mapper" >
-  <resultMap id="BaseResultMap" type="com.cloud.model.zxjs0101" >
+<mapper namespace="com.cloud.dao.ZXJS0101Mapper" >
+  <resultMap id="BaseResultMap" type="com.cloud.model.ZZJS0101" >
     <constructor >
       <idArg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="login_name" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -33,7 +33,7 @@
     delete from zxjs0101
     where user_id = #{userId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.cloud.model.zxjs0101" >
+  <insert id="insert" parameterType="com.cloud.model.ZZJS0101" >
     insert into zxjs0101 (user_id, login_name, full_name, 
       gender, mobile, enabled, 
       is_admin, psw, create_time, 
@@ -45,7 +45,7 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, #{headUrl,jdbcType=VARCHAR}, 
       #{schId,jdbcType=INTEGER}, #{xqhId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.cloud.model.zxjs0101" >
+  <insert id="insertSelective" parameterType="com.cloud.model.ZZJS0101" >
     insert into zxjs0101
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -136,7 +136,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cloud.model.zxjs0101" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloud.model.ZZJS0101" >
     update zxjs0101
     <set >
       <if test="loginName != null" >
@@ -181,7 +181,7 @@
     </set>
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cloud.model.zxjs0101" >
+  <update id="updateByPrimaryKey" parameterType="com.cloud.model.ZZJS0101" >
     update zxjs0101
     set login_name = #{loginName,jdbcType=VARCHAR},
       full_name = #{fullName,jdbcType=VARCHAR},

@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 import static com.cloud.util.RegExUtil.isEmail;
+import static com.cloud.util.ResultVo.RETURN_CODE_ERR;
 
 /**
  * 文件, 邮件处理接口
@@ -52,7 +53,7 @@ public class OssController {
         try {
             if (null == multipartFile) {
                 uploadResult.setMsg("multipartFile为空");
-                uploadResult.setCode(ResultVo.RETURN_CODE_ERR);
+                uploadResult.setCode(RETURN_CODE_ERR);
                 return uploadResult;
             }
             if (StringUtils.isEmpty(fileName)) {
@@ -61,7 +62,7 @@ public class OssController {
             uploadResult = ossService.uploadSingle(fileName, "/mobilecompus/file", multipartFile.getInputStream());
         } catch (Exception e) {
             logger.error("uploadSingle error", e);
-            uploadResult.setCode(ResultVo.RETURN_CODE_ERR);
+            uploadResult.setCode(RETURN_CODE_ERR);
             uploadResult.setMsg("上传文件异常！");
         }
         return uploadResult;
@@ -90,17 +91,17 @@ public class OssController {
         try {
             if (!isEmail(addressee)) {
                 result.setMsg("收件邮件错误");
-                result.setCode(ResultVo.RETURN_CODE_ERR);
+                result.setCode(RETURN_CODE_ERR);
                 return result;
             }
             if (StringUtils.isEmpty(content)) {
                 result.setMsg("邮件内容为空");
-                result.setCode(ResultVo.RETURN_CODE_ERR);
+                result.setCode(RETURN_CODE_ERR);
                 return result;
             }
             if (StringUtils.isEmpty(subject)) {
                 result.setMsg("邮件主题为空");
-                result.setCode(ResultVo.RETURN_CODE_ERR);
+                result.setCode(RETURN_CODE_ERR);
                 return result;
             }
             List<EmailContent> contents = JSONObject.parseArray(content, EmailContent.class);
@@ -109,7 +110,7 @@ public class OssController {
         } catch (Exception e) {
             result.setData(false);
             logger.error("uploadSingle error", e);
-            result.setCode(ResultVo.RETURN_CODE_ERR);
+            result.setCode(RETURN_CODE_ERR);
             result.setMsg("发送邮件异常！" + e);
         }
         return result;

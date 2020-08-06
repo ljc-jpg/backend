@@ -7,7 +7,7 @@ import java.util.Date;
  * @date 2020/7/31
  */
 
-public class Zxxx0101 {
+public class ZXXX0101 {
     /**
      *
      */
@@ -62,7 +62,7 @@ public class Zxxx0101 {
 
     private String appSecret;
 
-    public Zxxx0101(Integer schId, Integer xqhId, String fullName, String mobile, String headUrl, String email,
+    public ZXXX0101(Integer schId, Integer xqhId, String fullName, String mobile, String headUrl, String email,
                     String adminUserId, String weChatAppId, String appSecret, Date createTime, Date updateTime, Integer enabled) {
         this.schId = schId;
         this.xqhId = xqhId;
@@ -78,7 +78,7 @@ public class Zxxx0101 {
         this.enabled = enabled;
     }
 
-    public Zxxx0101() {
+    public ZXXX0101() {
         super();
     }
 
