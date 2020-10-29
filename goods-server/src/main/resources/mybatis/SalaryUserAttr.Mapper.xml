@@ -4,7 +4,7 @@
 
     <select id="selectSalaryByMap" resultMap="salaryMap">
       SELECT DISTINCT a.full_name,a.login_name,b.project_name,b.money,c.salary_name,c.type, project_type,c.path,c.approval_time  from
-      (SELECT user_id,full_name,login_name from zxjs0101 where sch_id = #{schId}) a
+      (SELECT user_id,full_name,login_name from ZXJS0101 where sch_id = #{schId}) a
       inner JOIN (SELECT user_id,name project_name,money,salary_id,project_type from t_salary_user_attr WHERE salary_id = #{salaryId}) b on b.user_id=a.user_id
       inner JOIN (SELECT `name` salary_name,type,salary_id ,path,approval_time from t_salary where salary_id = #{salaryId}  ) c on c.salary_id = b.salary_id
       ORDER BY a.full_name,b.project_name

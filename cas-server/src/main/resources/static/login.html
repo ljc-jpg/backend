@@ -17,11 +17,11 @@
 <script type="text/javascript" src="/static/js/util/util.js"></script>
 <script>
     function doLogin() {
-        var data = {
-            loginName: $('#loginName').val(),
-            pwd: $('#pwd').val()
-        }
-        Util.requestFormData("/cas/login", 'POST', data,
+        // var data = {
+        //     loginName: $('#loginName').val(),
+        //     pwd: $('#pwd').val()
+        // }
+        Util.requestFormData("/cas/login/" + $('#loginName').val() + "/" + $('#pwd').val(), 'GET', '',
             function (res) {
                 if (res.code == 1) {
                     location.href = Util.casIndex;

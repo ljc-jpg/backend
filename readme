@@ -1,0 +1,11 @@
+zuul-server     网关(登录校验)
+cas-server      单点登录（登录）
+eureka-server   注册中心
+config-server   配置中心（配置集中配置）
+goods-server    商品管理（业务模板）
+
+启动顺序
+euraka(注册) ->config(注册配置中心) ->zuul（注册网关）->(cas)登录验证 -> 业务服务集群
+
+请求顺序
+ngix->zuul(转发 ) ->cas (合法验证)  -> euraka(获取服务) -> 业务服务集群

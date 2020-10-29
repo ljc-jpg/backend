@@ -5,10 +5,7 @@ import com.cloud.util.ResultVo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +41,7 @@ public class LoginController {
      * @apiSuccessExample 响应结果示例
      * {"data":{}}
      */
-    @PostMapping("/login/{loginName}/{pwd}")
+    @GetMapping("/login/{loginName}/{pwd}")
     public ResultVo login(HttpServletRequest request, HttpServletResponse response,
                           @PathVariable String loginName, @PathVariable String pwd) {
         ResultVo resultVo = new ResultVo();
