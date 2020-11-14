@@ -54,7 +54,7 @@ public class UserController {
      * email=X
      */
     @GetMapping("/selectByUser")
-    public ResultVo<List<User>> selectByUser(User user) {
+    public ResultVo<List<User>> selectByUser(@RequestBody User user) {
         ResultVo resultVo = new ResultVo();
         try {
             List<User> users = userService.selectByUser(user);
@@ -81,9 +81,8 @@ public class UserController {
      * @apiSuccessExample 响应结果示例
      * {"msg":"Yk2xFy9","code":80,"data":{}}
      */
-    @PostMapping(value = "/insertExcel")
-    public ResultVo<Boolean> insertUsers(@RequestParam(value = "multipartFile") MultipartFile multipartFile,
-                                         @RequestParam(value = "schId") String schId) {
+    @PostMapping(value = "/insertExcel/{multipartFile}/{schId}")
+    public ResultVo<Boolean> insertUsers(@PathVariable MultipartFile multipartFile, @PathVariable String schId) {
         ResultVo resultVo = new ResultVo();
         try {
             if (null == multipartFile) {
