@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author zhuz
  * @date 2020/8/3
  */
-@FeignClient(name = "cas-server")
+@FeignClient(name = "cas-server" , fallback = CaseClientFallback.class)
 public interface CaseClientService {
 
     /**
