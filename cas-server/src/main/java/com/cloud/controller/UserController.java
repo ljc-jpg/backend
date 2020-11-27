@@ -54,7 +54,7 @@ public class UserController {
      * email=X
      */
     @GetMapping("/selectByUser")
-    public ResultVo<List<User>> selectByUser(@RequestBody User user) {
+    public ResultVo<List<User>> selectByUser(User user) {
         ResultVo resultVo = new ResultVo();
         try {
             List<User> users = userService.selectByUser(user);

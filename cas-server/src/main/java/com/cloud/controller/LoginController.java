@@ -1,5 +1,6 @@
 package com.cloud.controller;
 
+import com.cloud.model.User;
 import com.cloud.service.LoginService;
 import com.cloud.util.ResultVo;
 import org.apache.commons.lang.StringUtils;
@@ -56,7 +57,8 @@ public class LoginController {
                 resultVo.setCode(RETURN_CODE_ERR);
                 return resultVo;
             }
-            loginService.login(request, response, loginName, pwd);
+            User user = loginService.login(request, response, loginName, pwd);
+            resultVo.setData(user);
         } catch (Exception e) {
             logger.error("login:", e);
             resultVo.setMsg("login:" + e);
@@ -65,5 +67,13 @@ public class LoginController {
         return resultVo;
     }
 
+    @PostMapping("/loginOut")
+    public void loginOut(HttpServletRequest request) {
+        try {
+            loginService.loginOut(request);
+        } catch (Exception e) {
+            logger.error("login:", e);
+        }
+    }
 
 }
