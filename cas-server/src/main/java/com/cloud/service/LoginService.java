@@ -59,6 +59,7 @@ public class LoginService {
         redisTemplate.opsForValue().set(token, secret);
         redisTemplate.expire(token, expireTime, TimeUnit.MILLISECONDS);
         CookieUtils.addCookie(request, response, CookieUtils.COOKIE_TOKEN, token, domainName);
+        u.setPsw(token);
         return u;
     }
 
@@ -76,6 +77,8 @@ public class LoginService {
                 cookie.setMaxAge(0);
                 cookie.setDomain(domainName);
                 cookie.setPath("/");
+            } else {
+                return;
             }
         } else {
             Cookie cookie = new Cookie(CookieUtils.COOKIE_TOKEN, token);
