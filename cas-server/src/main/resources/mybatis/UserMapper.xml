@@ -6,8 +6,7 @@
         select user_id,login_name,full_name,
         ( CASE WHEN gender = 1 THEN '男' ELSE '女' END ) gender ,
         ( CASE WHEN user_type = "T" THEN '教师' WHEN user_type = "S" THEN '家长' ELSE '学生' END ) user_type,
-        mobile,enabled,is_admin,psw,create_time,update_time,email,head_url,sch_id
-        from  t_user
+        mobile, is_admin, email, head_url, sch_id from t_user
         <where >
             <if test="userId != null" >
                 and user_id = #{userId,jdbcType=VARCHAR}

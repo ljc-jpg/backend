@@ -34,6 +34,8 @@ public class SpringConfig implements WebMvcConfigurer {
         corsConfiguration.addAllowedHeader("*");
         /*允许访问的方法名,GET POST等*/
         corsConfiguration.addAllowedMethod("*");
+        /*暴露哪些头部信息 不能用*因为跨域访问默认不能获取全部头部信息*/
+        corsConfiguration.addExposedHeader("token");
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }

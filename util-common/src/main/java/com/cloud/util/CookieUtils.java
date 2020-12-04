@@ -1,12 +1,17 @@
 package com.cloud.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 资源工具，读取资源文件，封装连接等.
@@ -59,12 +64,14 @@ public class CookieUtils {
         return isMobile;
     }
 
-    public static void addCookie(HttpServletRequest request, HttpServletResponse response,
-                                 String nameCookie, String value, String domainName) {
+    public static void addCookie(HttpServletRequest request, HttpServletResponse response, String nameCookie,
+                                 String value, String domainName) {
         Cookie cookie = new Cookie(nameCookie, value);
         //手机端设置30天有效 电脑端浏览器关闭前有效
         if (CookieUtils.isMobile(request)) {
             cookie.setMaxAge(COOKIE_TIME);
+        } else if (StringUtils.isEmpty(value)) {
+            cookie.setMaxAge(0);
         } else {
             cookie.setMaxAge(-2);
         }
@@ -74,18 +81,16 @@ public class CookieUtils {
         response.addCookie(cookie);
     }
 
-    public static final String getCookie(HttpServletRequest servletRequest, String nameCookie) {
-        String token = null;
-        Cookie[] cookies = servletRequest.getCookies();
-        logger.info("cookies" + cookies);
-        if (null != cookies) {
-            for (Cookie cookie : cookies) {
-                if (nameCookie.equals(cookie.getName())) {
-                    token = cookie.getValue();
-                    break;
-                }
-            }
+    public static final String getCookie(HttpServletRequest request, String nameCookie) {
+        List<Cookie> list = Arrays.asList(request.getCookies());
+        if (CollectionUtils.isEmpty(list)) {
+            return "";
         }
-        return token;
+        List<Cookie> token = list.stream().filter(p -> p.getName().equals(nameCookie)).collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(token)) {
+            return "";
+        }
+        return token.get(0).getValue();
     }
+
 }

@@ -68,9 +68,9 @@ public class LoginController {
     }
 
     @PostMapping("/loginOut")
-    public void loginOut(HttpServletRequest request) {
+    public void loginOut(HttpServletRequest request, HttpServletResponse response) {
         try {
-            loginService.loginOut(request);
+            loginService.loginOut(request, response);
         } catch (Exception e) {
             logger.error("login:", e);
         }

@@ -1,6 +1,5 @@
 package com.cloud.service;
 
-import com.auth0.jwt.interfaces.Claim;
 import com.cloud.dao.UserMapper;
 import com.cloud.model.User;
 import com.cloud.util.CookieUtils;
@@ -14,12 +13,13 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import static com.cloud.util.CookieUtils.COOKIE_TOKEN;
+import static com.cloud.util.CookieUtils.addCookie;
 
 /**
  * @author zhuz
@@ -55,39 +55,25 @@ public class LoginService {
         //生成密钥   用户信息  随机字符串  时间戳
         String secret = UUID.randomUUID().toString().replaceAll("-", "");
         String token = JwtUtil.encode(u.toString(), secret, expireTime);
+        u.setPsw(token);
         //存入token 密钥 过期时间
         redisTemplate.opsForValue().set(token, secret);
         redisTemplate.expire(token, expireTime, TimeUnit.MILLISECONDS);
-        CookieUtils.addCookie(request, response, CookieUtils.COOKIE_TOKEN, token, domainName);
-        u.setPsw(token);
+        addCookie(request, response, COOKIE_TOKEN, token, domainName);
         return u;
     }
 
-    public void loginOut(HttpServletRequest request) {
-        String token = CookieUtils.getCookie(request, CookieUtils.COOKIE_TOKEN);
+    public void loginOut(HttpServletRequest request, HttpServletResponse response) {
+        String token = CookieUtils.getCookie(request, COOKIE_TOKEN);
+        if (StringUtils.isEmpty(token)) {
+            throw new RuntimeException("token为空");
+        }
         //token删除
         String sign = redisTemplate.opsForValue().get(token);
         if (!StringUtils.isEmpty(sign)) {
-            Map<String, Claim> map = JwtUtil.decode(token, sign);
-            logger.info("map:" + map);
-            String jwtSign = map.get("id").asString();
-            if (sign.equals(jwtSign)) {
-                Cookie cookie = new Cookie(CookieUtils.COOKIE_TOKEN, token);
-                cookie.setHttpOnly(true);
-                cookie.setMaxAge(0);
-                cookie.setDomain(domainName);
-                cookie.setPath("/");
-            } else {
-                return;
-            }
-        } else {
-            Cookie cookie = new Cookie(CookieUtils.COOKIE_TOKEN, token);
-            cookie.setHttpOnly(true);
-            cookie.setMaxAge(0);
-            cookie.setDomain(domainName);
-            cookie.setPath("/");
-            return;
+            redisTemplate.delete(token);
         }
+        addCookie(request, response, "token", null, domainName);
     }
 
 
