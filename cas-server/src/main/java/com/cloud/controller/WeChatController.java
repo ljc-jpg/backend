@@ -109,7 +109,7 @@ public class WeChatController {
      * {
      * "code": 1,
      * "msg": null,
-     * "data": "35_si1Rizrt6R56AKqSpB7j14HZDqD8wdSI6LTCNoYx75X90FGMgl2Lk7kgs6QvEzaC1GsFiVb66mhaeVQbGAmkAtJqZRZgSXzYlYNdUevNLlpS3Dc2GYf6eMeuFtydqw1nbvRFluFD8DGA4NbKRNUfABAJFM"
+     * "data": "35_si1Rizrt6R56AKqSpB7j14HZDqD8wdSI6L"
      * }
      */
     @GetMapping(value = "/accessToken/{schId}")

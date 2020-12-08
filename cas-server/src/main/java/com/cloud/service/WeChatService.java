@@ -2,8 +2,10 @@ package com.cloud.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.cloud.dao.ZXXX0101Mapper;
-import com.cloud.model.ZXXX0101;
+
+import com.cloud.dao.EducationMapper;
+import com.cloud.model.Education;
+
 import com.cloud.util.ActiveEnum;
 import com.cloud.util.HttpUtils;
 import com.cloud.utils.wechat.AccessToken;
@@ -39,7 +41,7 @@ public class WeChatService {
     private String redirectUri;
 
     @Resource
-    private ZXXX0101Mapper zxxx0101Mapper;
+    private EducationMapper educationMapper;
 
     @Autowired
     public StringRedisTemplate redisTemplate;
@@ -50,6 +52,40 @@ public class WeChatService {
         resultMap.put("color", color);
         return resultMap;
     }
+
+    /**
+     * 获取微信accessToken
+     *
+     * @param educationId
+     * @return {@link String}
+     * @author zhuz
+     * @date 2020/8/3
+     */
+    public String getAccessToken(String educationId) {
+        String token;
+        Education education = educationMapper.selectByPrimaryKey(educationId);
+        if (null == education|| StringUtils.isEmpty(education.getWechatAppId())) {
+            throw new RuntimeException("未找到学校");
+        }
+        String appId = education.getWechatAppId();
+        String appSecret = education.getAppSecret();
+
+        AccessToken accessToken = new AccessToken();
+        String tokenStr = redisTemplate.opsForValue().get("send_template_message_token_" + appId);
+        logger.info("redis 获取 token  == >      " + tokenStr);
+        if (!StringUtils.isEmpty(tokenStr)) {
+            token = tokenStr;
+        } else {
+            token = accessToken.request(appId, appSecret);
+            String key = "send_template_message_token_" + appId;
+            logger.info("自动生成key" + key + "  token:" + token);
+            redisTemplate.opsForValue().set(key, token);
+            redisTemplate.expire(key, 3600, TimeUnit.SECONDS);
+        }
+        return token;
+    }
+
+
 
     /**
      * 发送模板消息
@@ -95,35 +131,7 @@ public class WeChatService {
         return json;
     }
 
-    /**
-     * 获取微信accessToken
-     *
-     * @param schId
-     * @return {@link String}
-     * @author zhuz
-     * @date 2020/8/3
-     */
-    public String getAccessToken(String schId) {
-        String token;
-        ZXXX0101 zxxx0101 = zxxx0101Mapper.selectBySchId(schId);
-        logger.info("appId:" + zxxx0101.getWechatAppId() + " appSecret:" + zxxx0101.getAppSecret());
-        if (null == zxxx0101) {
-            throw new RuntimeException("getAccessToken未找到学校");
-        }
-        AccessToken accessToken = new AccessToken();
-        String tokenStr = redisTemplate.opsForValue().get("send_template_message_token_" + zxxx0101.getWechatAppId());
-        logger.info("redis 获取 token  == >      " + tokenStr);
-        if (!StringUtils.isEmpty(tokenStr)) {
-            token = tokenStr;
-        } else {
-            token = accessToken.request(zxxx0101.getWechatAppId(), zxxx0101.getAppSecret());
-            String key = "send_template_message_token_" + zxxx0101.getWechatAppId();
-            logger.info("自动生成key" + key + "  token:" + token);
-            redisTemplate.opsForValue().set(key, token);
-            redisTemplate.expire(key, 3600, TimeUnit.SECONDS);
-        }
-        return token;
-    }
+
 
     /**
      * @Author zhuz

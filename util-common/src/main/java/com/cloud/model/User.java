@@ -1,44 +1,129 @@
 package com.cloud.model;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
- *
- * @author zhuz
- * @date 2020/7/31
+ * @author zhu zheng
+ * @date 2020/3/30
  */
-public class User {
+@Table(name = "table_user")
+@ColumnWidth(10)
+public class User implements Serializable {
+
+    /**
+     * 用户id
+     */
+    @ExcelIgnore
+    @Id
     private String userId;
 
-    private String loginName;
+    /**
+     * 机构id
+     */
+    @ExcelIgnore
+    private String educationId;
 
-    private String fullName;
-
-    private String gender;
-
-    private String userType;
-
-    private String mobile;
-
-    private Integer enabled;
-
-    private Integer isAdmin;
-
-    private String psw;
-
-    private Date createTime;
-
-    private Date updateTime;
-
-    private String email;
-
+    /**
+     * 用户头像
+     */
+    @ExcelIgnore
     private String headUrl;
 
-    private Integer schId;
+    /**
+     * 登录名
+     */
+    @ColumnWidth(15)
+    @ExcelProperty("登录名")
+    private String loginName;
 
-    private Integer xqhId;
+    /**
+     * 姓名
+     */
+    @ExcelProperty("姓名")
+    private String fullName;
 
-    public User(String userId, String gender, String loginName, String mobile, Integer enabled, String fullName, Integer isAdmin, String psw, String userType, Date createTime, Date updateTime, String email, String headUrl, Integer schId, Integer xqhId) {
+    /**
+     * 性别 1男 0女
+     */
+    @ExcelProperty("性别")
+    private String gender;
+
+    /**
+     * 用户角色 T 教职工 S学生 P 家长 D默认用户
+     */
+    @ColumnWidth(12)
+    @ExcelProperty("用户角色")
+    private String userType;
+
+    /**
+     * 手机号
+     */
+    @ColumnWidth(15)
+    @ExcelProperty("手机号")
+    private String mobile;
+
+    /**
+     * 邮箱
+     */
+    @ColumnWidth(20)
+    @ExcelProperty("邮箱")
+    private String email;
+
+    /**
+     * 管理员 1是0否
+     */
+    @ExcelIgnore
+    private Integer isAdmin;
+
+    /**
+     * 密码
+     */
+    @ExcelIgnore
+    private String psw;
+
+    /**
+     * 1正常 0 删除
+     */
+    @ExcelIgnore
+    private Integer enabled = 1;
+
+    /**
+     * 创建时间
+     */
+    @ColumnWidth(20)
+    @ExcelProperty("创建时间")
+    @DateTimeFormat("yyyy年MM月dd日HH时")
+    private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    @ColumnWidth(20)
+    @ExcelProperty("更新时间")
+    @DateTimeFormat("yyyy年MM月dd日HH时")
+    private Date updateTime;
+
+    @ExcelIgnore
+    private Integer status = 1;
+
+    @Transient
+    private List<Map> articles;
+
+    public User(List<Map> articles, String userId, String gender, String loginName, String mobile, Integer enabled, String fullName,
+                Integer isAdmin, String psw, String userType, Date createTime, Date updateTime, String email, String headUrl,
+                String educationId, Integer status) {
+        this.articles = articles;
         this.userId = userId;
         this.loginName = loginName;
         this.mobile = mobile;
@@ -51,8 +136,24 @@ public class User {
         this.updateTime = updateTime;
         this.email = email;
         this.headUrl = headUrl;
-        this.schId = schId;
-        this.xqhId = xqhId;
+        this.educationId = educationId;
+        this.gender = gender;
+        this.status = status;
+    }
+
+    public List<Map> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Map> articles) {
+        this.articles = articles;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -76,30 +177,6 @@ public class User {
         this.loginName = loginName == null ? null : loginName.trim();
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName == null ? null : fullName.trim();
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender == null ? null : gender.trim();
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType == null ? null : userType.trim();
-    }
-
     public String getMobile() {
         return mobile;
     }
@@ -116,6 +193,14 @@ public class User {
         this.enabled = enabled;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName == null ? null : fullName.trim();
+    }
+
     public Integer getIsAdmin() {
         return isAdmin;
     }
@@ -130,6 +215,14 @@ public class User {
 
     public void setPsw(String psw) {
         this.psw = psw == null ? null : psw.trim();
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType == null ? null : userType.trim();
     }
 
     public Date getCreateTime() {
@@ -164,19 +257,19 @@ public class User {
         this.headUrl = headUrl == null ? null : headUrl.trim();
     }
 
-    public Integer getSchId() {
-        return schId;
+    public String getEducationId() {
+        return educationId;
     }
 
-    public void setSchId(Integer schId) {
-        this.schId = schId;
+    public void setEducationId(String educationId) {
+        this.educationId = educationId;
     }
 
-    public Integer getXqhId() {
-        return xqhId;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setXqhId(Integer xqhId) {
-        this.xqhId = xqhId;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

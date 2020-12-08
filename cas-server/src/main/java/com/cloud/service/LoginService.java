@@ -27,7 +27,9 @@ import static com.cloud.util.CookieUtils.addCookie;
  */
 @Service
 public class LoginService {
+
     private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
+
     private static long expireTime;
 
     @Resource
@@ -44,11 +46,8 @@ public class LoginService {
     @Value("${domain-name}")
     private String domainName;
 
-    public User login(HttpServletRequest request, HttpServletResponse response, String loginName, String pwd) {
-        User user = new User();
-        user.setLoginName(loginName);
-        user.setPsw(pwd);
-        User u = userMapper.selectOne(user);
+    public User login(HttpServletRequest request, HttpServletResponse response, String loginName, String psd) {
+        User u = userMapper.selectByLoginName(loginName, psd);
         if (null == u || null == u.getUserId()) {
             throw new RuntimeException("账号或者密码错误");
         }

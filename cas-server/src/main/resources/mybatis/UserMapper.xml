@@ -3,11 +3,11 @@
 <mapper namespace="com.cloud.dao.UserMapper">
 
     <select id="selectExcelUser" resultType="com.cloud.model.User">
-        select user_id,login_name,full_name,
+        select user_id, login_name, full_name, education_id,
         ( CASE WHEN gender = 1 THEN '男' ELSE '女' END ) gender ,
         ( CASE WHEN user_type = "T" THEN '教师' WHEN user_type = "S" THEN '家长' ELSE '学生' END ) user_type,
-        mobile, is_admin, email, head_url, sch_id from t_user
-        <where >
+        mobile, is_admin, email, head_url from table_user
+        <where>
             <if test="userId != null" >
                 and user_id = #{userId,jdbcType=VARCHAR}
             </if>
@@ -32,58 +32,54 @@
             <if test="isAdmin != null" >
                 and  is_admin = #{isAdmin,jdbcType=INTEGER}
             </if>
-            <if test="psw != null" >
-                and psw = #{psw,jdbcType=VARCHAR}
-            </if>
-            <if test="createTime != null" >
-                and create_time = #{createTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="updateTime != null" >
-                and update_time = #{updateTime,jdbcType=TIMESTAMP}
-            </if>
             <if test="email != null" >
                 and email = #{email,jdbcType=VARCHAR}
             </if>
             <if test="headUrl != null" >
                 and head_url = #{headUrl,jdbcType=VARCHAR}
             </if>
-            <if test="schId != null" >
-                and sch_id = #{schId,jdbcType=INTEGER}
+            <if test="educationId != null" >
+                and education_id = #{educationId,jdbcType=INTEGER}
             </if>
         </where>
-
     </select>
 
+    <select id="selectByLoginName" resultMap="userMap">
+        SELECT t1.user_id, t1.education_id, t1.full_name, t1.login_name, t2.article_id,
+        ( CASE WHEN t1.gender = 1 THEN '男' ELSE '女' END ) gender,
+        ( CASE WHEN t1.user_type = "T" THEN '教师' WHEN t1.user_type = "S" THEN '家长' ELSE '学生' END ) user_type,
+        t2.title, t2.banner, t2.article_content
+        from table_user t1, table_article t2
+        where t1.enabled = 1 and t1.login_name = #{loginName} and t1.psw = #{psd} and t2.create_id = t1.user_id
+    </select>
+    <resultMap id="userMap" type="com.cloud.model.User">
+        <id property="userId" column="user_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="educationId" column="education_id"/>
+        <result property="fullName" column="full_name"/>
+        <result property="loginName" column="login_name"/>
+        <result property="gender" column="gender"/>
+        <result property="userType" column="user_type"/>
+        <collection property="articles" ofType="map">
+            <id property="articleId" column="article_id"/>
+            <result property="articleId" column="article_id"/>
+            <result property="title" column="title"/>
+            <result property="banner" column="banner"/>
+            <result property="articleContent" column="article_content"/>
+        </collection>
+    </resultMap>
+
     <insert id="insertUsers">
-        insert into t_user ( user_id, login_name, full_name, gender, user_type, mobile, enabled,
-        is_admin, psw,create_time, update_time, email, head_url, sch_id,platform_type )
+        insert into table_user
+        ( user_id, education_id, head_url, login_name, full_name, gender, user_type, mobile, email, is_admin, psw)
         values
         <foreach collection="list" item="users" index="index" separator=",">
-            (
-            (SELECT REPLACE(UUID(), '-', '')), #{users.loginName,jdbcType=VARCHAR}, #{users.fullName,jdbcType=VARCHAR},
-            #{users.gender,jdbcType=VARCHAR}, #{users.userType,jdbcType=VARCHAR}, #{users.mobile,jdbcType=VARCHAR},
-            #{users.enabled,jdbcType=INTEGER}, #{users.isAdmin,jdbcType=INTEGER}, #{users.psw,jdbcType=VARCHAR},
-            #{users.createTime,jdbcType=TIMESTAMP}, #{users.updateTime,jdbcType=TIMESTAMP}, #{users.email,jdbcType=VARCHAR},
-            #{users.headUrl,jdbcType=VARCHAR}, #{users.schId,jdbcType=INTEGER},#{users.platformType,jdbcType=INTEGER}
-            )
+        (
+         (SELECT REPLACE(UUID(), '-', '')), #{users.educationId}, #{users.headUrl}, #{users.loginName},
+         #{users.fullName}, #{users.gender}, #{users.userType}, #{users.mobile}, #{users.email}, #{users.isAdmin}, #{users.psw}
+        )
         </foreach>
     </insert>
 
-    <!--主键 更新-->
-    <!--<update id="updateStatusByMap" parameterType="com.wxm.cloud.model.Meal">-->
-        <!--update t_school_meal-->
-        <!--<trim prefix="set" suffixOverrides=",">-->
-            <!--<trim prefix="status =case" suffix="end,">-->
-                <!--<foreach collection="list" item="item" index="index">-->
-                    <!--<if test="item.status!=null">-->
-                        <!--when meal_id = #{item.mealId} then #{item.status}-->
-                    <!--</if>-->
-                <!--</foreach>-->
-            <!--</trim>-->
-        <!--</trim>-->
-        <!--where-->
-        <!--<foreach collection="list" separator="or" item="item" index="index">-->
-            <!--meal_id = #{item.mealId}-->
-        <!--</foreach>-->
-    <!--</update>-->
+
 </mapper>

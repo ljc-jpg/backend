@@ -5,6 +5,7 @@ package com.cloud.model;
  * @date 2020/7/31
  */
 public class EmailContent {
+
     /**
      * 邮件内容
      */

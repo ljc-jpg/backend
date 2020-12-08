@@ -19,40 +19,40 @@
 
     <dependencies>
 
-        <!--spring-boot 自动帮我们引入了web模块开发需要的相关jar包-->
+        <!--          spring-boot-web开发需要的相关jar包          -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--thymeleaf-->
+        <!--          thymeleaf          -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!--  json -->
+        <!--          json          -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.50</version>
         </dependency>
 
-        <!--文件上传-->
+        <!--          文件上传          -->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
             <version>1.3.3</version>
         </dependency>
 
-        <!--辅助包-->
+        <!--          辅助包          -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.8.1</version>
         </dependency>
 
-        <!--io处理-->
+        <!--          io处理          -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -66,14 +66,14 @@
             <scope>compile</scope>
         </dependency>
 
-        <!--单点登录-->
+        <!--          单点登录          -->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>3.7.0</version>
         </dependency>
 
-        <!--pdf-->
+        <!--          pdf          -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itext-asian</artifactId>
@@ -86,7 +86,7 @@
             <version>5.5.10</version>
         </dependency>
 
-        <!--中文转拼音-->
+        <!--          中文转拼音          -->
         <dependency>
             <groupId>com.belerweb</groupId>
             <artifactId>pinyin4j</artifactId>
@@ -99,11 +99,25 @@
             <version>4.5.2</version>
         </dependency>
 
-        <!--HttpClient基于流式API封装的客户端-->
+        <!--          HttpClient基于流式API封装的客户端          -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>fluent-hc</artifactId>
             <version>4.5.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!--          阿里处理excel          -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.1.1</version>
         </dependency>
 
     </dependencies>

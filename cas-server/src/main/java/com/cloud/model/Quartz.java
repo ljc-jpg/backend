@@ -8,17 +8,26 @@ import java.util.Date;
  * @author zhuz
  * @date 2020/8/3
  */
-@Table(name = "t_quartz")
+@Table(name = "table_quartz")
 public class Quartz {
+
     @Id
     private Integer quartzId;
+
     private String taskName;
+
     private String cron;
+
     private String address;
-    private Date createTime;
+
     private String phone;
+
     private String groupName;
+
     private String param;
+
+    private Date createTime;
+
     private Integer status;
 
     public Quartz(Integer quartzId, String taskName, String cron, Integer status, String address, Date createTime, String phone, String groupName, String param) {

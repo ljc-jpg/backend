@@ -10,7 +10,6 @@ import com.cloud.model.User;
 import com.cloud.utils.UserExcelListener;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- *
  * @author zhuz
  * @date 2020/7/31
  */
@@ -32,22 +30,26 @@ public class UserService {
     private UserMapper userMapper;
 
     /**
+     * 根据user对象查询用户信息
+     *
      * @param user
-     * @Description: 根据user对象重新数据
-     * @author zhu zheng
-     * @date 2020/4/1
+     * @return {@link List< User>}
+     * @author zhuz
+     * @date 2020/12/7
      */
     public List<User> selectByUser(User user) {
         LOGGER.debug("User:" + user);
-        List<User> users = userMapper.select(user);
+        List<User> users = userMapper.selectExcelUser(user);
         return users;
     }
 
     /**
+     * 批量导入
+     *
      * @param users
-     * @Description:将List<User>批量插入
-     * @author zhu zheng
-     * @date 2020/4/1
+     * @return
+     * @author zhuz
+     * @date 2020/12/7
      */
     public void insertUsers(List<User> users) {
         LOGGER.debug("users:" + users.size());
@@ -55,27 +57,14 @@ public class UserService {
     }
 
     /**
-     * @param schId loginName
-     * @Description: 根据schId loginName查询单个User对象
-     * @author zhu zheng
-     * @date 2020/4/1
-     */
-    public User selectByLoginName(String loginName, String schId) {
-        User user = new User();
-        user.setLoginName(loginName);
-        user.setSchId(schId);
-        List<User> users = userMapper.select(user);
-        if (!CollectionUtils.isEmpty(users)) {
-            return users.get(0);
-        }
-        return null;
-    }
-
-    /**
-     * @param userService multipartFile
-     * @Description: 根据UserExcelListener批量导入User对象的excel数据
-     * @author zhu zheng
-     * @date 2020/4/1
+     * 批量导入excelUser对象数据
+     *
+     * @param multipartFile
+     * @param userService
+     * @param schId
+     * @return
+     * @author zhuz
+     * @date 2020/12/7
      */
     public void readExcel(MultipartFile multipartFile, UserService userService, String schId) throws IOException {
         ExcelReader excelReader = EasyExcel.read(multipartFile.getInputStream(), User.class,
@@ -90,10 +79,13 @@ public class UserService {
     }
 
     /**
-     * @param user outputStream
-     * @Description: 根据user对象查询数据并且写入excel
-     * @author zhu zheng
-     * @date 2020/4/1
+     * user对象查询数据写入excel
+     *
+     * @param outputStream
+     * @param user
+     * @return
+     * @author zhuz
+     * @date 2020/12/7
      */
     public void writeExcel(ServletOutputStream outputStream, User user) {
         List<User> users = userMapper.selectExcelUser(user);

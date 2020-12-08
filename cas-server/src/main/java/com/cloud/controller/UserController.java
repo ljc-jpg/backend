@@ -82,25 +82,21 @@ public class UserController {
      * {"msg":"Yk2xFy9","code":80,"data":{}}
      */
     @PostMapping(value = "/insertExcel/{multipartFile}/{schId}")
-    public ResultVo<Boolean> insertUsers(@PathVariable MultipartFile multipartFile, @PathVariable String schId) {
+    public ResultVo insertUsers(@PathVariable MultipartFile multipartFile, @PathVariable String schId) {
         ResultVo resultVo = new ResultVo();
         try {
             if (null == multipartFile) {
-                resultVo.setData(false);
                 resultVo.setMsg("multipartFile为空");
                 resultVo.setCode(RETURN_CODE_ERR);
                 return resultVo;
             }
             String excelType = "xlsx";
             if (!multipartFile.getOriginalFilename().contains(excelType)) {
-                resultVo.setData(false);
                 resultVo.setMsg("导入的文件格式不正确，应该是excel的文件");
                 return resultVo;
             }
             userService.readExcel(multipartFile, userService, schId);
-            resultVo.setData(true);
         } catch (Exception e) {
-            resultVo.setData(false);
             logger.error("insertUsers:", e);
             resultVo.setMsg("insertUsers:" + e);
             resultVo.setCode(RETURN_CODE_ERR);
@@ -143,16 +139,14 @@ public class UserController {
      * {"msg":"ZI5Yr","code":73,"data":false}
      */
     @PostMapping("downloadExcel")
-    public ResultVo<Boolean> downloadExcel(HttpServletResponse response, @RequestBody User user) {
+    public ResultVo downloadExcel(HttpServletResponse response, @RequestBody User user) {
         ResultVo resultVo = new ResultVo();
         try {
             response.setCharacterEncoding("utf-8");
             String fileName = URLEncoder.encode("测试", "UTF-8");
             response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
             userService.writeExcel(response.getOutputStream(), user);
-            resultVo.setData(true);
         } catch (Exception e) {
-            resultVo.setData(false);
             logger.error("downloadExcel:", e);
             resultVo.setMsg("downloadExcel:" + e);
             resultVo.setCode(RETURN_CODE_ERR);

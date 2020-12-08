@@ -56,7 +56,7 @@ public class UserExcelListener extends AnalysisEventListener<User> {
         user.setUserType("教师".equals(user.getUserType()) ? "T" : ("学生".equals(user.getUserType()) ? "S" : "P"));
         user.setGender("男".equals(user.getGender()) ? "1" : "0");
         user.setIsAdmin(0);
-        user.setSchId(schId);
+        user.setEducationId(schId);
         data.add(user);
         // 达到BATCH_COUNT了，需要去存储一次数据库，防止数据几万条数据在内存，容易BOOM
         if (data.size() > BATCH_COUNT) {

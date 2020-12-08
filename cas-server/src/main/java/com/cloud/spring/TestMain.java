@@ -1,6 +1,7 @@
 package com.cloud.spring;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author zhuz

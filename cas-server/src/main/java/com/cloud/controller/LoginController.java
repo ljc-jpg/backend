@@ -42,9 +42,9 @@ public class LoginController {
      * @apiSuccessExample 响应结果示例
      * {"data":{}}
      */
-    @GetMapping("/login/{loginName}/{pwd}")
+    @GetMapping("/login/{loginName}/{psd}")
     public ResultVo login(HttpServletRequest request, HttpServletResponse response,
-                          @PathVariable String loginName, @PathVariable String pwd) {
+                          @PathVariable String loginName, @PathVariable String psd) {
         ResultVo resultVo = new ResultVo();
         try {
             if (StringUtils.isEmpty(loginName)) {
@@ -52,12 +52,12 @@ public class LoginController {
                 resultVo.setCode(RETURN_CODE_ERR);
                 return resultVo;
             }
-            if (StringUtils.isEmpty(pwd)) {
-                resultVo.setMsg("pwd为空");
+            if (StringUtils.isEmpty(psd)) {
+                resultVo.setMsg("psd为空");
                 resultVo.setCode(RETURN_CODE_ERR);
                 return resultVo;
             }
-            User user = loginService.login(request, response, loginName, pwd);
+            User user = loginService.login(request, response, loginName, psd);
             resultVo.setData(user);
         } catch (Exception e) {
             logger.error("login:", e);
