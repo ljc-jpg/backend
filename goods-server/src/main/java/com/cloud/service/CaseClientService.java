@@ -3,6 +3,7 @@ package com.cloud.service;
 
 import com.cloud.util.ResultVo;
 import com.cloud.util.UploadResult;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,5 +45,8 @@ public interface CaseClientService {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/OSS/sendEmail")
     ResultVo sendEmails(@RequestParam(value = "addressee") String addressee, @RequestParam(value = "content") String content, @RequestParam(value = "subject") String subject);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/user/selectByUser")
+    ResultVo selectByUser(@RequestParam("userId") String userId);
 
 }

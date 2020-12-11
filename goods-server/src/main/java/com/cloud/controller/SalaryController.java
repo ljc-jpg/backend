@@ -1,5 +1,6 @@
 package com.cloud.controller;
 
+import com.cloud.service.CaseClientService;
 import com.cloud.service.SalaryService;
 import com.cloud.util.ResultVo;
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 import static com.cloud.util.RegExUtil.isEmail;
 import static com.cloud.util.ResultVo.RETURN_CODE_ERR;
@@ -26,6 +29,9 @@ public class SalaryController {
 
     @Resource
     private SalaryService salaryService;
+
+    @Resource
+    private CaseClientService caseClientService;
 
     /**
      * @api {GET} /salaryUserAttr/salaryPdf/{salaryId}/{schId} 阅览工资单对应pdf
@@ -109,6 +115,25 @@ public class SalaryController {
             result.setData(false);
             logger.error("salaryEmail", e);
             result.setMsg("salaryEmail" + e);
+            result.setCode(RETURN_CODE_ERR);
+        }
+        return result;
+    }
+
+    @GetMapping(value = "/selectByUser/{userId}")
+    public ResultVo<String> selectByUser(@PathVariable String userId) {
+        ResultVo result = new ResultVo();
+        try {
+            if (StringUtils.isEmpty(userId)) {
+                result.setMsg("salaryId为空");
+                result.setCode(RETURN_CODE_ERR);
+                return result;
+            }
+
+            result = caseClientService.selectByUser(userId);
+        } catch (Exception e) {
+            logger.error("salaryPdf", e);
+            result.setMsg("salaryPdf" + e);
             result.setCode(RETURN_CODE_ERR);
         }
         return result;

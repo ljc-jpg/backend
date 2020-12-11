@@ -21,4 +21,9 @@ public class  CaseClientFallback implements CaseClientService{
     public ResultVo sendEmails(String addressee, String content, String subject) {
         return null;
     }
+
+    @Override
+    public ResultVo selectByUser(String userId) {
+        return null;
+    }
 }
