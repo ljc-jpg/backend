@@ -44,30 +44,13 @@
         </where>
     </select>
 
-    <select id="selectByLoginName" resultMap="userMap">
-        SELECT t1.user_id, t1.education_id, t1.full_name, t1.login_name, t2.article_id,
+    <select id="selectByLoginName" resultType="com.cloud.model.User">
+        SELECT t1.user_id, t1.education_id, t1.full_name, t1.login_name
         ( CASE WHEN t1.gender = 1 THEN '男' ELSE '女' END ) gender,
-        ( CASE WHEN t1.user_type = "T" THEN '教师' WHEN t1.user_type = "S" THEN '家长' ELSE '学生' END ) user_type,
-        t2.title, t2.banner, t2.article_content
-        from table_user t1, table_article t2
-        where t1.enabled = 1 and t1.login_name = #{loginName} and t1.psw = #{psd} and t2.create_id = t1.user_id
+        ( CASE WHEN t1.user_type = "T" THEN '教师' WHEN t1.user_type = "S" THEN '家长' ELSE '学生' END ) user_type
+        from table_user t1
+        where t1.enabled = 1 and t1.login_name = #{loginName} and t1.psw = #{psd}
     </select>
-    <resultMap id="userMap" type="com.cloud.model.User">
-        <id property="userId" column="user_id"/>
-        <result property="userId" column="user_id"/>
-        <result property="educationId" column="education_id"/>
-        <result property="fullName" column="full_name"/>
-        <result property="loginName" column="login_name"/>
-        <result property="gender" column="gender"/>
-        <result property="userType" column="user_type"/>
-        <collection property="articles" ofType="map">
-            <id property="articleId" column="article_id"/>
-            <result property="articleId" column="article_id"/>
-            <result property="title" column="title"/>
-            <result property="banner" column="banner"/>
-            <result property="articleContent" column="article_content"/>
-        </collection>
-    </resultMap>
 
     <insert id="insertUsers">
         insert into table_user
