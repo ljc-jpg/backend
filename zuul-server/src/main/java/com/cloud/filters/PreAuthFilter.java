@@ -46,8 +46,8 @@ public class PreAuthFilter extends ZuulFilter {
     private String domainName;
 
     static {
-        MAP.put("news-web", new String[]{"/news-web/homePage/getThomePageBySchId/**", "/news-web/information/syncInfomation"});
-        MAP.put("online-shop", new String[]{"/online-shop/pay/payWeiXinByJsapi", "/online-shop/api/pay/payWeiXinByJsapi"});
+        MAP.put("cas-server", new String[]{"/cas-server/article/articleByUser", "/cas-server/cas/login"});
+        MAP.put("goods-server", new String[]{"/goods-server/salaryUserAttr/selectByUser"});
     }
 
     /**

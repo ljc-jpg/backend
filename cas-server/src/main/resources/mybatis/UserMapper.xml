@@ -45,7 +45,7 @@
     </select>
 
     <select id="selectByLoginName" resultType="com.cloud.model.User">
-        SELECT t1.user_id, t1.education_id, t1.full_name, t1.login_name
+        SELECT t1.user_id, t1.education_id, t1.full_name, t1.login_name,
         ( CASE WHEN t1.gender = 1 THEN '男' ELSE '女' END ) gender,
         ( CASE WHEN t1.user_type = "T" THEN '教师' WHEN t1.user_type = "S" THEN '家长' ELSE '学生' END ) user_type
         from table_user t1
