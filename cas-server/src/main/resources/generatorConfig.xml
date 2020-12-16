@@ -28,7 +28,7 @@
         <!-- targetPackage：生成的实体类所在的包 -->
         <!-- targetProject：生成的实体类所在的硬盘位置 -->
         <javaModelGenerator targetPackage="com.cloud.model"
-                            targetProject="D:\VSCodeWorkSpace\backend\goods-server\src\main\java">
+                            targetProject="D:\VSCodeWorkSpace\backend\cas-server\src\main\java">
             <!-- 是否允许子包 -->
             <property name="enableSubPackages" value="false"/>
             <!-- 是否对modal添加构造函数 -->
@@ -41,14 +41,14 @@
 
         <!-- targetPackage 和 targetProject：生成的 mapper 文件的包和位置 -->
         <sqlMapGenerator targetPackage="mybatis"
-                         targetProject="D:\VSCodeWorkSpace\backend\goods-server\src\main\resources">
+                         targetProject="D:\VSCodeWorkSpace\backend\cas-server\src\main\resources">
             <!-- 针对数据库的一个配置，是否把 schema 作为字包名 -->
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
         <!-- targetPackage 和 targetProject：生成的 interface 文件的包和位置 -->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.cloud.dao"
-                             targetProject="D:\VSCodeWorkSpace\backend\goods-server\src\main\java">
+                             targetProject="D:\VSCodeWorkSpace\backend\cas-server\src\main\java">
             <!-- 针对 oracle 数据库的一个配置，是否把 schema 作为字包名 -->
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
